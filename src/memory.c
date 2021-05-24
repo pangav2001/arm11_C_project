@@ -22,13 +22,14 @@ void initialize_memory(void)
 
 int store(uint16_t address, int8_t data)
 {
+    assert(memory != NULL);
     memory[address] = data;
     return 0;
 }
 
 int32_t load(uint16_t address, int num_bytes)
 {
-    assert(num_bytes <= 4 && num_bytes >= 1);
+    assert(memory != NULL && num_bytes <= 4 && num_bytes >= 1);
     uint32_t toReturn;
     for (int i = 0; i < num_bytes; i++)
     {
