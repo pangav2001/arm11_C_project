@@ -1,7 +1,7 @@
-#include "memory.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+#include "memory.h"
 
 #define MEMORY_SIZE 65536
 
@@ -15,4 +15,16 @@ void initialize(void)
     } else {
         printf("Memory is already initialized");
     }
+}
+
+uint32_t load(uint16_t address, int num_bytes)
+{
+    assert(num_bytes <= 4 && num_bytes >= 1);
+    uint32_t toReturn;
+    for (int i = 0; i < num_bytes; i++)
+    {
+        toReturn = *memory + 8 * i;
+    }
+
+    return toReturn;
 }
