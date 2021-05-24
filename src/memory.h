@@ -3,8 +3,6 @@
 #ifndef MEMORY_H
 #define MEMORY_H
 
-extern int8_t *memory;
-
 void intitialize(void);
 
 int store(uint16_t address, int8_t data);

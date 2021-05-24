@@ -24,6 +24,10 @@ int32_t get_reg(int reg_name);
 
 int store_reg(int reg_name, int32_t data);
 
+void initialize(void);
+
+void free_registers(void);
+
 // mov
 
 #endif
