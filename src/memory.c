@@ -36,3 +36,8 @@ uint32_t load(uint16_t address, int num_bytes)
 
     return toReturn;
 }
+
+void freeMemory(void)
+{
+    free(memory);
+}
