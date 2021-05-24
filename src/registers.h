@@ -24,7 +24,7 @@ int32_t get_reg(enum Register_Names reg_name);
 
 int store_reg(enum Register_Names reg_name, int32_t data);
 
-void initialize(void);
+void initialize_registers(void);
 
 void free_registers(void);
 

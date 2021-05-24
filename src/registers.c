@@ -39,7 +39,7 @@
 
 static int32_t *registers = NULL;
 
-void initialize(void) {
+void initialize_registers(void) {
     if (registers != NULL)
     {
         registers = calloc(NUM_REG, sizeof(int32_t));
