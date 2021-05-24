@@ -7,7 +7,7 @@
 
 static int8_t *memory = NULL;
 
-void initialize(void)
+void initialize_memory(void)
 {
     if (memory != NULL)
     {
@@ -37,7 +37,7 @@ int32_t load(uint16_t address, int num_bytes)
     return toReturn;
 }
 
-void freeMemory(void)
+void free_memory(void)
 {
     free(memory);
 }
