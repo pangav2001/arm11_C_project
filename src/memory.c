@@ -9,10 +9,18 @@ static int8_t *memory = NULL;
 
 void initialize(void)
 {
-    if (memory != NULL) {
+    if (memory != NULL)
+    {
         memory = calloc(MEMORY_SIZE, sizeof(int8_t));
         assert(memory != NULL);
-    } else {
+    }
+    else
+    {
         printf("Memory is already initialized");
     }
+}
+
+int store(uint16_t address, int8_t data)
+{
+    memory[address] = data;
 }
