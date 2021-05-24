@@ -11,4 +11,6 @@ int32_t load(uint16_t address, int num_bytes);
 
 void free_memory(void);
 
+void print_memory_state(void);
+
 #endif
