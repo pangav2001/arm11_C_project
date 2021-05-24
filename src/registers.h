@@ -3,7 +3,7 @@
 #ifndef REGISTER_H
 #define REGISTER_H
 
-enum registerNames {R0,
+enum Register_Names {R0,
 R1,
 R2,
 R3,
@@ -20,9 +20,9 @@ LR,
 PC,
 CPSR};
 
-int32_t get_reg(int reg_name);
+int32_t get_reg(enum Register_Names reg_name);
 
-int store_reg(int reg_name, int32_t data);
+int store_reg(enum Register_Names reg_name, int32_t data);
 
 void initialize(void);
 
