@@ -1,5 +1,5 @@
 CC      = gcc
-CFLAGS  = -Wall -g -D_POSIX_SOURCE -D_BSD_SOURCE -std=c99 -Werror -pedantic
+CFLAGS  = -Wall -g -std=c99 -Werror -pedantic
 
 .SUFFIXES: .c .o
 
@@ -9,7 +9,15 @@ all: assemble emulate
 
 assemble: assemble.o
 
+
+#Build the emulator executable
 emulate: emulate.o
+
+
+#Build the object files for emulator
+emulate.o: memory.o registers.o
+memory.o: memory.h
+registers.o: registers.h
 
 clean:
 	rm -f $(wildcard *.o)
