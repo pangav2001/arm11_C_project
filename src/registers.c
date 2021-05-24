@@ -40,14 +40,14 @@
 static int32_t *registers = NULL;
 
 void initialize_registers(void) {
-    if (registers != NULL)
+    if (registers == NULL)
     {
         registers = calloc(NUM_REG, sizeof(int32_t));
         assert(registers != NULL);
     }
     else
     {
-        printf("Registers are already initialized");
+        printf("Registers are already initialized\n");
     }
 }
 
@@ -60,4 +60,8 @@ int store_reg(enum Register_Names reg_name, int32_t data)
 {
     registers[reg_name] = data;
     return 0;
+}
+
+void free_registers(void) {
+    free(registers);
 }

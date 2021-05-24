@@ -3,7 +3,7 @@
 #ifndef MEMORY_H
 #define MEMORY_H
 
-void intitialize_memory(void);
+void initialize_memory(void);
 
 int store(uint16_t address, int8_t data);
 

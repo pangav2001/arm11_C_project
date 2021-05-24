@@ -9,14 +9,14 @@ static int8_t *memory = NULL;
 
 void initialize_memory(void)
 {
-    if (memory != NULL)
+    if (memory == NULL)
     {
         memory = calloc(MEMORY_SIZE, sizeof(int8_t));
         assert(memory != NULL);
     }
     else
     {
-        printf("Memory is already initialized");
+        printf("Memory is already initialized\n");
     }
 }
 
