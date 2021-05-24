@@ -11,11 +11,10 @@ assemble: assemble.o
 
 
 #Build the emulator executable
-emulate: emulate.o
+emulate: memory.o registers.o
 
 
 #Build the object files for emulator
-emulate.o: memory.o registers.o
 memory.o: memory.h
 registers.o: registers.h
 
