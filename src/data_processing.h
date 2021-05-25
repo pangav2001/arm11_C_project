@@ -1,8 +1,13 @@
 #include "registers.h"
 #include "memory.h"
+#include "flags.h"
+#include "decode.h"
 #include <stdint.h>
 
-enum Operators 
+#ifndef DATA_PROCESSING
+#define DATA_PROCESSING
+
+enum Operators
 {
     AND,
     EOR,
@@ -16,4 +21,8 @@ enum Operators
     MOV
 };
 
-void process_func(int i_flag, enum Operators opcode, enum Register_Names rn, enum Register_Names rd, int16_t operand2);
+void process_func(int8_t i_flag, enum Operators opcode, int8_t s_flag, enum Register_Names rn, enum Register_Names rd, int16_t operand2);
+
+int32_t immediate_operand(int16_t operand2, int8_t i_flag);
+
+#endif
