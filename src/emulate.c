@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
   //test for memory
   store_memory(1,2);
   store_memory(2, 4);
-  int32_t m = load_memory(1,2);
+  int32_t m = get_memory(1,2);
   printf("memory test = %d\n", m);
 
   //test for registers
