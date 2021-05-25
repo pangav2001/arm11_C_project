@@ -28,6 +28,8 @@ void initialize_registers(void);
 
 void free_registers(void);
 
+void print_register_state(void);
+
 // mov
 
 #endif
