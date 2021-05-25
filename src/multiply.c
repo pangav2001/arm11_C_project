@@ -23,8 +23,8 @@ void multiply(int A, int S,
         
         // N flag is set to last bit of result -- define get last bit func
 
-        int n,first;
-        n = result;
+        int first;
+        first = result;
 
         while(first >= 10){
             first = first / 10;
