@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include "registers.h"
 
 #ifndef MULTIPLY_H
 #define MULTIPLY_H
