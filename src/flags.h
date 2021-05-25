@@ -4,7 +4,7 @@ enum Condition_Code
 {
     EQ,
     NE,
-    GE,
+    GE = 10,
     LT,
     GT,
     LE,
@@ -23,3 +23,5 @@ int check_cond(enum Condition_Code condition_code);
 void set_flag(enum Flag flag);
 
 void reset_flag(enum Flag flag);
+
+int get_flag(enum Flag);
