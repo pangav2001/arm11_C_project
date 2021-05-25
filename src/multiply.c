@@ -19,7 +19,20 @@ void multiply(int A, int S,
         if(result == 0){
             set_flag(Z);
         }
+
+        
         // N flag is set to last bit of result -- define get last bit func
+
+        int n,first;
+        n = result;
+
+        while(first >= 10){
+            first = first / 10;
+        }
+        if(first == 1){
+            set_flag(N);
+        }
+        
     }
 
  }
