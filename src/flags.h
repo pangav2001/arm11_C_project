@@ -1,6 +1,6 @@
 #include <stdint.h>
 
-enum Condition_Codes
+enum Condition_Code
 {
     EQ,
     NE,
@@ -11,15 +11,15 @@ enum Condition_Codes
     AL
 };
 
-enum Flags {
+enum Flag {
     N,
     Z,
     C,
     V
 };
 
-int check_cond(enum Condition_Code);
+int check_cond(enum Condition_Code condition_code);
 
-void set_flag(enum Flags flag);
+void set_flag(enum Flag flag);
 
-void reset_flag(enum Flags flag);
+void reset_flag(enum Flag flag);
