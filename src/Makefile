@@ -1,5 +1,6 @@
 CC      = gcc
 CFLAGS  = -Wall -g -std=c99 -Werror -pedantic
+LIBS = -lm
 
 .SUFFIXES: .c .o
 
@@ -12,7 +13,6 @@ assemble: assemble.o
 
 #Build the emulator executable
 emulate: memory.o registers.o
-
 
 #Build the object files for emulator
 memory.o: memory.h
