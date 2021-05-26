@@ -42,6 +42,7 @@ static int32_t shift(enum Shift_Types shift_type, int32_t value, int32_t amount)
     case ASR:
         check_c_flag(amount - 1) return value >> amount;
     case ROR:
+        amount *= 2;
         amount %= 32;
         int32_t right = extract_bits(value, 0, amount - 1);
         int32_t left = extract_bits(value, amount, VALUE_SIZE) - 1;
