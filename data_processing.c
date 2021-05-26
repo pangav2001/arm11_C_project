@@ -28,12 +28,10 @@
 #define RS_LAST_BYTE exctract_bits(operand2, 7, 0)
 #define SHIFT_CONSTANT (uint8_t) exctract_bits(operand2, 7, 11)
 
-
-static enum Shift_Types {
-    LSL,
-    LSR,
-    ASR,
-    ROR
+static enum Shift_Types { LSL,
+                          LSR,
+                          ASR,
+                          ROR
 };
 
 static int32_t shift(enum Shift_Types shift_type, int32_t value, int32_t amount, int8_t s_flag)
@@ -76,10 +74,14 @@ int32_t immediate_operand(int16_t operand2, int8_t i_flag, int8_t s_flag)
     }
 }
 
-static void overflow_check(int32_t a, int32_t b, int32_t result, int8_t s_flag) {
-    if (a > 0 && b > 0 && result < 0 || a < 0 && b < 0 && result > 0) {
+static void overflow_check(int32_t a, int32_t b, int32_t result, int8_t s_flag)
+{
+    if (a > 0 && b > 0 && result < 0 || a < 0 && b < 0 && result > 0)
+    {
         SET_FLAG_VALUE(C, 1);
-    } else {
+    }
+    else
+    {
         SET_FLAG_VALUE(C, 0);
     }
 }
