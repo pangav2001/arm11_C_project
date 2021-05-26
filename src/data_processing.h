@@ -16,4 +16,4 @@ enum Operators
     MOV
 };
 
-void process_func(int i_flag, enum Operators opcode, enum Register_Names rn, enum Register_Names rd, int16_t operand2);
+void process_func(int8_t i_flag, enum Operators opcode, int8_t s_flag, enum Register_Names rn, enum Register_Names rd, int16_t operand2);
