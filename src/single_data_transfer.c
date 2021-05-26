@@ -2,6 +2,7 @@
 #include "single_data_transfer.h"
 #include "decode.h"
 #include "memory.h"
+#include "data_processing.h"
 
 //From the spec
 //If PC is used make sure we +8 or something!!!!
@@ -34,7 +35,8 @@ int16_t calculate_address(enum Register_Names rn, uint32_t offset, int8_t u, int
             return pre_index(rn, offset, u);
         }
     case 1:
-        //cons function
+        //connys function maybe work maybe not
+        return immediate_operand(offset,0);
     }
 }
 
