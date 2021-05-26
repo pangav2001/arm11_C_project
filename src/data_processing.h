@@ -2,6 +2,9 @@
 #include "memory.h"
 #include <stdint.h>
 
+#ifndef REGISTER_H
+#define REGISTER_H
+
 enum Operators 
 {
     AND,
@@ -17,3 +20,5 @@ enum Operators
 };
 
 void process_func(int8_t i_flag, enum Operators opcode, int8_t s_flag, enum Register_Names rn, enum Register_Names rd, int16_t operand2);
+
+#endif
