@@ -3,6 +3,7 @@
 #include "memory.h"
 #include "registers.h"
 #include "parse_file.h"
+#include "decode.h"
 
 
 int main(int argc, char **argv) {
@@ -21,12 +22,17 @@ int main(int argc, char **argv) {
   int r = get_reg(R12);
   printf("register test = %d\n", r);
 
-  //test for read
-  read_in_binary();
-  printf("%d\n", get_memory(0, 4));
+  // //test for read
+  // read_in_binary();
+  // printf("%d\n", get_memory(0, 4));
+
+  printf("%d\n", extract_bits(39, 1, 7));
   
   //free memory and reg
   free_memory();
   free_registers();
   return EXIT_SUCCESS;
 }
+
+// 7 6 5 4 3 2 1 0
+// 0 0 1 0 0 1 1 1

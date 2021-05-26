@@ -12,12 +12,13 @@ assemble: assemble.o
 
 
 #Build the emulator executable
-emulate: memory.o registers.o parse_file.o
+emulate: memory.o registers.o parse_file.o decode.o
 
 #Build the object files for emulator
 memory.o: memory.h
 registers.o: registers.h
 parse_file.o: parse_file.h
+decode.o: decode.h
 
 clean:
 	rm -f $(wildcard *.o)
