@@ -2,6 +2,7 @@
 #include<stdio.h>
 #include "memory.h"
 #include "registers.h"
+#include "parse_file.h"
 
 
 int main(int argc, char **argv) {
@@ -19,6 +20,10 @@ int main(int argc, char **argv) {
   store_reg(R12, 43);
   int r = get_reg(R12);
   printf("register test = %d\n", r);
+
+  //test for read
+  read_in_binary();
+  printf("%d\n", get_memory(0, 4));
   
   //free memory and reg
   free_memory();

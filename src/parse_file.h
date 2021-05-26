@@ -1,5 +1,8 @@
 #include <stdint.h>
 
-//#ifndef PARSE_FILE
+#ifndef PARSE_FILE_H
+#define PARSE_FILE_H
 
-int read_in_binary(void);
+void read_in_binary(void);
+
+#endif
