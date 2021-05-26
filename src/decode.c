@@ -120,7 +120,7 @@ void decode(int32_t instruction)
             instr->rn = extract_bits(instruction, 16, 19);
             instr->rd = extract_bits(instruction, 12, 15);
             instr->offset = extract_bits(instruction, 0, 11);
-            single_data_transfer(instr->i_bit, instr->p_bit, instr->u_bit, instr->l_bit, instr->rn, instr->rn, instr->offset);
+            single_data_transfer(instr->i_bit, instr->p_bit, instr->u_bit, instr->l_bit, instr->rn, instr->rd, instr->offset);
             free(instr);
         }
         break;

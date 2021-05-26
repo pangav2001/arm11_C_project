@@ -17,12 +17,22 @@ int main(int argc, char **argv) {
   initialize_registers();
 
   int bytes = read_in_binary(argv[1]);
+  //printf("bytes: %d\n", bytes);
 
-  int noOfInstructions = bytes / 4;
+  int32_t instruction;
 
-  for(int i = 0; i < noOfInstructions; i+=4)
+  store_reg(PC, 8);
+
+  for(int i = 0; i < bytes; i+=4)
   {
-    decode(get_memory(i, 4));
+    instruction = get_memory(i, 4);
+    if (instruction == 0) //all zero instruction
+    {
+      break;
+    }
+    store_reg(PC, get_reg(PC) + 4);
+    decode(instruction);
+    
   }
 
   print_registers();

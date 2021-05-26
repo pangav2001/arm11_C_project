@@ -1,20 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
-//#include <math.h>
+#include <math.h>
 #include "memory.h"
 
-static int8_t *memory = NULL;
-
-static int powe(int a, int b) {
-    int result = 1;
-    while (b > 0)
-    {
-        b--;
-        result *=a;
-    }
-    return result;
-}
+static uint8_t *memory = NULL;
 
 void initialize_memory(void)
 {
@@ -36,13 +26,14 @@ int store_memory(uint16_t address, int8_t data)
     return 0;
 }
 
+
 int32_t get_memory(uint16_t address, int num_bytes)
 {
     assert(memory != NULL && num_bytes <= 4 && num_bytes >= 1);
-    uint32_t toReturn = 0;
+    int32_t toReturn = 0;
     for (int i = 0; i < num_bytes; i++)
     {
-        toReturn += memory[address + i] * powe(BYTE_SIZE, i);
+        toReturn = (toReturn << 8) | ((uint32_t) memory[address + i] & 0xFF);
     }
 
     return toReturn;

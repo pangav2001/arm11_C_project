@@ -4,23 +4,36 @@
 #include "memory.h"
 #include "data_processing.h"
 
-static uint16_t calculate_address(enum Register_Names rn, uint16_t offset, int8_t u, int8_t i, int8_t p);
+static uint32_t calculate_address(int32_t rn, uint16_t offset, int8_t u, int8_t i, int8_t p);
 static void load(enum Register_Names rd, uint16_t address);
 static void store(enum Register_Names rd, uint16_t address);
 
 void single_data_transfer(int8_t i, int8_t p, int8_t u, int8_t l, enum Register_Names rn, enum Register_Names rd, uint16_t offset)
 {
-    rn = (rn == PC) ? rn + 8 : rn; //accomodate for pipeline
-    uint16_t address = calculate_address(rn, offset, u, i, p);
+     
+    int32_t rn_data = get_reg(rn);
+    rn_data = (rn == PC) ? rn_data - 4 : rn_data; //accomodate for pipeline
+    uint32_t address = calculate_address(rn_data, offset, u, i, p);
+    if (address > pow(2,16)) 
+    {
+        printf("Error: Out of bounds memory access at address 0x%08x\n", address);
+    } else 
+    {
     switch (l)
     {
     case 0:
         store(rd, address);
+        break;
     case 1:
+        //printf("here: rd: %d address %d\n", rd, address);
         load(rd, address);
+        break;
     default:
         printf("L bit is not valid\n");
+        break;
         //throw some error
+    }
+
     }
 }
 
@@ -51,33 +64,37 @@ static void store(enum Register_Names rd, uint16_t address)
     }
 }
 
-static int16_t pre_index(enum Register_Names rn, uint16_t offset, int8_t u)
+static int32_t pre_index(int32_t rn, uint16_t offset, int8_t u)
 {
-    return add_sub(u, get_reg(rn), offset);
+    return add_sub(u, rn, offset);
 }
 
-static int16_t post_index(enum Register_Names rn, uint16_t offset, int8_t u)
+static int32_t post_index(int32_t rn, uint16_t offset, int8_t u)
 {
-    int32_t rn_data = get_reg(rn);
-    store_reg(rn, add_sub(u, rn_data, offset));
-    return rn_data;
+    store_reg(rn, add_sub(u, rn, offset));
+    return rn;
 }
 
-static uint16_t calculate_address(enum Register_Names rn, uint16_t offset, int8_t u, int8_t i, int8_t p)
+static uint32_t calculate_address(int32_t rn, uint16_t offset, int8_t u, int8_t i, int8_t p)
 {
-    return 0;
     switch (i)
     {
     case 0:
+        //printf("%d\n", p);
         switch (p)
         {
         case 0:
             return post_index(rn, offset, u);
         case 1:
             return pre_index(rn, offset, u);
+        default:
+            break;
         }
     case 1:
         //connys function maybe work maybe not
         return immediate_operand(offset, 0, 0);
+    default:
+        return 0;
+        break;
     }
 }

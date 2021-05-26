@@ -13,7 +13,7 @@ assemble: assemble.o
 
 
 #Build the emulator executable
-emulate: memory.o registers.o parse_file.o decode.o data_processing.o flags.o multiply.o branch.o #single_data_transfer.o#
+emulate: memory.o registers.o parse_file.o decode.o data_processing.o flags.o multiply.o branch.o single_data_transfer.o emulate_output.o -lm
 
 #Build the object files for emulator
 memory.o: memory.h
