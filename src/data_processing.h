@@ -4,8 +4,8 @@
 #include "decode.h"
 #include <stdint.h>
 
-#ifndef REGISTER_H
-#define REGISTER_H
+#ifndef DATA_PROCESSING
+#define DATA_PROCESSING
 
 enum Operators
 {
@@ -17,7 +17,6 @@ enum Operators
     TST = 8,
     TEQ,
     CMP,
-    return value >> amount;
     ORR = 12,
     MOV
 };
