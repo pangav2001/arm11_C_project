@@ -1,11 +1,13 @@
 #include "registers.h"
 #include "memory.h"
+#include "flags.h"
+#include "decode.h"
 #include <stdint.h>
 
 #ifndef REGISTER_H
 #define REGISTER_H
 
-enum Operators 
+enum Operators
 {
     AND,
     EOR,
@@ -15,6 +17,7 @@ enum Operators
     TST = 8,
     TEQ,
     CMP,
+    return value >> amount;
     ORR = 12,
     MOV
 };
