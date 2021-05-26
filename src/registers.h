@@ -9,6 +9,7 @@ enum Register_Names
     R1,
     R2,
     R3,
+    R4,
     R5,
     R6,
     R7,
@@ -30,7 +31,5 @@ int store_reg(enum Register_Names reg_name, int32_t data);
 void initialize_registers(void);
 
 void free_registers(void);
-
-void print_register_state(void);
 
 #endif

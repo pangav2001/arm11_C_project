@@ -39,12 +39,11 @@ static int32_t shift(enum Shift_Types shift_type, int32_t value, int32_t amount,
         return value << amount;
     case LSR:
         check_c_flag_logical(amount - 1, value, amount, s_flag);
-        return (uint32_t)value >> amount;
+        return (uint32_t) value >> amount;
     case ASR:
         check_c_flag_logical(amount - 1, value, amount, s_flag);
         return value >> amount;
     case ROR:
-        amount *= 2;
         amount %= 32;
         int32_t right = extract_bits(value, 0, amount - 1);
         int32_t left = extract_bits(value, amount, VALUE_SIZE - 1);
@@ -57,7 +56,7 @@ int32_t immediate_operand(int16_t operand2, int8_t i_flag, int8_t s_flag)
 {
     if (i_flag)
     {
-        return shift(ROR, ROTATE_BITS, IMMEDIATE_VALUE, s_flag);
+        return shift(ROR, ROTATE_BITS, 2 * IMMEDIATE_VALUE, s_flag);
     }
     else if (SHIFT_BY_REGISTER)
     {
@@ -70,7 +69,7 @@ int32_t immediate_operand(int16_t operand2, int8_t i_flag, int8_t s_flag)
     }
 }
 
-/*static*/ void overflow_check(int32_t a, int32_t b, int32_t result, int8_t s_flag)
+/*static*/ void overflow_check_addition(int32_t a, int32_t b, int32_t result, int8_t s_flag)
 {
     if (a > 0 && b > 0 && result < 0 || a < 0 && b < 0 && result > 0)
     {
@@ -97,15 +96,15 @@ void process_func(int8_t i_flag, enum Operators opcode, int8_t s_flag, enum Regi
         break;
     case SUB:
         result = get_reg(rn) - immediate_operand2;
-        overflow_check(get_reg(rn), -immediate_operand2, result, s_flag);
+        overflow_check_addition(get_reg(rn), -immediate_operand2, result, s_flag);
         break;
     case RSB:
         result = immediate_operand2 - get_reg(rn);
-        overflow_check(get_reg(rn), -immediate_operand2, result, s_flag);
+        overflow_check_addition(get_reg(rn), -immediate_operand2, result, s_flag);
         break;
     case ADD:
         result = get_reg(rn) + immediate_operand2;
-        overflow_check(get_reg(rn), immediate_operand2, result, s_flag);
+        overflow_check_addition(get_reg(rn), immediate_operand2, result, s_flag);
         break;
     case TST:
         get_reg(rn) & immediate_operand2;
@@ -115,7 +114,7 @@ void process_func(int8_t i_flag, enum Operators opcode, int8_t s_flag, enum Regi
         break;
     case CMP:
         get_reg(rn) - immediate_operand2;
-        overflow_check(get_reg(rn), -immediate_operand2, result, s_flag);
+        overflow_check_addition(get_reg(rn), -immediate_operand2, result, s_flag);
         break;
     case ORR:
         get_reg(rn) | immediate_operand2;
