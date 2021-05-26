@@ -49,7 +49,7 @@ static int32_t shift(enum Shift_Types shift_type, int32_t value, int32_t amount)
     }
 }
 
-int32_t operand2_value_calc(int16_t operand2, int8_t i_flag)
+int32_t immediate_operand(int16_t operand2, int8_t i_flag)
 {
     if (i_flag)
     {
