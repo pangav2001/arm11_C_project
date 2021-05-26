@@ -23,6 +23,6 @@ enum Operators
 
 void process_func(int8_t i_flag, enum Operators opcode, int8_t s_flag, enum Register_Names rn, enum Register_Names rd, int16_t operand2);
 
-int32_t immediate_operand(int16_t operand2, int8_t i_flag);
+int32_t immediate_operand(int16_t operand2, int8_t i_flag, int8_t s_flag);
 
 #endif
