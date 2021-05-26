@@ -5,7 +5,7 @@
 #define MULTIPLY_H
 
 void multiply(int A, int S,
- Register_Names Rd, Register_Names Rs, Register_Names Rm);
+ Register_Names Rd, Register_Names Rn, Register_Names Rs, Register_Names Rm);
 
 
 #endif
