@@ -6,7 +6,7 @@
 
 
 void multiply(int A, int S,
- Register_Names Rd ,Register_Names Rn, Register_Names Rs, Register_Names Rm){
+ enum Register_Names Rd ,enum Register_Names Rn, enum Register_Names Rs, enum Register_Names Rm){
 
      assert(Rd != Rm);
 
@@ -21,6 +21,8 @@ void multiply(int A, int S,
     if(S == 1){
         if(result == 0){
             set_flag(Z);
+        }else{
+            reset_flag(Z);
         }
 
         
@@ -32,8 +34,11 @@ void multiply(int A, int S,
         while(first >= 10){
             first = first / 10;
         }
+        
         if(first == 1){
             set_flag(N);
+        }else{
+            reset_flag(N);
         }
         
     }
