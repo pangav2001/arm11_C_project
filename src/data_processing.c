@@ -1,4 +1,5 @@
 #include "data_processing.h"
+// #include "flags.h"
 
 #define SET_FLAG_VALUE(F, V)             \
     if (s_flag)                          \
@@ -21,12 +22,12 @@
 #define ROTATE_BITS extract_bits(operand2, 8, 11)
 #define IMMEDIATE_VALUE (uint32_t) extract_bits(operand2, 0, 7)
 
-#define RM exctract_bits(operand2, 0, 3)
+#define RM extract_bits(operand2, 0, 3)
 #define SHIFT_BY_REGISTER extract_bits(operand2, 4, 4)
-#define REG_SHIFT_TYPE exctract_bits(operand2, 5, 6)
+#define REG_SHIFT_TYPE extract_bits(operand2, 5, 6)
 
-#define RS_LAST_BYTE exctract_bits(operand2, 7, 0)
-#define SHIFT_CONSTANT (uint8_t) exctract_bits(operand2, 7, 11)
+#define RS_LAST_BYTE extract_bits(operand2, 7, 0)
+#define SHIFT_CONSTANT (uint8_t) extract_bits(operand2, 7, 11)
 
 static enum Shift_Types { LSL,
                           LSR,
@@ -89,7 +90,7 @@ static void overflow_check(int32_t a, int32_t b, int32_t result, int8_t s_flag)
 void process_func(int8_t i_flag, enum Operators opcode, int8_t s_flag, enum Register_Names rn, enum Register_Names rd, int16_t operand2)
 {
     int32_t result = 0;
-    int32_t immediate_operand2 = immediate_value(operand2, i_flag);
+    int32_t immediate_operand2 = immediate_operand(operand2, i_flag, s_flag);
 
     switch (opcode)
     {
@@ -130,7 +131,7 @@ void process_func(int8_t i_flag, enum Operators opcode, int8_t s_flag, enum Regi
     }
 
     SET_FLAG_VALUE(Z, result == 0);
-    SET_FLAG_VALUE(N, exctract_bits(result, 31, 31));
+    SET_FLAG_VALUE(N, extract_bits(result, 31, 31));
 
     store_reg(rd, result);
 }
