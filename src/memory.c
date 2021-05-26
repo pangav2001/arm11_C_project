@@ -4,9 +4,6 @@
 //#include <math.h>
 #include "memory.h"
 
-#define MEMORY_SIZE 65536
-#define BYTE_SIZE 256
-
 static int8_t *memory = NULL;
 
 static int powe(int a, int b) {
