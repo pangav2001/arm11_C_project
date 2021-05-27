@@ -1,7 +1,7 @@
 #include "decode.h"
 
-//variables named with 'o' representing a one
-//and 'z' representing a zero
+//variables named with 'o' represent a one
+//and 'z' represent a zero
 
 struct data_processing
 {
