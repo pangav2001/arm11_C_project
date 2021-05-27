@@ -9,8 +9,8 @@
 
 int main(int argc, char **argv) {
   // //init memory and reg
-  // initialize_memory();
-  // initialize_registers();
+  initialize_memory();
+  initialize_registers();
 
   // //test for memory
   // store_memory(1,2);
@@ -33,6 +33,33 @@ int main(int argc, char **argv) {
   // int32_t e = 7;
   // int32_t r = shift(LSR, e, 2, 0);
   // printf("%d\n", r);
+
+  //Test for flags
+  set_flag(N);
+  int32_t cpsr = extract_bits(get_reg(CPSR),28,31);
+  printf("%d\n",get_flag(N));
+  set_flag(Z);
+  cpsr = extract_bits(get_reg(CPSR),28,31);
+  printf("%d\n",get_flag(Z));
+  set_flag(C);
+  cpsr = extract_bits(get_reg(CPSR),28,31);
+  printf("%d\n",get_flag(C));
+  set_flag(V);
+  cpsr = extract_bits(get_reg(CPSR),28,31);
+  printf("%d\n",get_flag(V));
+  reset_flag(V);
+  cpsr = extract_bits(get_reg(CPSR),28,31);
+  printf("%d\n",get_flag(V));
+  reset_flag(C);
+  cpsr = extract_bits(get_reg(CPSR),28,31);
+  printf("%d\n",get_flag(C));
+  reset_flag(Z);
+  cpsr = extract_bits(get_reg(CPSR),28,31);
+  printf("%d\n",get_flag(Z));
+  reset_flag(N);
+  cpsr = extract_bits(get_reg(CPSR),28,31);
+  printf("%d\n",get_flag(N));
+
 
 
   //free memory and reg
