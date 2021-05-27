@@ -12,7 +12,7 @@ void branch(int offset){
     //assert(offset != NULL); want to assert 24 bits in length
 
     int32_t temp = (int32_t) offset << 2;
-    printf("value %d \n", temp);
+    //printf("value %d \n", temp);
     
     // PC is 8 bytes ahead of the instruction that is being executed
     int32_t pc_value = get_reg(PC);
