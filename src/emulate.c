@@ -10,30 +10,38 @@
 
 int main(int argc, char **argv) {
   //make sure the user didn't mess up
-  assert(argc == 2);
+  
+  // testing branch
+  // assert(argc == 2);
 
   //init memory and reg
   initialize_memory();
   initialize_registers();
 
-  int bytes = read_in_binary(argv[1]);
-  //printf("bytes: %d\n", bytes);
+  // int bytes = read_in_binary(argv[1]);
+  // //printf("bytes: %d\n", bytes);
 
   int32_t instruction;
 
-  store_reg(PC, 8);
+  store_reg(PC, 8); // since first instruction has been fetched & decoded
 
-  for(int i = 0; i < bytes; i+=4)
-  {
-    instruction = get_memory(i, 4);
-    if (instruction == 0) //all zero instruction
-    {
-      break;
-    }
-    store_reg(PC, get_reg(PC) + 4);
-    decode(instruction);
+  // for(int i = 0; i < bytes; i+=4)
+  // {
+  //   instruction = get_memory(i, 4);
+  //   if (instruction == 0) //all zero instruction
+  //   {
+  //     break;
+  //   }
+  //   store_reg(PC, get_reg(PC) + 4);
+  //   decode(instruction);
     
-  }
+  // }
+
+  decode(3925868548); // offset = 4
+  decode(3942645758); // offset = -2 broken for negative offset
+
+
+
 
   print_registers();
   print_memory();
