@@ -12,7 +12,7 @@ assemble: assemble.o
 
 
 #Build the emulator executable
-emulate: memory.o registers.o parse_file.o decode.o data_processing.o flags.o multiply.o branch.o #single_data_transfer.o#
+emulate: memory.o registers.o parse_file.o decode.o data_processing.o flags.o multiply.o branch.o single_data_transfer.o
 
 #Build the object files for emulator
 memory.o: memory.h
@@ -23,7 +23,7 @@ data_processing.o: data_processing.h
 flags.o: flags.h
 multiply.o: multiply.h
 branch.o: branch.h
-#single_data_transfer.o: single_data_transfer.h
+single_data_transfer.o: single_data_transfer.h
 
 clean:
 	rm -f $(wildcard *.o)
