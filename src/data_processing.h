@@ -1,11 +1,11 @@
+#ifndef DATA_PROCESSING
+#define DATA_PROCESSING
+
 #include "registers.h"
 #include "memory.h"
 #include "flags.h"
 #include "decode.h"
 #include <stdint.h>
-
-#ifndef DATA_PROCESSING
-#define DATA_PROCESSING
 
 enum Operators
 {

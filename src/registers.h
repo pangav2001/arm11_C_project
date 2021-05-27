@@ -1,7 +1,7 @@
-#include <stdint.h>
-
 #ifndef REGISTER_H
 #define REGISTER_H
+
+#include <stdint.h>
 
 enum Register_Names
 {
