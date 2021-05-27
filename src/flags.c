@@ -56,7 +56,7 @@ void reset_flag(enum Flag flag) {
             store_reg(CPSR,((13 << 28)) & get_reg(CPSR)); //1101
             break;
         case V:
-            store_reg(CPSR,((14 << 28) - 1) & get_reg(CPSR)); //1110
+            store_reg(CPSR,((14 << 28)) & get_reg(CPSR)); //1110
             break;
     }
 }
