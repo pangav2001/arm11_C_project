@@ -9,6 +9,7 @@
 
 void single_data_transfer(int8_t i, int8_t p, int8_t u, int8_t l, enum Register_Names rn, enum Register_Names rd, uint16_t offset)
 {
+    rn = rn == PC ? rn + 8 : rn; //accomodate for pipeline
     int16_t address = calculate_address(rn, offset, u, i, p);
     switch (l)
     {
@@ -36,7 +37,7 @@ int16_t calculate_address(enum Register_Names rn, uint32_t offset, int8_t u, int
         }
     case 1:
         //connys function maybe work maybe not
-        return immediate_operand(offset,0);
+        return immediate_operand(offset,0,0);
     }
 }
 
@@ -59,7 +60,10 @@ void load(enum Register_Names rd, int16_t address)
 
 void store(enum Register_Names rd, int16_t address)
 {
-    //wait for pan
+    int32_t rd_data = get_reg(rd);
+    for (int i = 0; i < 4; i++) {
+        store_memory(address + i, extract_bits(rd_data,i*8,(i*8)+7));
+    }
 }
 
 //0 mean sub 1 mean add
