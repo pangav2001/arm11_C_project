@@ -4,6 +4,6 @@
 
 #include <stdint.h>
 
-void read_in_binary(void);
+int32_t read_in_binary(char* fileName);
 
 #endif

@@ -3,13 +3,13 @@
 #include "parse_file.h"
 #include "memory.h"
 
-void read_in_binary(void)
+int32_t read_in_binary(char* fileName)
 {
     FILE *inFile;
-    long fileSize;
+    int32_t fileSize;
     int8_t *buffer;
 
-    inFile = fopen("add01", "rb");
+    inFile = fopen(fileName, "rb");
 
     if (inFile == NULL)
     {
@@ -42,4 +42,6 @@ void read_in_binary(void)
     }
     
     fclose(inFile);
+
+    return fileSize;
 }
