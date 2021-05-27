@@ -1,5 +1,5 @@
 CC      = gcc
-CFLAGS  = -Wall -g -std=c99 -Werror -pedantic
+# CFLAGS  = -Wall -g -std=c99 -Werror -pedantic
 LIBS = -lm
 
 .SUFFIXES: .c .o
@@ -12,11 +12,15 @@ assemble: assemble.o
 
 
 #Build the emulator executable
-emulate: memory.o registers.o
+emulate: memory.o registers.o parse_file.o decode.o data_processing.o flags.o
 
 #Build the object files for emulator
 memory.o: memory.h
 registers.o: registers.h
+parse_file.o: parse_file.h
+decode.o: decode.h
+data_processing.o: data_processing.h
+flags.o: flags.h
 
 clean:
 	rm -f $(wildcard *.o)
