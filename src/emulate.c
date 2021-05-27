@@ -20,6 +20,23 @@ int main(int argc, char **argv) {
   printf("%d\n", r);
   printf("%d\n", get_reg(10));
 
+  // //test multiply w/ decode
+  // store_reg(R1, 2);
+  // store_reg(R2, 5);
+  // store_reg(R3, 11);
+
+  // //11100000001000000011000110010010
+  // decode(3760206226);
+
+  // printf("%d\n", get_reg(R0));
+
+
+  // test branch 
+  store_reg(PC,1);
+  printf("%d \n", get_reg(PC));
+  decode(3925868545);
+  printf("%d \n", get_reg(PC));
+
 
   //free memory and reg
   free_memory();
