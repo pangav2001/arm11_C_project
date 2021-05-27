@@ -15,11 +15,11 @@ void single_data_transfer(int8_t i, int8_t p, int8_t u, int8_t l, enum Register_
     switch (l)
     {
     case 0:
-        store(rd,address);
+        store(rd, address);
     case 1:
-        load(rd,address);
+        load(rd, address);
     default:
-        printf("L bit is not valid");
+        printf("L bit is not valid\n");
         //throw some error
     }
 }
@@ -45,8 +45,9 @@ static void load(enum Register_Names rd, uint16_t address)
 static void store(enum Register_Names rd, uint16_t address)
 {
     int32_t rd_data = get_reg(rd);
-    for (int i = 0; i < 4; i++) {
-        store_memory(address + i, extract_bits(rd_data,i*8,(i*8)+7));
+    for (int i = 0; i < 4; i++)
+    {
+        store_memory(address + i, extract_bits(rd_data, i * 8, (i * 8) + 7));
     }
 }
 
@@ -77,6 +78,6 @@ static uint16_t calculate_address(enum Register_Names rn, uint16_t offset, int8_
         }
     case 1:
         //connys function maybe work maybe not
-        return immediate_operand(offset,0,0);
+        return immediate_operand(offset, 0, 0);
     }
 }
