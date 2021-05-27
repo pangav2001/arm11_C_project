@@ -1,11 +1,10 @@
-#include <stdint.h>
-#include "registers.h"
-
 #ifndef MULTIPLY_H
 #define MULTIPLY_H
 
-void multiply(int A, int S,
- Register_Names Rd, Register_Names Rn, Register_Names Rs, Register_Names Rm);
+#include <stdint.h>
+#include "registers.h"
 
+void multiply(int A, int S,
+              enum Register_Names Rd, enum Register_Names Rn, enum Register_Names Rs, enum Register_Names Rm);
 
 #endif

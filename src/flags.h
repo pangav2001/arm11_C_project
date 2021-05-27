@@ -1,3 +1,7 @@
+
+#ifndef FLAGS_H
+#define FLAGS_H
+
 #include <stdint.h>
 
 enum Condition_Code
@@ -25,3 +29,5 @@ void set_flag(enum Flag flag);
 void reset_flag(enum Flag flag);
 
 int get_flag(enum Flag);
+
+#endif
