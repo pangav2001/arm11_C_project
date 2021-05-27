@@ -1,23 +1,6 @@
 #include "data_processing.h"
-// #include "flags.h"
-
-#define SET_FLAG_VALUE(F, V)             \
-    if (s_flag)                          \
-    {                                    \
-        V ? set_flag(F) : reset_flag(F); \
-    }
 
 #define VALUE_SIZE 32
-
-#define CHECK_C_FLAG_LOGICAL(L)                       \
-    if (amount > VALUE_SIZE - 1 && value != 0)        \
-    {                                                 \
-        SET_FLAG_VALUE(C, 1);                         \
-    }                                                 \
-    else                                              \
-    {                                                 \
-        SET_FLAG_VALUE(C, extract_bits(value, L, L)); \
-    }
 
 #define ROTATE_BITS extract_bits(operand2, 8, 11)
 #define IMMEDIATE_VALUE (uint32_t) extract_bits(operand2, 0, 7)
@@ -35,25 +18,37 @@ static enum Shift_Types { LSL,
                           ROR
 };
 
+static inline void check_c_flag_logical(int8_t bit, int32_t value, int32_t amount, int8_t s_flag)
+{
+    if (amount > VALUE_SIZE - 1 && value != 0)
+    {
+        SET_FLAG_VALUE(C, 1);
+    }
+    else
+    {
+        SET_FLAG_VALUE(C, extract_bits(value, bit, bit));
+    }
+}
+
 static int32_t shift(enum Shift_Types shift_type, int32_t value, int32_t amount, int8_t s_flag)
 {
     switch (shift_type)
     {
     case LSL:
-        CHECK_C_FLAG_LOGICAL(VALUE_SIZE - amount)
+        check_c_flag_logical(VALUE_SIZE - amount, value, amount, s_flag);
         return value << amount;
     case LSR:
-        CHECK_C_FLAG_LOGICAL(amount - 1)
+        check_c_flag_logical(amount - 1, value, amount, s_flag);
         return (uint32_t)value >> amount;
     case ASR:
-        CHECK_C_FLAG_LOGICAL(amount - 1)
+        check_c_flag_logical(amount - 1, value, amount, s_flag);
         return value >> amount;
     case ROR:
         amount *= 2;
         amount %= 32;
         int32_t right = extract_bits(value, 0, amount - 1);
-        int32_t left = extract_bits(value, amount, VALUE_SIZE) - 1;
-        CHECK_C_FLAG_LOGICAL(amount - 1)
+        int32_t left = extract_bits(value, amount, VALUE_SIZE - 1);
+        check_c_flag_logical(amount - 1, value, amount, s_flag);
         return left + (right << (VALUE_SIZE - amount));
     }
 }
@@ -62,7 +57,7 @@ int32_t immediate_operand(int16_t operand2, int8_t i_flag, int8_t s_flag)
 {
     if (i_flag)
     {
-        shift(ROR, ROTATE_BITS, IMMEDIATE_VALUE, s_flag);
+        return shift(ROR, ROTATE_BITS, IMMEDIATE_VALUE, s_flag);
     }
     else if (SHIFT_BY_REGISTER)
     {
@@ -75,7 +70,7 @@ int32_t immediate_operand(int16_t operand2, int8_t i_flag, int8_t s_flag)
     }
 }
 
-static void overflow_check(int32_t a, int32_t b, int32_t result, int8_t s_flag)
+/*static*/ void overflow_check(int32_t a, int32_t b, int32_t result, int8_t s_flag)
 {
     if (a > 0 && b > 0 && result < 0 || a < 0 && b < 0 && result > 0)
     {
