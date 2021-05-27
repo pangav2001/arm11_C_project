@@ -23,17 +23,17 @@ int main(int argc, char **argv) {
 
   int32_t instruction;
 
-  store_reg(PC, 8); // since first instruction has been fetched & decoded
+  store_reg(PC, 8);
 
-  // for(int i = 0; i < bytes; i+=4)
-  // {
-  //   instruction = get_memory(i, 4);
-  //   if (instruction == 0) //all zero instruction
-  //   {
-  //     break;
-  //   }
-  //   store_reg(PC, get_reg(PC) + 4);
-  //   decode(instruction);
+  for(int i = 0; i < bytes; i+=4)
+  {
+    instruction = get_memory(i, 4, BIG);
+    if (instruction == 0) //all zero instruction
+    {
+      break;
+    }
+    store_reg(PC, get_reg(PC) + 4);
+    decode(instruction);
     
   // }
 

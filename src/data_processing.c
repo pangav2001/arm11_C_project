@@ -20,9 +20,9 @@ static enum Shift_Types { LSL,
 
 static inline void check_c_flag_logical(int8_t bit, int32_t value, int32_t amount, int8_t s_flag)
 {
-    if (amount > VALUE_SIZE - 1 && value != 0)
+    if (amount >= VALUE_SIZE)
     {
-        SET_FLAG_VALUE(C, 1);
+        SET_FLAG_VALUE(C, 0);
     }
     else
     {
@@ -93,7 +93,7 @@ void process_func(int8_t i_flag, enum Operators opcode, int8_t s_flag, enum Regi
     int32_t result = 0;
     int32_t immediate_operand2 = immediate_operand(operand2, i_flag, s_flag);
 
-    printf("DATA PROCESSINGS WAS CALLED");
+    printf("DATA PROCESSINGS WAS CALLED\n");
 
     switch (opcode)
     {
@@ -124,14 +124,7 @@ void process_func(int8_t i_flag, enum Operators opcode, int8_t s_flag, enum Regi
     case CMP:
         result = get_reg(rn) - immediate_operand2;
         overflow_check_addition(get_reg(rn), -immediate_operand2, result, s_flag);
-        if(get_flag(C))
-        {
-            SET_FLAG_VALUE(C, 0);
-        }
-        else
-        {
-            SET_FLAG_VALUE(C, 1);
-        }
+        //SET_FLAG_VALUE(C, !get_flag(C))
         break;
     case ORR:
         result = get_reg(rn) | immediate_operand2;
