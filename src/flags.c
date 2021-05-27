@@ -63,18 +63,5 @@ void reset_flag(enum Flag flag) {
 
 int get_flag(enum Flag flag) {
     uint32_t cpsr = get_reg(CPSR);
-    uint8_t codes = extract_bits(cpsr, 28, 31) >> 28; //moves condition to the LSB
-
-    switch (flag) {
-        case N:
-            return (codes && 8) >> 3;
-        case Z:
-            return (codes && 4) >> 2;
-        case C:
-            return (codes && 2) >> 1;
-        case V:
-            return (codes && 1);
-        default:
-            return -1; //throw error
-    }
+    return extract_bits(cpsr, 31 - flag, 31 - flag);
 }
