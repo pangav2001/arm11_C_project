@@ -1,5 +1,5 @@
 CC      = gcc
-# CFLAGS  = -Wall -g -std=c99 -Werror -pedantic
+CFLAGS  = -Wall -g -std=c99 -pedantic
 LIBS = -lm
 
 .SUFFIXES: .c .o
