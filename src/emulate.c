@@ -1,25 +1,32 @@
 #include <stdlib.h>
-#include<stdio.h>
+#include <stdio.h>
 #include "memory.h"
 #include "registers.h"
 #include "parse_file.h"
 #include "decode.h"
 #include "data_processing.h"
-//#include "data_processing.c"
+#include "emulate_output.h"
 
 
 int main(int argc, char **argv) {
-  // //init memory and reg
+  //make sure the user didn't mess up
+  assert(argc == 2);
+
+  //init memory and reg
   initialize_memory();
   initialize_registers();
 
-  //Tests for immediate operant
-  int32_t e = 1325;
-  store_reg(10,123456789);
-  int32_t r = immediate_operand(e, 0, 0);
-  printf("%d\n", r);
-  printf("%d\n", get_reg(10));
+  int bytes = read_in_binary(argv[1]);
 
+  int noOfInstructions = bytes / 4;
+
+  for(int i = 0; i < noOfInstructions; i+=4)
+  {
+    decode(get_memory(i, 4));
+  }
+
+  print_registers();
+  print_memory();
 
   //free memory and reg
   free_memory();
