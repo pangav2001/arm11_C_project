@@ -26,6 +26,19 @@ int store_memory(uint16_t address, int8_t data)
     return 0;
 }
 
+
+int32_t get_memorye(uint16_t address, int num_bytes)
+{
+    assert(memory != NULL && num_bytes <= 4 && num_bytes >= 1);
+    int32_t toReturn = 0;
+    for (int i = 0; i < num_bytes; i++)
+    {
+        toReturn |= ((uint32_t) memory[address + i] & 0xFF) << (i*8);
+    }
+
+    return toReturn;
+}
+
 int32_t get_memory(uint16_t address, int num_bytes)
 {
     assert(memory != NULL && num_bytes <= 4 && num_bytes >= 1);
