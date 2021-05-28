@@ -124,14 +124,7 @@ void process_func(int8_t i_flag, enum Operators opcode, int8_t s_flag, enum Regi
     case CMP:
         result = get_reg(rn) - immediate_operand2;
         overflow_check_addition(get_reg(rn), -immediate_operand2, result, s_flag);
-        // if(get_flag(C))
-        // {
-        //     SET_FLAG_VALUE(C, 0);
-        // }
-        // else
-        // {
-        //     SET_FLAG_VALUE(C, 1);
-        // }
+        //SET_FLAG_VALUE(C, !get_flag(C))
         break;
     case ORR:
         result = get_reg(rn) | immediate_operand2;
