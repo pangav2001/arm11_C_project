@@ -38,6 +38,7 @@ static inline void check_c_flag_logical(int8_t bit, int32_t value, int32_t amoun
 static int32_t shift(enum Shift_Types shift_type, int32_t value, int32_t amount, int8_t s_flag)
 {
     if (amount == 0) {
+        SET_FLAG_VALUE(C, 0);
         return value;
     } 
     
