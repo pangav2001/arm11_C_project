@@ -12,8 +12,6 @@ int store_memory(uint16_t address, int8_t data);
 
 int32_t get_memory(uint16_t address, int num_bytes);
 
-//int32_t read_memory(uint16_t address, int num_bytes);
-
 void free_memory(void);
 
 #endif

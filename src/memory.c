@@ -39,38 +39,6 @@ int32_t get_memory(uint16_t address, int num_bytes)
     return toReturn;
 }
 
-// int32_t get_memory(uint16_t address, int num_bytes)
-// {
-//     assert(memory != NULL && num_bytes <= 4 && num_bytes >= 1);
-//     int32_t toReturn = 0;
-//     for (int i = 0; i < num_bytes; i++)
-//     {
-//         toReturn += (memory[address + i] << (i*8));
-//     }
-
-//     return toReturn % ((int32_t) pow(2, 32));
-// }
-
-// //You should be
-// //Sorry?
-// int32_t read_memory(uint16_t address, int num_bytes)
-// {
-//     uint8_t temp[4];
-//     assert(memory != NULL && num_bytes <= 4 && num_bytes >= 1);
-
-//     for (int i = 0; i < num_bytes; i++)
-//     {
-//         temp[i] = memory[address + i];
-//     }
-
-//     memory[address] = temp[3];
-//     memory[address + 1] = temp[2];
-//     memory[address + 2] = temp[1];
-//     memory[address + 3] = temp[0];
-
-//     return get_memory(address, num_bytes);
-// }
-
 void free_memory(void)
 {
     free(memory);
