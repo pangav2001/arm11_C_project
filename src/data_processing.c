@@ -12,11 +12,11 @@
 #define RS_LAST_BYTE extract_bits(operand2, 7, 0)
 #define SHIFT_CONSTANT (uint8_t) extract_bits(operand2, 7, 11)
 
-static enum Arithmetic_Operations { SUBTRACTION,
+ enum Arithmetic_Operations { SUBTRACTION,
                                     ADDITION
 };
 
-static enum Shift_Types { LSL,
+enum Shift_Types { LSL,
                           LSR,
                           ASR,
                           ROR
@@ -59,6 +59,8 @@ static int32_t shift(enum Shift_Types shift_type, int32_t value, int32_t amount,
         int32_t left = extract_bits(value, amount, VALUE_SIZE - 1);
         check_c_flag_logical(amount - 1, value, amount, s_flag);
         return left + (right << (VALUE_SIZE - amount));
+    default:
+        return 0;
     }
 }
 
@@ -68,9 +70,10 @@ int32_t immediate_operand(int16_t operand2, int8_t i_flag, int8_t s_flag)
     {
         return shift(ROR, IMMEDIATE_VALUE, 2 * ROTATE_BITS, s_flag);
     }
+
     else if (SHIFT_BY_REGISTER)
     {
-        int32_t rs = get_reg(extract_bits(operand2, 8, 11));
+        //int32_t rs = get_reg(extract_bits(operand2, 8, 11));
         return shift(REG_SHIFT_TYPE, get_reg(RM), RS_LAST_BYTE, s_flag);
     }
     else
@@ -81,7 +84,7 @@ int32_t immediate_operand(int16_t operand2, int8_t i_flag, int8_t s_flag)
 
 static void overflow_check_arithmetic(int32_t a, int32_t b, int32_t result, int8_t s_flag, enum Arithmetic_Operations op)
 {
-    int overflow = result < 0 | result > INT32_MAX;
+    int overflow = (result < 0) | (result > INT32_MAX);
     if (overflow)
     {
         SET_FLAG_VALUE(C, op);
