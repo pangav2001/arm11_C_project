@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
 
   for(int i = 0; i < bytes; i+=4)
   {
-    instruction = get_memory(i, 4, BE);
+    instruction = get_memory(i, 4, BIG);
     if (instruction == 0) //all zero instruction
     {
       break;

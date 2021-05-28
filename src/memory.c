@@ -33,7 +33,7 @@ int32_t get_memory(uint16_t address, int num_bytes, enum Endian endian)
 {
     assert(memory != NULL && num_bytes <= 4 && num_bytes >= 1);
     int32_t toReturn = 0;
-    if (endian == LE)
+    if (endian == LITTLE)
     {
         for (LE_FOR)
         {

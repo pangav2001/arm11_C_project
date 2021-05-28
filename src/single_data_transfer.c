@@ -52,7 +52,7 @@ static int32_t add_sub(int8_t sign, int32_t a, int32_t b)
 
 static void load(enum Register_Names rd, uint16_t address)
 {
-    store_reg(rd, get_memory(address, 4, LE));
+    store_reg(rd, get_memory(address, 4, LITTLE));
 }
 
 static void store(enum Register_Names rd, uint16_t address)
