@@ -34,14 +34,14 @@ int32_t get_memory(uint16_t address, int num_bytes, enum Endian endian)
     {
         for (int i = 0; i < num_bytes; i++)
         {
-            toReturn = (toReturn << 8) | ((uint32_t)memory[address + i] & 0xFF);
+            toReturn = (toReturn << 8) | memory[address + i];
         }
     }
     else
     {
         for (int i = num_bytes - 1; i >= 0; i--)
         {
-            toReturn = (toReturn << 8) | ((uint32_t)memory[address + i] & 0xFF);
+            toReturn = (toReturn << 8) | memory[address + i];
         }   
     }
 
