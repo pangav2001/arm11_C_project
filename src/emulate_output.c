@@ -8,12 +8,12 @@ void print_registers(void)
     for (enum Register_Names i = R0; i <= R12; i++)
     {
         int32_t val = get_reg(i);
-        printf("$%-2d :%11d (0x%08x)\n", i, val, val);
+        printf("$%-2d : %10d (0x%08x)\n", i, val, val);
     }
     int32_t val = get_reg(PC);
-    printf("PC  :%11d (0x%08x)\n", val, val);
+    printf("PC  : %10d (0x%08x)\n", val, val);
     val = get_reg(CPSR);
-    printf("CPSR:%11d (0x%08x)\n", val, val);
+    printf("CPSR: %10d (0x%08x)\n", val, val);
 }
 
 void print_memory(void)
