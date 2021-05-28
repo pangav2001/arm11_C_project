@@ -24,7 +24,7 @@ void print_memory(void)
     {   
         //try to think of a way such that we won't 
         //iterate through the whole memory block
-        mem = read_memory(i, 4);
+        mem = get_memory(i, 4);
         if(mem != 0)
             {
                 printf("0x%08x: 0x%08x\n", i, mem);
