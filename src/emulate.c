@@ -17,13 +17,34 @@ int main(int argc, char **argv) {
   initialize_registers();
 
   int bytes = read_in_binary(argv[1]);
+  //printf("bytes: %d\n", bytes);
 
-  int noOfInstructions = bytes / 4;
+  int32_t instruction;
 
-  for(int i = 0; i < noOfInstructions; i+=4)
-  {
-    decode(get_memory(i, 4));
+  store_reg(PC, 8);
+
+  while (get_reg(PC) - 8 < bytes) {
+    //printf("PC is: %d\n", get_reg(PC));
+    instruction = get_memory(get_reg(PC) - 8, 4, BIG);
+    if (instruction == 0) //all zero instruction
+    {
+      break;
+    }
+    store_reg(PC, get_reg(PC) + 4); //pc stores next instriction, but also 8 ahead so is 12 ahead
+    decode(instruction);
   }
+  
+  // for(int i = 0; i < bytes; i+=4)
+  // {
+  //   instruction = get_memory(i, 4, BIG);
+  //   if (instruction == 0) //all zero instruction
+  //   {
+  //     break;
+  //   }
+  //   store_reg(PC, get_reg(PC) + 4);
+  //   decode(instruction);
+    
+  // }
 
   print_registers();
   print_memory();

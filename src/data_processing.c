@@ -12,6 +12,11 @@
 #define RS_LAST_BYTE extract_bits(operand2, 7, 0)
 #define SHIFT_CONSTANT (uint8_t) extract_bits(operand2, 7, 11)
 
+static enum Arithmetic_Operations {
+    SUBTRACTION,
+    ADDITION
+};
+
 static enum Shift_Types { LSL,
                           LSR,
                           ASR,
@@ -20,9 +25,9 @@ static enum Shift_Types { LSL,
 
 static inline void check_c_flag_logical(int8_t bit, int32_t value, int32_t amount, int8_t s_flag)
 {
-    if (amount > VALUE_SIZE - 1 && value != 0)
+    if (amount >= VALUE_SIZE)
     {
-        SET_FLAG_VALUE(C, 1);
+        SET_FLAG_VALUE(C, 0);
     }
     else
     {
@@ -32,6 +37,11 @@ static inline void check_c_flag_logical(int8_t bit, int32_t value, int32_t amoun
 
 static int32_t shift(enum Shift_Types shift_type, int32_t value, int32_t amount, int8_t s_flag)
 {
+    if (amount == 0) {
+        SET_FLAG_VALUE(C, 0);
+        return value;
+    } 
+    
     switch (shift_type)
     {
     case LSL:
@@ -56,7 +66,7 @@ int32_t immediate_operand(int16_t operand2, int8_t i_flag, int8_t s_flag)
 {
     if (i_flag)
     {
-        return shift(ROR, ROTATE_BITS, 2 * IMMEDIATE_VALUE, s_flag);
+        return shift(ROR, IMMEDIATE_VALUE, 2 * ROTATE_BITS, s_flag);
     }
     else if (SHIFT_BY_REGISTER)
     {
@@ -69,15 +79,15 @@ int32_t immediate_operand(int16_t operand2, int8_t i_flag, int8_t s_flag)
     }
 }
 
-/*static*/ void overflow_check_addition(int32_t a, int32_t b, int32_t result, int8_t s_flag)
+static void overflow_check_arithmetic(int32_t a, int32_t b, int32_t result, int8_t s_flag, enum Arithmetic_Operations op)
 {
     if (a > 0 && b > 0 && result < 0 || a < 0 && b < 0 && result > 0)
     {
-        SET_FLAG_VALUE(C, 1);
+        SET_FLAG_VALUE(C, op);
     }
     else
     {
-        SET_FLAG_VALUE(C, 0);
+        SET_FLAG_VALUE(C, !op);
     }
 }
 
@@ -96,36 +106,39 @@ void process_func(int8_t i_flag, enum Operators opcode, int8_t s_flag, enum Regi
         break;
     case SUB:
         result = get_reg(rn) - immediate_operand2;
-        overflow_check_addition(get_reg(rn), -immediate_operand2, result, s_flag);
+        overflow_check_arithmetic(get_reg(rn), -immediate_operand2, result, s_flag, SUBTRACTION);
         break;
     case RSB:
         result = immediate_operand2 - get_reg(rn);
-        overflow_check_addition(get_reg(rn), -immediate_operand2, result, s_flag);
+        overflow_check_arithmetic(get_reg(rn), -immediate_operand2, result, s_flag, SUBTRACTION);
         break;
     case ADD:
         result = get_reg(rn) + immediate_operand2;
-        overflow_check_addition(get_reg(rn), immediate_operand2, result, s_flag);
+        overflow_check_arithmetic(get_reg(rn), immediate_operand2, result, s_flag, ADDITION);
         break;
     case TST:
-        get_reg(rn) & immediate_operand2;
+        result = get_reg(rn) & immediate_operand2;
         break;
     case TEQ:
-        get_reg(rn) ^ immediate_operand2;
+        result = get_reg(rn) ^ immediate_operand2;
         break;
     case CMP:
-        get_reg(rn) - immediate_operand2;
-        overflow_check_addition(get_reg(rn), -immediate_operand2, result, s_flag);
+        result = get_reg(rn) - immediate_operand2;
+        overflow_check_arithmetic(get_reg(rn), -immediate_operand2, result, s_flag, SUBTRACTION);
         break;
     case ORR:
-        get_reg(rn) | immediate_operand2;
+        result = get_reg(rn) | immediate_operand2;
         break;
     case MOV:
         result = immediate_operand2;
         break;
     }
-
+    
     SET_FLAG_VALUE(Z, result == 0);
     SET_FLAG_VALUE(N, extract_bits(result, 31, 31));
 
-    store_reg(rd, result);
+    if(!(opcode == TST || opcode == TEQ || opcode == CMP))
+    {
+        store_reg(rd, result);
+    }
 }
