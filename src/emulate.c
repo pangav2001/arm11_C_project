@@ -25,9 +25,14 @@ int main(int argc, char **argv) {
 
   for(int i = 0; i < bytes; i+=4)
   {
-    store_reg(PC, get_reg(PC) + 4);
     instruction = get_memory(i, 4);
+    if (instruction == 0) //all zero instruction
+    {
+      break;
+    }
+    store_reg(PC, get_reg(PC) + 4);
     decode(instruction);
+    
   }
 
   print_registers();
