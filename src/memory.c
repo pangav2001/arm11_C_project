@@ -4,14 +4,8 @@
 #include <math.h>
 #include "memory.h"
 
-#define LE_FOR     \
-    int i = 0;     \
-    i < num_bytes; \
-    i++
-#define BE_FOR             \
-    int i = num_bytes - 1; \
-    i >= 0;                \
-    i--
+#define LE_FOR int i = 0; i < num_bytes; i++
+#define BE_FOR int i = num_bytes - 1; i >= 0; i--
 
 static uint8_t *memory = NULL;
 
