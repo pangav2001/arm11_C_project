@@ -20,8 +20,14 @@ void print_memory(void)
 {
     printf("Non-zero memory:\n");
     int32_t mem;
-    for (int i = 0; i < MEMORY_SIZE && (mem = read_memory(i, 4)) != 0; i+=4)
-    {
-        printf("0x%08x: 0x%08x\n", i, mem);
+    for (int i = 0; i < MEMORY_SIZE; i+=4)
+    {   
+        //try to think of a way such that we won't 
+        //iterate through the whole memory block
+        mem = read_memory(i, 4);
+        if(mem != 0)
+            {
+                printf("0x%08x: 0x%08x\n", i, mem);
+            }
     }
 }
