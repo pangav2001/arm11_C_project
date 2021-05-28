@@ -4,9 +4,6 @@
 #include <math.h>
 #include "memory.h"
 
-#define LE_FOR int i = 0; i < num_bytes; i++
-#define BE_FOR int i = num_bytes - 1; i >= 0; i--
-
 static uint8_t *memory = NULL;
 
 void initialize_memory(void)
@@ -35,14 +32,14 @@ int32_t get_memory(uint16_t address, int num_bytes, enum Endian endian)
     int32_t toReturn = 0;
     if (endian == LITTLE)
     {
-        for (LE_FOR)
+        for (int i = 0; i < num_bytes; i++)
         {
             toReturn = (toReturn << 8) | ((uint32_t)memory[address + i] & 0xFF);
         }
     }
     else
     {
-        for (BE_FOR)
+        for (int i = num_bytes - 1; i >= 0; i--)
         {
             toReturn = (toReturn << 8) | ((uint32_t)memory[address + i] & 0xFF);
         }   
