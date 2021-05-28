@@ -31,9 +31,4 @@ int32_t immediate_operand(int16_t operand2, int8_t i_flag, int8_t s_flag);
         V ? set_flag(F) : reset_flag(F); \
     }
 
-
-//To be removed
-
-void overflow_check(int32_t a, int32_t b, int32_t result, int8_t s_flag);
-
 #endif
