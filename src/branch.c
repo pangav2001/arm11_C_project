@@ -17,17 +17,5 @@ void branch(int offset){
     // PC is 8 bytes ahead of the instruction that is being executed
     int32_t pc_value = get_reg(PC);
     pc_value  = (pc_value - 8) + temp;
-    store_reg(PC,pc_value);
+    store_reg(PC, pc_value);
 }
-
-
-/* For testing
-int main(void){
-
-    long int input = 1110 0110 1001 1001 1001 1000;
-
-    branch(input);
-
-    return 0;
-}
-*/

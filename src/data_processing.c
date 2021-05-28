@@ -32,6 +32,11 @@ static inline void check_c_flag_logical(int8_t bit, int32_t value, int32_t amoun
 
 static int32_t shift(enum Shift_Types shift_type, int32_t value, int32_t amount, int8_t s_flag)
 {
+    //Late night stuff
+    if (amount == 0) {
+        return value;
+    } 
+    //
     switch (shift_type)
     {
     case LSL:
@@ -54,9 +59,11 @@ static int32_t shift(enum Shift_Types shift_type, int32_t value, int32_t amount,
 
 int32_t immediate_operand(int16_t operand2, int8_t i_flag, int8_t s_flag)
 {
+    //printf("%d\n", operand2);
     if (i_flag)
     {
-        return shift(ROR, ROTATE_BITS, 2 * IMMEDIATE_VALUE, s_flag);
+        //printf("%d\n", ROTATE_BITS);
+        return shift(ROR, IMMEDIATE_VALUE, 2 * ROTATE_BITS, s_flag);
     }
     else if (SHIFT_BY_REGISTER)
     {
@@ -123,9 +130,12 @@ void process_func(int8_t i_flag, enum Operators opcode, int8_t s_flag, enum Regi
         result = immediate_operand2;
         break;
     }
-
+    
     SET_FLAG_VALUE(Z, result == 0);
     SET_FLAG_VALUE(N, extract_bits(result, 31, 31));
 
-    store_reg(rd, result);
+    if(!(opcode == TST || opcode == TEQ || opcode == CMP))
+    {
+        store_reg(rd, result);
+    }
 }
