@@ -79,9 +79,14 @@ int32_t immediate_operand(int16_t operand2, int8_t i_flag, int8_t s_flag)
     }
 }
 
+
 static void overflow_check_arithmetic(int32_t a, int32_t b, int32_t result, int8_t s_flag, enum Arithmetic_Operations op)
 {
-    if (a > 0 && b > 0 && result < 0 || a < 0 && b < 0 && result > 0)
+    //nonsense 
+    uint64_t temp_result = (uint64_t) result;
+    uint32_t overflow = extract_bits(temp_result,32, 63);
+    //
+    if (overflow)
     {
         SET_FLAG_VALUE(C, op);
     }
