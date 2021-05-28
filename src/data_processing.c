@@ -9,7 +9,7 @@
 #define SHIFT_BY_REGISTER extract_bits(operand2, 4, 4)
 #define REG_SHIFT_TYPE extract_bits(operand2, 5, 6)
 
-#define RS_LAST_BYTE extract_bits(operand2, 7, 0)
+//#define RS_LAST_BYTE extract_bits(rs, 8, 11)
 #define SHIFT_CONSTANT (uint8_t) extract_bits(operand2, 7, 11)
 
  enum Arithmetic_Operations { SUBTRACTION,
@@ -73,8 +73,8 @@ int32_t immediate_operand(int16_t operand2, int8_t i_flag, int8_t s_flag)
 
     else if (SHIFT_BY_REGISTER)
     {
-        //int32_t rs = get_reg(extract_bits(operand2, 8, 11));
-        return shift(REG_SHIFT_TYPE, get_reg(RM), RS_LAST_BYTE, s_flag);
+        int32_t rs = get_reg(extract_bits(operand2, 8, 11));
+        return shift(REG_SHIFT_TYPE, get_reg(RM), rs, s_flag);
     }
     else
     {
