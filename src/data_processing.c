@@ -76,7 +76,7 @@ int32_t immediate_operand(int16_t operand2, int8_t i_flag, int8_t s_flag)
     }
 }
 
-/*static*/ void overflow_check_addition(int32_t a, int32_t b, int32_t result, int8_t s_flag)
+static void overflow_check_addition(int32_t a, int32_t b, int32_t result, int8_t s_flag)
 {
     if (a > 0 && b > 0 && result < 0 || a < 0 && b < 0 && result > 0)
     {
@@ -92,6 +92,8 @@ void process_func(int8_t i_flag, enum Operators opcode, int8_t s_flag, enum Regi
 {
     int32_t result = 0;
     int32_t immediate_operand2 = immediate_operand(operand2, i_flag, s_flag);
+
+    printf("DATA PROCESSINGS WAS CALLED");
 
     switch (opcode)
     {
