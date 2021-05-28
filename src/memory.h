@@ -7,8 +7,8 @@
 #define BYTE_SIZE 256
 
 enum Endian {
-    LE,
-    BE
+    LITTLE,
+    BIG
 };
 
 void initialize_memory(void);
