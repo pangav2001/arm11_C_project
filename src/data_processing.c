@@ -114,17 +114,25 @@ void process_func(int8_t i_flag, enum Operators opcode, int8_t s_flag, enum Regi
         overflow_check_addition(get_reg(rn), immediate_operand2, result, s_flag);
         break;
     case TST:
-        get_reg(rn) & immediate_operand2;
+        result = get_reg(rn) & immediate_operand2;
         break;
     case TEQ:
-        get_reg(rn) ^ immediate_operand2;
+        result = get_reg(rn) ^ immediate_operand2;
         break;
     case CMP:
-        get_reg(rn) - immediate_operand2;
+        result = get_reg(rn) - immediate_operand2;
         overflow_check_addition(get_reg(rn), -immediate_operand2, result, s_flag);
+        if(get_flag(C))
+        {
+            SET_FLAG_VALUE(C, 0);
+        }
+        else
+        {
+            SET_FLAG_VALUE(C, 1);
+        }
         break;
     case ORR:
-        get_reg(rn) | immediate_operand2;
+        result = get_reg(rn) | immediate_operand2;
         break;
     case MOV:
         result = immediate_operand2;
