@@ -23,17 +23,28 @@ int main(int argc, char **argv) {
 
   store_reg(PC, 8);
 
-  for(int i = 0; i < bytes; i+=4)
-  {
-    instruction = get_memory(i, 4, BIG);
+  while (get_reg(PC) - 8 < bytes) {
+    //printf("PC is: %d\n", get_reg(PC));
+    instruction = get_memory(get_reg(PC) - 8, 4, BIG);
     if (instruction == 0) //all zero instruction
     {
       break;
     }
-    store_reg(PC, get_reg(PC) + 4);
+    store_reg(PC, get_reg(PC) + 4); //pc stores next instriction, but also 8 ahead so is 12 ahead
     decode(instruction);
-    
   }
+  
+  // for(int i = 0; i < bytes; i+=4)
+  // {
+  //   instruction = get_memory(i, 4, BIG);
+  //   if (instruction == 0) //all zero instruction
+  //   {
+  //     break;
+  //   }
+  //   store_reg(PC, get_reg(PC) + 4);
+  //   decode(instruction);
+    
+  // }
 
   print_registers();
   print_memory();
