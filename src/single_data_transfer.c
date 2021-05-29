@@ -6,36 +6,61 @@
 
 #define MAX_ADDRESS 65536
 
-static uint32_t calculate_address(enum Register_Names rn, int32_t rn_data, uint16_t offset, int8_t u, int8_t i, int8_t p);
 static void load(enum Register_Names rd, uint16_t address);
 static void store(enum Register_Names rd, uint16_t address);
+static int32_t add_sub(int8_t sign, int32_t a, int32_t b);
 
 void single_data_transfer(int8_t i, int8_t p, int8_t u, int8_t l, enum Register_Names rn, enum Register_Names rd, uint16_t offset)
 {
-     
+
     int32_t rn_data = get_reg(rn);
     rn_data = (rn == PC) ? rn_data - 4 : rn_data; //accomodate for pipeline
-    uint32_t address = calculate_address(rn, rn_data, offset, u, i, p);
-    if (address > MAX_ADDRESS) 
+    uint16_t new_offset = offset;
+    if (i)
+    {
+        new_offset = immediate_operand(offset, 0, 0);
+    }
+    uint32_t address = add_sub(u, rn_data, new_offset);
+    //printf("Rn: %d Rn_data: %d address: 0x%08x\n", rn, rn_data, address);
+    if (address > MAX_ADDRESS)
     {
         printf("Error: Out of bounds memory access at address 0x%08x\n", address);
-    } else 
-    {
-    switch (l)
-    {
-    case 0:
-        store(rd, address);
-        break;
-    case 1:
-        //printf("here: rd: %d address %d\n", rd, address);
-        load(rd, address);
-        break;
-    default:
-        printf("L bit is not valid\n");
-        break;
-        //throw some error
     }
-
+    else
+    {
+        switch (l)
+        {
+        case 0:
+            if (!p)
+            {
+                store(rd, rn_data);
+            }
+            else
+            {
+                store(rd, address);
+            }
+            break;
+        case 1:
+            //printf("here: rd: %d address %d\n", rd, address);
+            if (!p)
+            {
+                load(rd, rn_data);
+            }
+            else
+            {
+                load(rd, address);
+            }
+            break;
+        default:
+            printf("L bit is not valid\n");
+            break;
+            //throw some error
+        }
+        //rn_data = get_reg(rn);
+        if (!p)
+        {
+            store_reg(rn, address);
+        }
     }
 }
 
@@ -60,43 +85,9 @@ static void load(enum Register_Names rd, uint16_t address)
 static void store(enum Register_Names rd, uint16_t address)
 {
     int32_t rd_data = get_reg(rd);
+    //printf("Rd: %d Rd data: 0x%08x Write to 0x%08x:\n", rd, rd_data, address);
     for (int i = 0; i < 4; i++)
     {
         store_memory(address + i, extract_bits(rd_data, i * 8, (i * 8) + 7));
-    }
-}
-
-static int32_t pre_index(int32_t rn, uint16_t offset, int8_t u)
-{
-    return add_sub(u, rn, offset);
-}
-
-static int32_t post_index(enum Register_Names rn ,int32_t rn_data, uint16_t offset, int8_t u)
-{
-    store_reg(rn, add_sub(u, rn_data, offset));
-    return rn_data;
-}
-
-static uint32_t calculate_address(enum Register_Names rn, int32_t rn_data, uint16_t offset, int8_t u, int8_t i, int8_t p)
-{
-    switch (i)
-    {
-    case 0:
-        //printf("%d\n", p);
-        switch (p)
-        {
-        case 0:
-            return post_index(rn, rn_data, offset, u);
-        case 1:
-            return pre_index(rn_data, offset, u);
-        default:
-            break;
-        }
-    case 1:
-        //connys function maybe work maybe not
-        return immediate_operand(offset, 0, 0);
-    default:
-        return 0;
-        break;
     }
 }
