@@ -22,6 +22,12 @@ enum Flag {
     V
 };
 
+#define SET_FLAG_VALUE(F, V)             \
+    if (s_flag)                          \
+    {                                    \
+        V ? set_flag(F) : reset_flag(F); \
+    }
+
 int check_cond(enum Condition_Code condition_code);
 
 void set_flag(enum Flag flag);
