@@ -4,7 +4,9 @@
 #include "memory.h"
 #include "data_processing.h"
 
-static uint32_t calculate_address(int32_t rn, uint16_t offset, int8_t u, int8_t i, int8_t p);
+#define MAX_ADDRESS 65536
+
+static uint32_t calculate_address(enum Register_Names rn, int32_t rn_data, uint16_t offset, int8_t u, int8_t i, int8_t p);
 static void load(enum Register_Names rd, uint16_t address);
 static void store(enum Register_Names rd, uint16_t address);
 
@@ -13,8 +15,8 @@ void single_data_transfer(int8_t i, int8_t p, int8_t u, int8_t l, enum Register_
      
     int32_t rn_data = get_reg(rn);
     rn_data = (rn == PC) ? rn_data - 4 : rn_data; //accomodate for pipeline
-    uint32_t address = calculate_address(rn_data, offset, u, i, p);
-    if (address > pow(2,16)) 
+    uint32_t address = calculate_address(rn, rn_data, offset, u, i, p);
+    if (address > MAX_ADDRESS) 
     {
         printf("Error: Out of bounds memory access at address 0x%08x\n", address);
     } else 
@@ -69,13 +71,13 @@ static int32_t pre_index(int32_t rn, uint16_t offset, int8_t u)
     return add_sub(u, rn, offset);
 }
 
-static int32_t post_index(int32_t rn, uint16_t offset, int8_t u)
+static int32_t post_index(enum Register_Names rn ,int32_t rn_data, uint16_t offset, int8_t u)
 {
-    store_reg(rn, add_sub(u, rn, offset));
-    return rn;
+    store_reg(rn, add_sub(u, rn_data, offset));
+    return rn_data;
 }
 
-static uint32_t calculate_address(int32_t rn, uint16_t offset, int8_t u, int8_t i, int8_t p)
+static uint32_t calculate_address(enum Register_Names rn, int32_t rn_data, uint16_t offset, int8_t u, int8_t i, int8_t p)
 {
     switch (i)
     {
@@ -84,9 +86,9 @@ static uint32_t calculate_address(int32_t rn, uint16_t offset, int8_t u, int8_t 
         switch (p)
         {
         case 0:
-            return post_index(rn, offset, u);
+            return post_index(rn, rn_data, offset, u);
         case 1:
-            return pre_index(rn, offset, u);
+            return pre_index(rn_data, offset, u);
         default:
             break;
         }
