@@ -3,13 +3,13 @@
 #define VALUE_SIZE 32
 
 #define ROTATE_BITS extract_bits(operand2, 8, 11)
-#define IMMEDIATE_VALUE (uint32_t) extract_bits(operand2, 0, 7)
+#define IMMEDIATE_VALUE (uint8_t) extract_bits(operand2, 0, 7)
 
 #define RM extract_bits(operand2, 0, 3)
 #define SHIFT_BY_REGISTER extract_bits(operand2, 4, 4)
 #define REG_SHIFT_TYPE extract_bits(operand2, 5, 6)
 
-//#define RS_LAST_BYTE extract_bits(rs, 8, 11)
+#define RS_LAST_BYTE get_reg(extract_bits(operand2, 8, 11))
 #define SHIFT_CONSTANT (uint8_t) extract_bits(operand2, 7, 11)
 
  enum Arithmetic_Operations { SUBTRACTION,
@@ -47,9 +47,10 @@ static int32_t shift(enum Shift_Types shift_type, int32_t value, int32_t amount,
     case LSL:
         check_c_flag_logical(VALUE_SIZE - amount, value, amount, s_flag);
         return value << amount;
+    //Why are LSR and ASR the same?
     case LSR:
         check_c_flag_logical(amount - 1, value, amount, s_flag);
-        return (uint32_t)value >> amount;
+        return (uint32_t) value >> amount;
     case ASR:
         check_c_flag_logical(amount - 1, value, amount, s_flag);
         return value >> amount;
@@ -73,8 +74,7 @@ int32_t immediate_operand(int16_t operand2, int8_t i_flag, int8_t s_flag)
 
     else if (SHIFT_BY_REGISTER)
     {
-        int32_t rs = get_reg(extract_bits(operand2, 8, 11));
-        return shift(REG_SHIFT_TYPE, get_reg(RM), rs, s_flag);
+        return shift(REG_SHIFT_TYPE, get_reg(RM), RS_LAST_BYTE, s_flag);
     }
     else
     {
