@@ -4,40 +4,29 @@
 #include "flags.h"
 #include <assert.h>
 
-void multiply(int A, int S,
-              enum Register_Names Rd, enum Register_Names Rn, enum Register_Names Rs, enum Register_Names Rm)
+void multiply(int a_flag, int s_flag,
+              enum Register_Names rd, enum Register_Names rn, enum Register_Names rs, enum Register_Names rm)
 {
 
-    assert(Rd != Rm);
+    assert(rd != rm);
 
-    int32_t result = get_reg(Rm) * get_reg(Rs);
+    int32_t result = get_reg(rm) * get_reg(rs);
 
-    if (A == 1)
+    if (a_flag)
     {
-        result = result + get_reg(Rn);
+        result = result + get_reg(rn);
     }
 
-    store_reg(Rd, result);
+    store_reg(rd, result);
+    SET_FLAG_VALUE(Z, result == 0)
 
-    if (S == 1)
+    // N flag is set to bit 31 of result -- define get last bit func
+
+    int first;
+    first = result;
+    while (first >= 10)
     {
-        if (result == 0)
-        {
-            set_flag(Z);
-        }
-
-        // N flag is set to bit 31 of result -- define get last bit func
-
-        int first;
-        first = result;
-
-        while (first >= 10)
-        {
-            first = first / 10;
-        }
-        if (first == 1)
-        {
-            set_flag(N);
-        }
+        first = first / 10;
     }
+    SET_FLAG_VALUE(N, first == 1)
 }
