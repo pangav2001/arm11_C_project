@@ -46,7 +46,7 @@ struct branch
 {
     unsigned cond : 4;
     unsigned ozoz : 4;
-    unsigned offset : 24;
+    signed offset : 24;
 };
 
 int32_t extract_bits(int32_t data, unsigned int start, unsigned int end)
