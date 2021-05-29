@@ -47,7 +47,6 @@ static int32_t shift(enum Shift_Types shift_type, int32_t value, int32_t amount,
     case LSL:
         check_c_flag_logical(VALUE_SIZE - amount, value, amount, s_flag);
         return value << amount;
-    //Why are LSR and ASR the same?
     case LSR:
         check_c_flag_logical(amount - 1, value, amount, s_flag);
         return (uint32_t) value >> amount;
@@ -102,12 +101,15 @@ void process_func(int8_t i_flag, enum Operators opcode, int8_t s_flag, enum Regi
 
     switch (opcode)
     {
+    case TST:
     case AND:
         result = get_reg(rn) & immediate_operand2;
         break;
+    case TEQ:
     case EOR:
         result = get_reg(rn) ^ immediate_operand2;
         break;
+    case CMP:
     case SUB:
         result = get_reg(rn) - immediate_operand2;
         overflow_check_arithmetic(get_reg(rn), immediate_operand2, result, s_flag, SUBTRACTION);
@@ -119,16 +121,6 @@ void process_func(int8_t i_flag, enum Operators opcode, int8_t s_flag, enum Regi
     case ADD:
         result = get_reg(rn) + immediate_operand2;
         overflow_check_arithmetic(get_reg(rn), immediate_operand2, result, s_flag, ADDITION);
-        break;
-    case TST:
-        result = get_reg(rn) & immediate_operand2;
-        break;
-    case TEQ:
-        result = get_reg(rn) ^ immediate_operand2;
-        break;
-    case CMP:
-        result = get_reg(rn) - immediate_operand2;
-        overflow_check_arithmetic(get_reg(rn), immediate_operand2, result, s_flag, SUBTRACTION);
         break;
     case ORR:
         result = get_reg(rn) | immediate_operand2;
