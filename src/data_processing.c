@@ -12,18 +12,21 @@
 #define RS_LAST_BYTE get_reg(extract_bits(operand2, 8, 11))
 #define SHIFT_CONSTANT (uint8_t) extract_bits(operand2, 7, 11)
 
- enum Arithmetic_Operations { SUBTRACTION,
-                                    ADDITION
+enum Arithmetic_Operations
+{
+    SUBTRACTION,
+    ADDITION
 };
 
-enum Shift_Types { LSL,
-                          LSR,
-                          ASR,
-                          ROR
+enum Shift_Types
+{
+    LSL,
+    LSR,
+    ASR,
+    ROR
 };
 
-extern void set_flag_value(enum Flag flag, int8_t value, int8_t s_flag);             
-
+extern void set_flag_value(enum Flag flag, int8_t value, int8_t s_flag);
 
 static inline void check_c_flag_logical(int8_t bit, int32_t value, int32_t amount, int8_t s_flag)
 {
@@ -52,7 +55,7 @@ static int32_t shift(enum Shift_Types shift_type, int32_t value, int32_t amount,
         return value << amount;
     case LSR:
         check_c_flag_logical(amount - 1, value, amount, s_flag);
-        return (uint32_t) value >> amount;
+        return (uint32_t)value >> amount;
     case ASR:
         check_c_flag_logical(amount - 1, value, amount, s_flag);
         return value >> amount;
