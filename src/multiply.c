@@ -4,6 +4,9 @@
 #include "flags.h"
 #include <assert.h>
 
+
+extern void set_flag_value(enum Flag flag, int8_t value, int8_t s_flag);             
+
 void multiply(int a_flag, int s_flag,
               enum Register_Names rd, enum Register_Names rn, enum Register_Names rs, enum Register_Names rm)
 {
@@ -18,7 +21,7 @@ void multiply(int a_flag, int s_flag,
     }
 
     store_reg(rd, result);
-    SET_FLAG_VALUE(Z, result == 0)
+    set_flag_value(Z, result == 0, s_flag);
 
     // N flag is set to bit 31 of result -- define get last bit func
 
@@ -28,5 +31,5 @@ void multiply(int a_flag, int s_flag,
     {
         first = first / 10;
     }
-    SET_FLAG_VALUE(N, first == 1)
+    set_flag_value(N, first == 1, s_flag);
 }

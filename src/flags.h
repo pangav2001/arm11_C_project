@@ -22,11 +22,7 @@ enum Flag {
     V
 };
 
-#define SET_FLAG_VALUE(F, V)             \
-    if (s_flag)                          \
-    {                                    \
-        V ? set_flag(F) : reset_flag(F); \
-    }
+void set_flag_value(enum Flag flag, int8_t value, int8_t s_flag);             
 
 int check_cond(enum Condition_Code condition_code);
 

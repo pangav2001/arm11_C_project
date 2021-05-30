@@ -22,15 +22,18 @@ enum Shift_Types { LSL,
                           ROR
 };
 
+extern void set_flag_value(enum Flag flag, int8_t value, int8_t s_flag);             
+
+
 static inline void check_c_flag_logical(int8_t bit, int32_t value, int32_t amount, int8_t s_flag)
 {
     if (amount >= VALUE_SIZE)
     {
-        SET_FLAG_VALUE(C, 0);
+        set_flag_value(C, 0, s_flag);
     }
     else
     {
-        SET_FLAG_VALUE(C, extract_bits(value, bit, bit));
+        set_flag_value(C, extract_bits(value, bit, bit), s_flag);
     }
 }
 
@@ -38,7 +41,7 @@ static int32_t shift(enum Shift_Types shift_type, int32_t value, int32_t amount,
 {
     if (amount == 0)
     {
-        SET_FLAG_VALUE(C, 0);
+        set_flag_value(C, 0, s_flag);
         return value;
     }
 
@@ -86,11 +89,11 @@ static void overflow_check_arithmetic(int32_t a, int32_t b, int32_t result, int8
     int overflow = (result < 0) | (result > INT32_MAX);
     if (overflow)
     {
-        SET_FLAG_VALUE(C, op);
+        set_flag_value(C, op, s_flag);
     }
     else
     {
-        SET_FLAG_VALUE(C, !op);
+        set_flag_value(C, !op, s_flag);
     }
 }
 
@@ -130,8 +133,8 @@ void process_func(int8_t i_flag, enum Operators opcode, int8_t s_flag, enum Regi
         break;
     }
 
-    SET_FLAG_VALUE(Z, result == 0);
-    SET_FLAG_VALUE(N, extract_bits(result, 31, 31));
+    set_flag_value(Z, result == 0, s_flag);
+    set_flag_value(N, extract_bits(result, 31, 31), s_flag);
 
     if (!(opcode == TST || opcode == TEQ || opcode == CMP))
     {

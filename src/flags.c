@@ -65,3 +65,11 @@ int get_flag(enum Flag flag) {
     uint32_t cpsr = get_reg(CPSR);
     return extract_bits(cpsr, 31 - flag, 31 - flag);
 }
+
+void set_flag_value(enum Flag flag, int8_t value, int8_t s_flag)
+{
+if (s_flag)                          
+    {                                    
+        value ? set_flag(flag) : reset_flag(flag); 
+    }
+}
