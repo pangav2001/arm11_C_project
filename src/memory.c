@@ -4,8 +4,14 @@
 #include <math.h>
 #include "memory.h"
 
-#define LE_FOR int i = 0; i < num_bytes; i++
-#define BE_FOR int i = num_bytes - 1; i >= 0; i--
+#define LE_LOOP int i = 0; i < num_bytes; i++
+#define BE_LOOP int i = num_bytes - 1; i >= 0; i--
+
+#define COMBINE_BITS(EXP)                                 \
+    for (EXP)                                             \
+    {                                                     \
+        toReturn = (toReturn << 8) | memory[address + i]; \
+    }
 
 static uint8_t *memory = NULL;
 
@@ -35,17 +41,11 @@ int32_t get_memory(uint16_t address, int num_bytes, enum Endian endian)
     int32_t toReturn = 0;
     if (endian == LITTLE)
     {
-        for (LE_FOR)
-        {
-            toReturn = (toReturn << 8) | ((uint32_t)memory[address + i] & 0xFF);
-        }
+        COMBINE_BITS(LE_LOOP)
     }
     else
     {
-        for (BE_FOR)
-        {
-            toReturn = (toReturn << 8) | ((uint32_t)memory[address + i] & 0xFF);
-        }   
+        COMBINE_BITS(BE_LOOP)
     }
 
     return toReturn;
