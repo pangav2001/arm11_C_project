@@ -32,6 +32,6 @@ enum Mnemonic {
     B,
     LSL,
     ANDEQ
-}
+};
 
 #endif
