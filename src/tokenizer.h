@@ -3,10 +3,11 @@
 
 #include <stdint.h>
 
+int16_t is_label(char *line);
+
 //@address is the previous address returned by assign_label_address
 // Since we do not increment if the line is a label
 int16_t assign_label_address(char *line, int16_t address);
-
 
 enum Mnemonic {
     ADD,
