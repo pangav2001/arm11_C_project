@@ -9,10 +9,7 @@ void branch(int32_t offset){
     // This offset is shifted left 2 bits, sign extended
     //to 32 bits and then added to the PC
 
-    //assert(offset != NULL); want to assert 24 bits in length
-
     int32_t temp = offset << 2;
-    //printf("value %d \n", temp);
     
     // PC is 8 bytes ahead of the instruction that is being executed
     int32_t pc_value = get_reg(PC);
