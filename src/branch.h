@@ -1,9 +1,9 @@
+#ifndef MUL_ASS
+#define MUL_ASS
 
-#ifndef BRANCH_H
-#define BRANCH_H
-
+#include "tokenizer.h"
 #include <stdint.h>
 
-void branch(int offset);
+uint32_t branch(enum Mnemonic instruction, char* expression, int16_t current_address);
 
 #endif

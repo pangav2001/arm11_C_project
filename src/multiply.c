@@ -1,48 +1,42 @@
-#include <stdint.h>
 #include "multiply.h"
-#include "registers.h"
-#include "flags.h"
-#include <assert.h>
 
-void multiply(int A, int S,
-              enum Register_Names Rd, enum Register_Names Rn, enum Register_Names Rs, enum Register_Names Rm)
+#define COND 0xE
+#define _1001 0x9
+
+uint32_t multiply(enum Mnemonic instruction, enum Register_Names rd, enum Register_Names rm, enum Register_Names rs, enum Register_Names rn)
 {
+    //Set bits 31 - 28 to Cond
+    uint32_t result = COND;
 
+    //Set bits 27 - 22 to 0
+    result <<= 6;
 
-    assert(Rd != Rm);
+    //Set bit 21(A)
+    result <<= 1;
+    result |= instruction == MLA;
 
-    int32_t result = get_reg(Rm) * get_reg(Rs);
+    //Set bit 20(S) to 0
+    result <<= 1;
 
-    if (A == 1)
-    {
-        result = result + get_reg(Rn);
-    }
+    //Set bits 19 - 16 to Rd
+    result <<= 4;
+    result |= rd;
 
-    store_reg(Rd, result);
+    //Set bits 15 - 12 to Rn
+    result <<= 4;
+    result |= rn;
 
-    if (S == 1)
-    {
-        if (result == 0)
-        {
-            set_flag(Z);
-        }else{
-            reset_flag(Z);
-        }
+    //Set bits 11 - 8 to Rs
+    result <<= 4;
+    result |= rs;
 
-        // N flag is set to bit 31 of result -- define get last bit func
+    //Set bits 7 - 4 to 1001
+    result <<= 4;
+    result |= _1001;
 
-        int first;
-        first = result;
+    //Set bits 3 - 0 to Rm
+    result <<= 4;
+    result |= rm;
 
-        while (first >= 10)
-        {
-            first = first / 10;
-        }
-        if (first == 1)
-        {
-            set_flag(N);
-        }else{
-            reset_flag(N);
-        }
-    }
+    return result;
 }

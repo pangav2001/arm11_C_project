@@ -1,10 +1,10 @@
-#ifndef MULTIPLY_H
-#define MULTIPLY_H
+#ifndef MUL_ASS
+#define MUL_ASS
 
+#include "tokenizer.h"
+#include "emulate_src/registers.h"
 #include <stdint.h>
-#include "registers.h"
 
-void multiply(int A, int S,
-              enum Register_Names Rd, enum Register_Names Rn, enum Register_Names Rs, enum Register_Names Rm);
+uint32_t multiply(enum Mnemonic instruction, enum Register_Names rd, enum Register_Names rm, enum Register_Names rs, enum Register_Names rn);
 
 #endif

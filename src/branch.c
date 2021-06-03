@@ -1,22 +1,66 @@
-#include <stdlib.h>
 #include "branch.h"
-#include "registers.h"
-#include <assert.h>
-#include <stdio.h>
 
+#define _0000  0
+#define _0001  1
+#define _1010 10
+#define _1011 11
+#define _1100 12
+#define _1101 13
+#define _1110 14
 
-void branch(int offset){
-    // This offset is shifted left 2 bits, sign extended
-    //to 32 bits and then added to the PC
+uint32_t branch(enum Mnemonic instruction, char* expression, int16_t current_address)
+{
+    uint32_t result;
 
-    //assert(offset != NULL); want to assert 24 bits in length
+    //Set bits 31 - 28 to Cond
+    switch (instruction)
+    {
+    case BEQ:
+        result = _0000;
+        break;
+    case BNE:
+        result = _0001;
+        break;
+    case BGE:
+        result = _1010;
+        break;
+    case BLT:
+        result = _1011;
+        break;
+    case BGT:
+        result = _1100;
+        break;
+    case BLE:
+        result = _1101;
+        break;
+    case B:
+        result = _1110;
+        break;
+    }
 
-    int32_t temp = (int32_t) offset << 2;
-    //printf("value %d \n", temp);
+    //Set bits 27 - 25 to 101 and 24 to 0
+    result <<= 4;
+    result |= _1010;
+
+    //Calculate offset
+    int16_t target_address = 0;
     
-    // PC is 8 bytes ahead of the instruction that is being executed
-    int32_t pc_value = get_reg(PC);
-    pc_value  = (pc_value - 8) + temp;
-    store_reg(PC,pc_value);
-}
+    //Calculate the target address
+    if (1) { //TODO: Check if expression is a label in the hash map
+        //TODO: Get the label address from the hash map
+    }
+    else
+    {
+        //TODO: Figure out what to do when not a label
+    }
 
+    int32_t offset = target_address - current_address;
+    offset >>= 2;
+
+    //Set bits 23 - 0 to offset
+    result <<= 24;
+    result |= extract_bits(offset, 0, 23);
+
+
+    return result;
+}

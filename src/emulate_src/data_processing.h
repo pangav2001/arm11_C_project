@@ -25,15 +25,4 @@ void process_func(int8_t i_flag, enum Operators opcode, int8_t s_flag, enum Regi
 
 int32_t immediate_operand(int16_t operand2, int8_t i_flag, int8_t s_flag);
 
-#define SET_FLAG_VALUE(F, V)             \
-    if (s_flag)                          \
-    {                                    \
-        V ? set_flag(F) : reset_flag(F); \
-    }
-
-
-//To be removed
-
-void overflow_check(int32_t a, int32_t b, int32_t result, int8_t s_flag);
-
 #endif
