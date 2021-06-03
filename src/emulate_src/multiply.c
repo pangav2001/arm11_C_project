@@ -23,7 +23,7 @@ void multiply(int a_flag, int s_flag,
     store_reg(rd, result);
     set_flag_value(Z, result == 0, s_flag);
 
-    // N flag is set to bit 31 of result -- define get last bit func
+    // N flag is set to bit 31 of result 
 
     int first;
     first = result;
