@@ -68,12 +68,14 @@ struct tokens {
     char **opcodes;
 };
 
-struct tokens tokenize_instruction(char *line);
+struct tokens* tokenize_instruction(char *line);
 
 void extract_mnemonic(char** line);
 
 enum Register_Names convert_register(char* reg);
 
 enum Mnemonic convert_mnemonic(char* mnemonic);
+
+void free_tokens(struct tokens* tokens);
 
 #endif

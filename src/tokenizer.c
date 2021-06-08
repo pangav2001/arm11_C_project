@@ -53,12 +53,15 @@ struct tokens* tokenize_instruction(char *line)
     char *rest = instruction;
     char **opcodes = calloc(MAX_OPCODE, sizeof(char *)); //remember to free this in assemble!
     int i;
-    for (i = 0; token = strtok_r(rest, ",", &rest); i++)
+    for (i = 0; (token = strtok_r(rest, ",", &rest)); i++)
     {
-        opcodes[i] = token;
+        //printf("%s\n", token);
+        char *curr = calloc(1, strlen(token));
+        strcpy(curr, token);
+        opcodes[i] = curr;
     }
     tokens->mnemonic = mnemonic;
-    tokens->num_opcode = i + 1;
+    tokens->num_opcode = i;
     tokens->opcodes = opcodes;
 
     // while(token = strtok_r(rest, ",", &rest)) {
@@ -99,4 +102,12 @@ enum Mnemonic convert_mnemonic(char *mnemonic)
     }
     perror("Bad Mnemonic");
     return -1;
+}
+
+void free_tokens(struct tokens* tokens) {
+    for (int i = 0; i < tokens->num_opcode; i++) {
+        free(tokens->opcodes[i]);
+    }
+    free(tokens->opcodes);
+    free(tokens);
 }
