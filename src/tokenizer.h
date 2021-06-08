@@ -35,4 +35,16 @@ enum Mnemonic {
     ANDEQ
 };
 
+struct tokens {
+    enum Mnemonic mnemonic;
+    int num_opcode;
+    char *opcodes;
+};
+
+struct tokens tokenize_instruction(char *line);
+
+void extract_mnemonic(char** line);
+
+enum Register_Names convert_register(char* reg);
+
 #endif
