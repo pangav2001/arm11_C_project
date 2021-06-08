@@ -70,7 +70,7 @@ struct tokens {
 
 struct tokens* tokenize_instruction(char *line);
 
-void extract_mnemonic(char** line);
+enum Mnemonic extract_mnemonic(char** line);
 
 enum Register_Names convert_register(char* reg);
 

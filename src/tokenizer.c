@@ -44,9 +44,9 @@ struct tokens* tokenize_instruction(char *line)
 {
     struct tokens *tokens = calloc(1,sizeof(struct tokens));
 
-    extract_mnemonic(&line);
+    
 
-    enum Mnemonic mnemonic = convert_mnemonic("mov");
+    enum Mnemonic mnemonic = extract_mnemonic(&line);
 
     char *instruction = strdup(line); //Had issues with line not being modifiable before, maybe remove after testing with actual buffer
     char *token;
@@ -73,16 +73,17 @@ struct tokens* tokenize_instruction(char *line)
 }
 
 //extracts the mnemonic and updates the pointer to after the first " ";
-void extract_mnemonic(char **line)
+enum Mnemonic extract_mnemonic(char **line)
 {
     char mnemonic[MAX_MNEMONIC_LENGTH];
-    for (int i = 0; (*line)[0] != ' '; (*line)++, i++)
+    int i;
+    for (i = 0; (*line)[0] != ' '; (*line)++, i++)
     {
         mnemonic[i] = (*line)[0];
     }
+    mnemonic[i] = '\0'; //ensure it's terminated
     (*line)++; //remove the leading " "
-    printf("%s\n", mnemonic);
-    //find a way of turning this char* into the enum
+    return convert_mnemonic(mnemonic);
 }
 
 enum Register_Names convert_register(char *reg)
