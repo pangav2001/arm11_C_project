@@ -10,14 +10,16 @@
 
 int main(int argc, char **argv) {
   //make sure the user didn't mess up
-  assert(argc == 2);
+  
+  // testing branch
+  // assert(argc == 2);
 
   //init memory and reg
   initialize_memory();
   initialize_registers();
 
-  int bytes = read_in_binary(argv[1]);
-  //printf("bytes: %d\n", bytes);
+  // int bytes = read_in_binary(argv[1]);
+  // //printf("bytes: %d\n", bytes);
 
   int32_t instruction;
 
