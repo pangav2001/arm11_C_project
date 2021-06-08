@@ -2,6 +2,13 @@
 #define TOKENIZER_H
 
 #include <stdint.h>
+#include <stddef.h>
+#include "emulate_src/registers.h"
+
+
+#define MAX_LINE_LENGTH 511
+#define MAX_OPCODE 4          //I think
+#define MAX_MNEMONIC_LENGTH 6 //Based on what we need to implement
 
 int16_t is_label(char *line);
 
