@@ -1,5 +1,5 @@
 CC      = gcc
-CFLAGS  = -Wall -g -std=c99 -Werror -pedantic
+CFLAGS  = -Wall -g #-std=c99 -Werror -pedantic // is making the mnemonic array throw error saying it's not used :/, also cannot use c99 standard for strtok
 LIBS = -lm
 LDFLAGS = -lm
 
@@ -11,7 +11,9 @@ all: assemble emulate
 
 
 #Build the assembler executable
-assemble: assemble.o multiply.o
+assemble: assemble.o multiply.o tokenizer.o 
+
+tokenizer.o: tokenizer.h
 
 
 #Build the emulator executable
