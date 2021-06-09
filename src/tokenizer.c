@@ -85,11 +85,11 @@ enum Register_Names convert_register(char *reg)
 
 enum Mnemonic convert_mnemonic(char *mnemonic)
 {
-    for (int i = 0; mnemonic_mapping[i]; i++)
+    for (int i = 0; mnemonic_mapping[i].mnemonic; i++)
     {
-        if (strcmp(mnemonic, mnemonic_mapping[i]) == 0)
+        if (strcmp(mnemonic, mnemonic_mapping[i].str) == 0)
         {
-            return i;
+            return mnemonic_mapping[i].mnemonic;
         }
     }
     perror("Bad Mnemonic");

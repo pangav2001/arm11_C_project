@@ -1,8 +1,8 @@
 #include "multiply.h"
 #include <stdarg.h>
 
-#define COND 0xE
-#define _1001 0x9
+#define COND 14
+#define _1001 9
 
 uint32_t multiply(enum Mnemonic instruction, char *rd_string, char *rm_string, char *rs_string, ...)
 {
@@ -13,8 +13,8 @@ uint32_t multiply(enum Mnemonic instruction, char *rd_string, char *rm_string, c
     if(instruction == MLA)
     {
         va_list ap;
-        char *rn_string;
-        va_start(ap, rn_string);
+        va_start(ap, rs_string);
+        char *rn_string = va_arg(ap, char *);
         rn = strtol(rn_string, NULL, 10);
         va_end(ap);
     }

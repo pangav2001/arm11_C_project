@@ -16,57 +16,78 @@ int16_t is_label(char *line);
 // Since we do not increment if the line is a label
 int16_t assign_label_address(char *line, int16_t address);
 
+#define DATA_PROCESSING_INDEX 0
+#define MULTIPLY_INDEX 20
+#define SINGLE_DATA_TRANSFER_INDEX 25
+#define BRANCH_INDEX 30
+#define SPECIAL_INDEX 50
+
+#define _1000 8
+#define _1010 10
+#define _1100 12
+
+
 enum Mnemonic {
-    ADD,
+    //Data Processing
+    AND = DATA_PROCESSING_INDEX,
+    EOR,
     SUB,
     RSB,
-    AND,
-    EOR,
-    ORR,
-    MOV,
-    TST,
+    ADD,
+    TST = DATA_PROCESSING_INDEX + _1000,
     TEQ,
     CMP,
-    MUL,
+    ORR = DATA_PROCESSING_INDEX + _1100,
+    MOV,
+    //Multiply
+    MUL = MULTIPLY_INDEX,
     MLA,
-    LDR,
+    //Single Data Transfer
+    LDR = SINGLE_DATA_TRANSFER_INDEX,
     STR,
-    BEQ,
+    //Branch
+    BEQ = BRANCH_INDEX,
     BNE,
-    BGE,
+    BGE = BRANCH_INDEX + _1010,
     BLT,
     BGT,
     BLE,
     B,
-    LSL,
+    //Special
+    LSL = SPECIAL_INDEX,
     ANDEQ
 };
 
-static char* mnemonic_mapping[] = {
-    "add",
-    "sub",
-    "rsb",
-    "and",
-    "eor",
-    "orr",
-    "mov",
-    "tst",
-    "teq",
-    "cmp",
-    "mul",
-    "mla",
-    "ldr",
-    "str",
-    "beq",
-    "bne",
-    "bge",
-    "blt",
-    "bgt",
-    "ble",
-    "b",
-    "lsl",
-    "andeq",
-    NULL //for iterating
+typedef struct {
+    char *str;
+    enum Mnemonic mnemonic;
+} Enum_Map;
+
+static Enum_Map mnemonic_mapping[] = {
+    "and", AND,
+    "eor", EOR,
+    "sub", SUB,
+    "rsb", RSB,
+    "add", ADD,
+    "tst", TST,
+    "teq", TEQ,
+    "cmp", CMP,
+    "orr", ORR,
+    "mov", MOV,
+    "mul", MUL,
+    "mla", MLA,
+    "ldr", LDR,
+    "str", STR,
+    "beq", BEQ,
+    "bne", BNE,
+    "bge", BGE,
+    "blt", BLT,
+    "bgt", BGT,
+    "ble", BLE,
+    "b", B,
+    "lsl", LSL,
+    "andeq", ANDEQ,
+    NULL, NULL //for iterating
 };
 
 struct tokens {
