@@ -1,5 +1,5 @@
-#ifndef MUL_ASS
-#define MUL_ASS
+#ifndef BRANCH_ASS
+#define BRANCH_ASS
 
 #include "tokenizer.h"
 #include <stdint.h>
