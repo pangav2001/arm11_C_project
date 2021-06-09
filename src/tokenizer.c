@@ -3,11 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "tokenizer.h"
-#include "emulate_src/registers.h"
-
-#define MAX_LINE_LENGTH 511
-#define MAX_OPCODE 4          //I think
-#define MAX_MNEMONIC_LENGTH 6 //Based on what we need to implement
 
 //returns 0 if not label
 //returns length of label otherwise
