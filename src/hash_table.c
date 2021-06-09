@@ -63,9 +63,9 @@ void free_table(Hash_Table *hash_table)
 {
     for (int i = 0; i < hash_table->size; i++)
     {
-        if (hash_table->entries[i] == NULL)
+        if (hash_table->entries[i] != NULL)
         {
-            free(hash_table->entries[i]);
+            free_entry(hash_table->entries[i]);
         }
     }
 
