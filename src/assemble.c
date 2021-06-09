@@ -3,7 +3,7 @@
 #include <string.h>
 #include "tokenizer.h"
 
-char** read_in_prog(char *filename);
+char** read_in_prog(char *filename, int *num_instr);
 
 int main(int argc, char **argv) {
   //test extracting label
@@ -21,7 +21,8 @@ int main(int argc, char **argv) {
 
   //Read in file
 
-  char **instrucs = read_in_prog("add01.s");
+  int num_instructions;
+  char **instrucs = read_in_prog("add01.s", &num_instructions);
   printf("read in\n");
 
 
@@ -29,7 +30,7 @@ int main(int argc, char **argv) {
 }
 
 //Maybe reuse from emulate but it uses memory which we do not need;
-char** read_in_prog(char *filename) {
+char** read_in_prog(char *filename,int *num_instr) {
 FILE *input_file;
 char buffer[MAX_LINE_LENGTH];
 int num_instructions = 0;
@@ -47,6 +48,7 @@ for (int i = 0; i < 2; i++) {
       }
       break;
     case 1:
+      *num_instr = num_instructions;
       instructions = calloc(num_instructions + 1, sizeof(char *)); //to allow to be null terminated
       int j = 0;
       while(fgets(buffer, sizeof(buffer), input_file) != NULL) {
