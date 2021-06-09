@@ -1,8 +1,8 @@
 #include "multiply.h"
 #include <stdarg.h>
 
-#define COND 0xE
-#define _1001 0x9
+#define COND 14
+#define _1001 9
 
 uint32_t multiply(enum Mnemonic instruction, char *rd_string, char *rm_string, char *rs_string, ...)
 {
