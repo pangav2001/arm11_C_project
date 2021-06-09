@@ -33,6 +33,6 @@ assemble
 *.nav
 *.toc
 
-#ignore json files
-*.json
+#ignore vscode folder
+.vscode
 
