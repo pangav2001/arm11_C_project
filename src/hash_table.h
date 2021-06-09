@@ -1,10 +1,16 @@
 #ifndef HASH_TABLE_H
 #define HASH_TABLE_H
 
+#include <stdio.h>
+#include <stddef.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdint.h>
+
 typedef struct
 {
     char *key;
-    char *value;
+    uint32_t value;
 } Entry;
 
 typedef struct
@@ -16,7 +22,7 @@ typedef struct
 
 unsigned long hash(char *str, int modulo);
 
-Entry *new_entry(char *key, char *value);
+Entry *new_entry(char *key, uint32_t value);
 
 void free_entry(Entry *entry);
 
@@ -24,9 +30,9 @@ Hash_Table *new_table(int size);
 
 void free_table(Hash_Table *hash_table);
 
-void insert(Hash_Table *hash_table, char *key, char *value);
+void insert(Hash_Table *hash_table, char *key, uint32_t value);
 
-char *search(Hash_Table *hash_table, char *key);
+uint32_t search(Hash_Table *hash_table, char *key);
 
 void print(Hash_Table *hash_table);
 

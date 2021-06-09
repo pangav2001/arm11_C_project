@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stddef.h>
-#include <string.h>
-#include <stdlib.h>
 #include "hash_table.h"
 
 #define SIZE 20000
@@ -20,14 +16,13 @@ unsigned long hash(char *str, int modulo)
 
 //allocate memory for a new entry and copy the given
 //key and value in it
-Entry *new_entry(char *key, char *value)
+Entry *new_entry(char *key, uint32_t value)
 {
     Entry *entry = (Entry *)malloc(sizeof(Entry));
     entry->key = (char *)malloc(strlen(key));
-    entry->value = (char *)malloc(strlen(value));
+    entry->value = value;
 
     strncpy(entry->key, key, strlen(key));
-    strncpy(entry->value, value, strlen(value));
 
     return entry;
 }
@@ -36,7 +31,6 @@ Entry *new_entry(char *key, char *value)
 void free_entry(Entry *entry)
 {
     free(entry->key);
-    free(entry->value);
     free(entry);
 }
 
@@ -75,7 +69,7 @@ void free_table(Hash_Table *hash_table)
 
 //create new entry with the given key and value, calculate its index
 //and try to insert it in the hash table
-void insert(Hash_Table *hash_table, char *key, char *value)
+void insert(Hash_Table *hash_table, char *key, uint32_t value)
 {
     Entry *entry = new_entry(key, value);
 
@@ -104,7 +98,7 @@ void insert(Hash_Table *hash_table, char *key, char *value)
         //by the hash function
         if (!strcmp(to_insert->key, key))
         {
-            strncpy(hash_table->entries[index]->value, value, strlen(value));
+            hash_table->entries[index]->value = value;
             return;
         }
         //if there was an actual collision
@@ -117,8 +111,8 @@ void insert(Hash_Table *hash_table, char *key, char *value)
 }
 
 //search the hash table for the entry with the given key
-//and return its value; if there's no such key, return NULL
-char *search(Hash_Table *hash_table, char *key)
+//and return its value; if there's no such key, return 0
+uint32_t search(Hash_Table *hash_table, char *key)
 {
     int index = hash(key, hash_table->size);
 
@@ -130,7 +124,7 @@ char *search(Hash_Table *hash_table, char *key)
         }
     }
 
-    return NULL;
+    return 0;
 }
 
 void print(Hash_Table *hash_table)
@@ -139,7 +133,7 @@ void print(Hash_Table *hash_table)
     {
         if (hash_table->entries[i])
         {
-            printf("Index:%d, Key:%s, Value:%s\n", i, hash_table->entries[i]->key, hash_table->entries[i]->value);
+            printf("Index: %d, Key: %s, Value: %d\n", i, hash_table->entries[i]->key, hash_table->entries[i]->value);
         }
     }
 }
@@ -147,10 +141,10 @@ void print(Hash_Table *hash_table)
 int main()
 {
     Hash_Table *hash_table = new_table(SIZE);
-    insert(hash_table, "1", "Naman");
-    insert(hash_table, "2", "Karim");
-    insert(hash_table, "3", "Konstantinos");
-    insert(hash_table, "4", "Panayiotis");
+    insert(hash_table, "1", 10);
+    insert(hash_table, "2", 20);
+    insert(hash_table, "3", 30);
+    insert(hash_table, "4", 40);
     print(hash_table);
     free_table(hash_table);
     return 0;
