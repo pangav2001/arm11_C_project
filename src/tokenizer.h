@@ -58,31 +58,36 @@ enum Mnemonic {
     ANDEQ
 };
 
-static char* mnemonic_mapping[] = {
-    "and",
-    "eor",
-    "sub",
-    "rsb",
-    "add",
-    "tst",
-    "teq",
-    "cmp",
-    "orr",
-    "mov",
-    "mul",
-    "mla",
-    "ldr",
-    "str",
-    "beq",
-    "bne",
-    "bge",
-    "blt",
-    "bgt",
-    "ble",
-    "b",
-    "lsl",
-    "andeq",
-    NULL //for iterating
+typedef struct {
+    char *str;
+    enum Mnemonic mnemonic;
+} Enum_Map;
+
+static Enum_Map mnemonic_mapping[] = {
+    "and", AND,
+    "eor", EOR,
+    "sub", SUB,
+    "rsb", RSB,
+    "add", ADD,
+    "tst", TST,
+    "teq", TEQ,
+    "cmp", CMP,
+    "orr", ORR,
+    "mov", MOV,
+    "mul", MUL,
+    "mla", MLA,
+    "ldr", LDR,
+    "str", STR,
+    "beq", BEQ,
+    "bne", BNE,
+    "bge", BGE,
+    "blt", BLT,
+    "bgt", BGT,
+    "ble", BLE,
+    "b", B,
+    "lsl", LSL,
+    "andeq", ANDEQ,
+    NULL, NULL //for iterating
 };
 
 struct tokens {
