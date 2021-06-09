@@ -6,19 +6,13 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <stdbool.h>
 
-typedef struct
-{
-    char *key;
-    uint32_t value;
-} Entry;
+typedef struct Entry Entry;
 
-typedef struct
-{
-    Entry **entries;
-    int size;
-    int no_of_entries;
-} Hash_Table;
+typedef struct Hash_Table Hash_Table;
+
+typedef struct List_Node List_Node;
 
 unsigned long hash(char *str, int modulo);
 
@@ -30,10 +24,26 @@ Hash_Table *new_table(int size);
 
 void free_table(Hash_Table *hash_table);
 
-void insert(Hash_Table *hash_table, char *key, uint32_t value);
+void table_insert(Hash_Table *hash_table, char *key, uint32_t value);
 
-uint32_t search(Hash_Table *hash_table, char *key);
+uint32_t table_search(Hash_Table *hash_table, char *key);
 
-void print(Hash_Table *hash_table);
+void print_table(Hash_Table *hash_table);
+
+List_Node *new_node();
+
+List_Node *list_insert(List_Node *linked_list, Entry *entry);
+
+Entry *list_remove(List_Node **linked_list);
+
+void free_list(List_Node *linked_list);
+
+List_Node **create_buckets(Hash_Table *hash_table);
+
+void free_buckets(Hash_Table *hash_table);
+
+void collision(Hash_Table *hash_table, int index, Entry *entry);
+
+void table_remove(Hash_Table *hash_table, char *key);
 
 #endif
