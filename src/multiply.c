@@ -13,8 +13,8 @@ uint32_t multiply(enum Mnemonic instruction, char *rd_string, char *rm_string, c
     if(instruction == MLA)
     {
         va_list ap;
-        char *rn_string;
-        va_start(ap, rn_string);
+        va_start(ap, rs_string);
+        char *rn_string = va_arg(ap, char *);
         rn = strtol(rn_string, NULL, 10);
         va_end(ap);
     }
