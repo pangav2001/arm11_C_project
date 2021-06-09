@@ -59,16 +59,16 @@ enum Mnemonic {
 };
 
 static char* mnemonic_mapping[] = {
-    "add",
-    "sub",
-    "rsb",
     "and",
     "eor",
-    "orr",
-    "mov",
+    "sub",
+    "rsb",
+    "add",
     "tst",
     "teq",
     "cmp",
+    "orr",
+    "mov",
     "mul",
     "mla",
     "ldr",
