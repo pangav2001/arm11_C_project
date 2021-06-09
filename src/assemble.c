@@ -6,25 +6,57 @@
 char** read_in_prog(char *filename, int *num_instr);
 
 int main(int argc, char **argv) {
-  //test extracting label
-  // char *label = "label:";
-  // int t = assign_label_address(label, 0);
-  // printf("%d", t);
-
-  //test strtok_r
-  // char *instruction = "ldr r2,[r0]";
-
-
-  // struct tokens *token = tokenize_instruction(instruction);
-  // //to free
-  // free_tokens(token);
-
-  //Read in file
 
   int num_instructions;
-  char **instrucs = read_in_prog("add01.s", &num_instructions);
-  printf("read in\n");
+  char **instrucs = read_in_prog("beq02.s", &num_instructions);
+  
+  //First Pass
+  
+  int16_t address = 0; //The current address
+  for (int i = 0; i < num_instructions; i++) {
+    address = assign_label_address(instrucs[i], address);
+  }
 
+  //Second Pass
+
+  uint16_t start_location_for_data = address; //This is the current location from where we can store data 
+  //such as offsets too large to fit into the instruction
+
+  uint32_t *assembled_program = calloc(2 * num_instructions, sizeof(uint32_t)); //Cannot have more than 2* in output 
+
+  address = 0;
+  for (int i = 0; i < num_instructions; i++) {
+    if (!is_label(instrucs[i])) {
+      printf("%s\n", instrucs[i]);
+      struct tokens *tokens = tokenize_instruction(instrucs[i]);
+
+      if (tokens->mnemonic <= CMP) {
+        //Data Processing
+        printf("DP\n");
+      } else if (tokens->mnemonic <= MLA) {
+        //Multiply
+        printf("MUL\n");
+
+      } else if (tokens->mnemonic <= STR) {
+        //SDT
+        printf("SDT\n");
+      } else if (tokens->mnemonic <= B) {
+        //branch
+        printf("B\n");
+      } else if (tokens->mnemonic <= ANDEQ) {
+        //special
+        printf("spec\n");
+      } else {
+        //Not supported
+      }
+
+      free_tokens(tokens);
+      address += 4;
+    }
+  }
+
+
+  free(assembled_program);  
 
   return EXIT_SUCCESS;
 }
@@ -44,7 +76,9 @@ for (int i = 0; i < 2; i++) {
     case 0:
       //Count instr
       while(fgets(buffer, sizeof(buffer), input_file) != NULL) {
-        num_instructions++;
+        if (buffer[0] != '\n') {
+          num_instructions++;
+        }
       }
       break;
     case 1:
