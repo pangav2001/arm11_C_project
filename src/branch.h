@@ -3,7 +3,8 @@
 
 #include "tokenizer.h"
 #include <stdint.h>
+#include "hash_table.h"
 
-uint32_t branch(enum Mnemonic instruction, char* expression, int16_t current_address);
+uint32_t branch(enum Mnemonic instruction, char* expression, int16_t current_address, Hash_Table table);
 
 #endif
