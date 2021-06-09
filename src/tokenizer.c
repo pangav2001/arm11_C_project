@@ -26,9 +26,11 @@ int16_t assign_label_address(char *line, int16_t address)
     {
         char *label = malloc(length + 1);
         strncpy(label, line, length);
+        label[length] = '\0';
         //TODO
         //Add the label to hashmap
         //and correct address
+        printf("%s\n", label);
         free(label);
         return address; //label so address hasn't changed
     }
@@ -38,8 +40,6 @@ int16_t assign_label_address(char *line, int16_t address)
 struct tokens* tokenize_instruction(char *line)
 {
     struct tokens *tokens = calloc(1,sizeof(struct tokens));
-
-    
 
     enum Mnemonic mnemonic = extract_mnemonic(&line);
 
@@ -58,10 +58,6 @@ struct tokens* tokenize_instruction(char *line)
     tokens->mnemonic = mnemonic;
     tokens->num_opcode = i;
     tokens->opcodes = opcodes;
-
-    // while(token = strtok_r(rest, ",", &rest)) {
-    //     printf("%s\n", token);
-    // }
 
     free(instruction);
     return tokens;
