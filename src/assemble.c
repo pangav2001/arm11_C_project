@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
       printf("%s\n", instrucs[i]);
       struct tokens *tokens = tokenize_instruction(instrucs[i]);
 
-      if (tokens->mnemonic <= CMP) {
+      if (tokens->mnemonic <= MOV) {
         //Data Processing
         printf("DP\n");
       } else if (tokens->mnemonic <= MLA) {
