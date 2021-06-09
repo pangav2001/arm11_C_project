@@ -1,4 +1,5 @@
 #include "branch.h"
+#include <assert.h>
 
 #define _0000  0
 #define _0001  1
@@ -8,7 +9,7 @@
 #define _1101 13
 #define _1110 14
 
-uint32_t branch(enum Mnemonic instruction, char* expression, int16_t current_address)
+uint32_t branch(enum Mnemonic instruction, char* expression, int16_t current_address, Hash_Table table)
 {
     uint32_t result;
 
@@ -46,14 +47,9 @@ uint32_t branch(enum Mnemonic instruction, char* expression, int16_t current_add
     int16_t target_address = 0;
     
     //Calculate the target address
-    if (1) { //TODO: Check if expression is a label in the hash map
-        //TODO: Get the label address from the hash map
-    }
-    else
-    {
-        //TODO: Figure out what to do when not a label
-    }
+    assert(target_address = search(&table, expression));
 
+    /*****May need to add/subtract 4/8/12 bits*******/
     int32_t offset = target_address - current_address;
     offset >>= 2;
 
