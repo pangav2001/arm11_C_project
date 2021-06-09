@@ -1,10 +1,24 @@
 #include "multiply.h"
+#include <stdarg.h>
 
 #define COND 0xE
 #define _1001 0x9
 
-uint32_t multiply(enum Mnemonic instruction, enum Register_Names rd, enum Register_Names rm, enum Register_Names rs, enum Register_Names rn)
+uint32_t multiply(enum Mnemonic instruction, char *rd_string, char *rm_string, char *rs_string, ...)
 {
+    enum Register_Names rd = strtol(rd_string, NULL, 10);
+    enum Register_Names rm = strtol(rm_string, NULL, 10);
+    enum Register_Names rs = strtol(rs_string, NULL, 10);
+    enum Register_Names rn = 0;
+    if(instruction == MLA)
+    {
+        va_list ap;
+        char *rn_string;
+        va_start(ap, rn_string);
+        rn = strtol(rn_string, NULL, 10);
+        va_end(ap);
+    }
+
     //Set bits 31 - 28 to Cond
     uint32_t result = COND;
 
