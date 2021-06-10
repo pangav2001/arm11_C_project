@@ -1,6 +1,7 @@
 #include "data_processing.h"
 #include "emulate_src/data_processing.h"
 #include <string.h>
+#include <assert.h>
 
 #define COND 14
 #define UINT5_MAX 31
