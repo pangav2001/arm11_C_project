@@ -28,9 +28,9 @@ enum Shift_Types convert_shift_types(char *str)
         "asr",
         "ror"};
 
-    for (enum Shift_Types i = LSL; i < ROR; i++)
+    for (enum Shift_Types i = LSL; i <= ROR; i++)
     {
-        if (strcmp(shift_types[i], str))
+        if (strcmp(shift_types[i], str) == 0)
         {
             return i;
         }
@@ -74,8 +74,11 @@ uint32_t data_process(tokens *instructions)
         break;
     default:
         perror("Unsupported instruction");
+        exit(1);
         break;
     }
+
+    //Check that the registers were read correctly
     assert(rd >= R0 && rd <= CPSR);
     assert(rn >= R0 && rn <= CPSR);
 
@@ -138,20 +141,20 @@ uint32_t data_process(tokens *instructions)
                 shift = rs;
 
                 //Set bit 7 to 0
-                shift <<= 2;
+                shift <<= 1;
             }
 
             //Set bits 6 - 5 to the shift type
             shift <<= 2;
             shift |= shift_type;
 
-            //Set bit 3 to the shift type flag
+            //Set bit 4 to the shift type flag
             shift <<= 1;
             shift |= instructions->opcodes[operand2_start + 2][0] != '#';
         }
 
         //Set bits 11 - 4 to shift
-        result <<= 9;
+        result <<= 8;
         result |= shift;
 
         //Set bits 3 - 0 to the Rm register
