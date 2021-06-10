@@ -16,6 +16,7 @@ uint32_t multiply(tokens *instructions)
     enum Register_Names rn = 0;
     if(instructions->mnemonic == MLA)
     {
+        assert(instructions->num_opcode == 4);
         rn = convert_register(instructions->opcodes[3]);
     }
 
