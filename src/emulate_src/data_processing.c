@@ -18,14 +18,6 @@ enum Arithmetic_Operations
     ADDITION
 };
 
-enum Shift_Types
-{
-    LSL,
-    LSR,
-    ASR,
-    ROR
-};
-
 extern void set_flag_value(enum Flag flag, int8_t value, int8_t s_flag);
 
 static inline void check_c_flag_logical(int8_t bit, int32_t value, int32_t amount, int8_t s_flag)

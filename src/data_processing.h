@@ -10,6 +10,6 @@
 // <and, eor, sub, rsb, add, orr>, Rd, Rn, Operand2
 // <mov>, Rd, Operand2
 // <tst, teq, cmp> Rn, Operand2
-uint32_t data_process(enum Mnemonic instruction, ...);
+uint32_t data_process(tokens *instructions);
 
 #endif
