@@ -1,10 +1,13 @@
 #include "branch.h"
 #include <assert.h>
+#include "emulate_src/decode.h"
 
 #define EXPRESSION instructions->opcodes[0]
 
+extern int32_t extract_bits(int32_t data, unsigned int start, unsigned int end);
+extern uint32_t table_search(Hash_Table *hash_table, char *key);
 
-uint32_t branch(tokens *instructions, int16_t current_address, Hash_Table table)
+uint32_t branch_assembly(tokens *instructions, int16_t current_address, Hash_Table *table)
 {
     uint32_t result;
 
@@ -17,9 +20,9 @@ uint32_t branch(tokens *instructions, int16_t current_address, Hash_Table table)
 
     //Calculate offset
     int16_t target_address = 0;
-    
+
     //Calculate the target address
-    assert(target_address = search(&table, EXPRESSION));
+    assert((target_address = table_search(table, EXPRESSION)));
 
     /*****May need to add/subtract 4/8/12 bits*******/
     int32_t offset = target_address - current_address;
@@ -28,7 +31,6 @@ uint32_t branch(tokens *instructions, int16_t current_address, Hash_Table table)
     //Set bits 23 - 0 to offset
     result <<= 24;
     result |= extract_bits(offset, 0, 23);
-
 
     return result;
 }
