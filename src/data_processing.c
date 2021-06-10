@@ -2,6 +2,7 @@
 #include "emulate_src/data_processing.h"
 #include <string.h>
 #include <assert.h>
+#include <stdio.h>
 
 #define COND 14
 #define UINT5_MAX 31
@@ -11,8 +12,7 @@
     {                                    \
         if (S[1] == '0' && S[2] == 'x')  \
         {                                \
-            \ 
-        I = strtol(S + 3, NULL, 16);     \
+            I = strtol(S + 3, NULL, 16); \
         }                                \
         else                             \
         {                                \
@@ -37,6 +37,7 @@ enum Shift_Types convert_shift_types(char *str)
     }
 
     perror("Unsupported shift type");
+    exit(1);
 }
 
 uint32_t data_process(tokens *instructions)
@@ -44,7 +45,6 @@ uint32_t data_process(tokens *instructions)
     enum Register_Names rd = 0;
     enum Register_Names rn = 0;
     enum Register_Names rm = 0;
-    enum Mnemonic shift;
     uint8_t operand2_start;
 
     switch (instructions->mnemonic)
@@ -68,7 +68,7 @@ uint32_t data_process(tokens *instructions)
     case TST:
     case TEQ:
     case CMP:
-        asser(instructions->num_opcode >= 2);
+        assert(instructions->num_opcode >= 2);
         rn = convert_register(instructions->opcodes[0]);
         operand2_start = 1;
         break;

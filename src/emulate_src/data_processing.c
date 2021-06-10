@@ -1,4 +1,6 @@
 #include "data_processing.h"
+#include <assert.h>
+#include <stdio.h>
 
 #define VALUE_SIZE 32
 
@@ -92,8 +94,10 @@ static void overflow_check_arithmetic(int32_t a, int32_t b, int32_t result, int8
     }
 }
 
-void process_func(int8_t i_flag, enum Operators opcode, int8_t s_flag, enum Register_Names rn, enum Register_Names rd, int16_t operand2)
+void process_func(int8_t i_flag, enum Mnemonic opcode, int8_t s_flag, enum Register_Names rn, enum Register_Names rd, int16_t operand2)
 {
+    opcode -= DATA_PROCESSING_INDEX;
+
     int32_t result = 0;
     int32_t immediate_operand2 = immediate_operand(operand2, i_flag, s_flag);
 
@@ -126,6 +130,9 @@ void process_func(int8_t i_flag, enum Operators opcode, int8_t s_flag, enum Regi
     case MOV:
         result = immediate_operand2;
         break;
+    default:
+        perror("Unsupported operator");
+        exit(1);
     }
 
     set_flag_value(Z, result == 0, s_flag);

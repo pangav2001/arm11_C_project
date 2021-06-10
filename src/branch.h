@@ -5,6 +5,6 @@
 #include <stdint.h>
 #include "hash_table.h"
 
-uint32_t branch(tokens *instructions, int16_t current_address, Hash_Table table);
+uint32_t branch_assembly(tokens *instructions, int16_t current_address, Hash_Table *table);
 
 #endif

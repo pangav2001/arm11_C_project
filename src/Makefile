@@ -7,20 +7,23 @@ LDFLAGS = -lm
 
 .PHONY: all clean
 
-all: assemble emulate
+all: assemble #emulate
 
 
 #Build the assembler executable
-assemble: assemble.o multiply.o tokenizer.o 
+assemble: assemble.o multiply.o tokenizer.o data_processing.o branch.o
 
 tokenizer.o: tokenizer.h
 
+multiply.o: multiply.h
+
+data_processing.o: data_processing.h
+
+branch.o: branch.h
+
 
 #Build the emulator executable
-emulate: emulate.o
-
-#Build the object files for emulator
-multiply.o : multiply.h
+#emulate: emulate.o
 
 clean:
 	rm -f $(wildcard *.o)
