@@ -1,4 +1,5 @@
 #include "multiply.h"
+#include <assert.h>
 
 #define COND 14
 #define _1001 9
