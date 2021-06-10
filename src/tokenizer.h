@@ -104,6 +104,6 @@ enum Register_Names convert_register(char* reg);
 
 enum Mnemonic convert_mnemonic(char* mnemonic);
 
-void free_tokens(struct tokens* tokens);
+void free_tokens(tokens* tokens);
 
 #endif
