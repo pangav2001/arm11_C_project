@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
   for (int i = 0; i < num_instructions; i++) {
     if (!is_label(instrucs[i])) {
       printf("%s\n", instrucs[i]);
-      struct tokens *tokens = tokenize_instruction(instrucs[i]);
+      tokens *tokens = tokenize_instruction(instrucs[i]);
 
       if (tokens->mnemonic <= MOV) {
         //Data Processing
