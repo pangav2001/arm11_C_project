@@ -37,9 +37,9 @@ int16_t assign_label_address(char *line, int16_t address)
     return address + 4; //return next address
 }
 
-tokens* tokenize_instruction(char *line)
+tokens *tokenize_instruction(char *line)
 {
-    tokens *tokens = calloc(1,sizeof(tokens));
+    tokens *tokens = calloc(1, sizeof(tokens));
 
     enum Mnemonic mnemonic = extract_mnemonic(&line);
 
@@ -73,7 +73,7 @@ enum Mnemonic extract_mnemonic(char **line)
         mnemonic[i] = (*line)[0];
     }
     mnemonic[i] = '\0'; //ensure it's terminated
-    (*line)++; //remove the leading " "
+    (*line)++;          //remove the leading " "
     return convert_mnemonic(mnemonic);
 }
 
@@ -85,6 +85,34 @@ enum Register_Names convert_register(char *reg)
 
 enum Mnemonic convert_mnemonic(char *mnemonic)
 {
+    Enum_Map mnemonic_mapping[] = {
+    {"and", AND},
+    {"eor", EOR},
+    {"sub", SUB},
+    {"rsb", RSB},
+    {"add", ADD},
+    {"tst", TST},
+    {"teq", TEQ},
+    {"cmp", CMP},
+    {"orr", ORR},
+    {"mov", MOV},
+    {"mul", MUL},
+    {"mla", MLA},
+    {"ldr", LDR},
+    {"str", STR},
+    {"beq", BEQ},
+    {"bne", BNE},
+    {"bge", BGE},
+    {"blt", BLT},
+    {"bgt", BGT},
+    {"ble", BLE},
+    {"b", B},
+    {"lsl", LSL_M},
+    {"andeq", ANDEQ},
+    {"", -1} //for iterating
+};
+
+
     for (int i = 0; mnemonic_mapping[i].mnemonic != -1; i++)
     {
         if (strcmp(mnemonic, mnemonic_mapping[i].str) == 0)
@@ -96,8 +124,10 @@ enum Mnemonic convert_mnemonic(char *mnemonic)
     return -1;
 }
 
-void free_tokens(tokens* tokens) {
-    for (int i = 0; i < tokens->num_opcode; i++) {
+void free_tokens(tokens *tokens)
+{
+    for (int i = 0; i < tokens->num_opcode; i++)
+    {
         free(tokens->opcodes[i]);
     }
     free(tokens->opcodes);
