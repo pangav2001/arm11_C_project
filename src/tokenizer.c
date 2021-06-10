@@ -37,9 +37,9 @@ int16_t assign_label_address(char *line, int16_t address)
     return address + 4; //return next address
 }
 
-struct tokens* tokenize_instruction(char *line)
+tokens* tokenize_instruction(char *line)
 {
-    struct tokens *tokens = calloc(1,sizeof(struct tokens));
+    tokens *tokens = calloc(1,sizeof(tokens));
 
     enum Mnemonic mnemonic = extract_mnemonic(&line);
 
@@ -96,7 +96,7 @@ enum Mnemonic convert_mnemonic(char *mnemonic)
     return -1;
 }
 
-void free_tokens(struct tokens* tokens) {
+void free_tokens(tokens* tokens) {
     for (int i = 0; i < tokens->num_opcode; i++) {
         free(tokens->opcodes[i]);
     }
