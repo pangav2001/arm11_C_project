@@ -1,11 +1,23 @@
 #include "branch.h"
 #include <assert.h>
-#include "emulate_src/decode.h"
+// #include "emulate_src/decode.h"
 
 #define EXPRESSION instructions->opcodes[0]
 
-extern int32_t extract_bits(int32_t data, unsigned int start, unsigned int end);
-extern uint32_t table_search(Hash_Table *hash_table, char *key);
+/*******************TEMPORARY******************************************/
+int32_t extract_bits(int32_t data, unsigned int start, unsigned int end)
+{
+    assert(start <= end);
+    unsigned int mask = 0;
+    for (unsigned i = start; i <= end; i++)
+    {
+        mask |= 1 << i;
+    }
+
+    return (mask & data) >> start;
+}
+/*******************TEMPORARY******************************************/
+
 
 uint32_t branch_assembly(tokens *instructions, int16_t current_address, Hash_Table *table)
 {
