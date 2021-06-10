@@ -75,6 +75,8 @@ uint32_t data_process(tokens *instructions)
         perror("Unsupported instruction");
         break;
     }
+    assert(rd >= R0 && rd <= CPSR);
+    assert(rn >= R0 && rn <= CPSR);
 
     //Set bits 31 - 28 to Cond
     uint32_t result = COND;
