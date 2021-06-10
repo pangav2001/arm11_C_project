@@ -87,7 +87,7 @@ static Enum_Map mnemonic_mapping[] = {
     "b", B,
     "lsl", LSL,
     "andeq", ANDEQ,
-    NULL, NULL //for iterating
+    "", NULL //for iterating
 };
 
 typedef struct {
