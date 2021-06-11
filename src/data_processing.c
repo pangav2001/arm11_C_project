@@ -7,6 +7,8 @@
 #define COND 14
 #define UINT5_MAX 31
 
+#define OPERAND2(I) instructions->opcodes[operand2_start + I]
+
 #define STR_TO_INT(S, I)                 \
     do                                   \
     {                                    \
@@ -90,7 +92,7 @@ uint32_t data_process(tokens_t *instructions)
 
     //Set bit 25 to the I flag
     result <<= 1;
-    result |= instructions->opcodes[operand2_start][0] == '#';
+    result |= OPERAND2(0)[0] == '#';
 
     //Set bits 24 - 21 to the opcode
     result <<= 4;
@@ -110,10 +112,10 @@ uint32_t data_process(tokens_t *instructions)
 
     //Set bits 11 - 0 to operand2
 
-    if (instructions->opcodes[operand2_start][0] == '#')
+    if (OPERAND2(0)[0] == '#')
     {
         uint16_t immediate_result;
-        STR_TO_INT(instructions->opcodes[operand2_start], immediate_result);
+        STR_TO_INT(OPERAND2(0), immediate_result);
 
         assert(immediate_result <= UINT8_MAX);
         //Set the right rotation to zero and immediate value to the result
@@ -122,21 +124,21 @@ uint32_t data_process(tokens_t *instructions)
     }
     else
     {
-        rm = convert_register(instructions->opcodes[operand2_start]);
+        rm = convert_register(OPERAND2(0));
         uint8_t shift = 0;
         if (instructions->num_opcode > operand2_start + 1)
         {
-            enum Shift_Types shift_type = convert_shift_types(instructions->opcodes[operand2_start + 1]);
-            if (instructions->opcodes[operand2_start + 2][0] == '#')
+            enum Shift_Types shift_type = convert_shift_types(OPERAND2(1));
+            if (OPERAND2(2)[0] == '#')
             {
                 //Set bits 11 - 7 to the immediate value
-                STR_TO_INT(instructions->opcodes[operand2_start + 2], shift);
+                STR_TO_INT(OPERAND2(2), shift);
                 assert(shift <= UINT5_MAX);
             }
             else
             {
                 //Set bits 11 - 8 to the Rs register
-                enum Register_Names rs = convert_register(instructions->opcodes[operand2_start + 2]);
+                enum Register_Names rs = convert_register(OPERAND2(2));
                 assert(rs >= R0 && rs <= CPSR);
                 shift = rs;
 
@@ -150,7 +152,7 @@ uint32_t data_process(tokens_t *instructions)
 
             //Set bit 4 to the shift type flag
             shift <<= 1;
-            shift |= instructions->opcodes[operand2_start + 2][0] != '#';
+            shift |= OPERAND2(2)[0] != '#';
         }
 
         //Set bits 11 - 4 to shift

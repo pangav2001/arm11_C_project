@@ -31,7 +31,7 @@ uint32_t branch_assembly(tokens_t *instructions, int16_t current_address, Hash_T
 
     //Set bits 27 - 25 to 101 and 24 to 0
     result <<= 4;
-    result |= _1010;
+    result |= B_1010;
 
     //Calculate offset
     int16_t target_address = 0;
