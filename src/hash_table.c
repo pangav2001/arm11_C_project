@@ -1,6 +1,6 @@
 #include "hash_table.h"
 
-#define SIZE 20000
+//#define SIZE 20000
 
 struct Entry
 {
@@ -41,10 +41,10 @@ unsigned long hash(char *str, int modulo)
 Entry *new_entry(char *key, uint32_t value)
 {
     Entry *entry = (Entry *)malloc(sizeof(Entry));
-    entry->key = (char *)malloc(strlen(key));
+    entry->key = (char *)malloc(strlen(key + 1)); //+1 for string terminator
     entry->value = value;
 
-    strncpy(entry->key, key, strlen(key));
+    strcpy(entry->key, key);
 
     return entry;
 }
@@ -188,7 +188,7 @@ void print_table(Hash_Table *hash_table)
         }
     }
 
-    if(empty)
+    if (empty)
     {
         printf("Sorry! Hash table is empty!\n");
     }
