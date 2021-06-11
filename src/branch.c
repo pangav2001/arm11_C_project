@@ -19,7 +19,7 @@ int32_t extract_bits(int32_t data, unsigned int start, unsigned int end)
 /*******************TEMPORARY******************************************/
 
 
-uint32_t branch_assembly(tokens *instructions, int16_t current_address, Hash_Table *table)
+uint32_t branch_assembly(tokens_t *instructions, int16_t current_address, Hash_Table *table)
 {
     uint32_t result;
 

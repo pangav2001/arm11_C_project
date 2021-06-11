@@ -37,9 +37,9 @@ int16_t assign_label_address(char *line, int16_t address, Hash_Table *table)
     return address + 4; //return next address
 }
 
-tokens *tokenize_instruction(char *line)
+tokens_t *tokenize_instruction(char *line)
 {
-    tokens *tokens = calloc(1, sizeof(tokens));
+    tokens_t *tokens = calloc(1, sizeof(tokens_t));
 
     enum Mnemonic mnemonic = extract_mnemonic(&line);
 
@@ -83,9 +83,7 @@ enum Register_Names convert_register(char *reg)
     return strtol(reg, NULL, 10);
 }
 
-enum Mnemonic convert_mnemonic(char *mnemonic)
-{
-    Enum_Map mnemonic_mapping[] = {
+Enum_Map mnemonic_mapping[] = {
     {"and", AND},
     {"eor", EOR},
     {"sub", SUB},
@@ -112,7 +110,8 @@ enum Mnemonic convert_mnemonic(char *mnemonic)
     {"", -1} //for iterating
 };
 
-
+enum Mnemonic convert_mnemonic(char *mnemonic)
+{
     for (int i = 0; mnemonic_mapping[i].mnemonic != -1; i++)
     {
         if (strcmp(mnemonic, mnemonic_mapping[i].str) == 0)
@@ -124,7 +123,7 @@ enum Mnemonic convert_mnemonic(char *mnemonic)
     return -1;
 }
 
-void free_tokens(tokens *tokens)
+void free_tokens(tokens_t *tokens)
 {
     for (int i = 0; i < tokens->num_opcode; i++)
     {

@@ -7,7 +7,7 @@
 // mul, Rd, Rm, Rs
 // mla Rd, Rm, Rs, Rn
 
-uint32_t multiply(tokens *instructions)
+uint32_t multiply(tokens_t *instructions)
 {
     assert(instructions->num_opcode > 2);
 
