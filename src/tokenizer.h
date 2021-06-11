@@ -68,9 +68,9 @@ typedef struct
     enum Mnemonic mnemonic;
     int num_opcode;
     char **opcodes;
-} tokens;
+} tokens_t;
 
-tokens *tokenize_instruction(char *line);
+tokens_t *tokenize_instruction(char *line);
 
 enum Mnemonic extract_mnemonic(char **line);
 
@@ -78,6 +78,6 @@ enum Register_Names convert_register(char *reg);
 
 enum Mnemonic convert_mnemonic(char *mnemonic);
 
-void free_tokens(tokens *tokens);
+void free_tokens(tokens_t *tokens_t);
 
 #endif

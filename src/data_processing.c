@@ -40,7 +40,7 @@ enum Shift_Types convert_shift_types(char *str)
     exit(1);
 }
 
-uint32_t data_process(tokens *instructions)
+uint32_t data_process(tokens_t *instructions)
 {
     enum Register_Names rd = 0;
     enum Register_Names rn = 0;
