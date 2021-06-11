@@ -42,8 +42,7 @@ uint32_t branch_assembly(tokens_t *instructions, int16_t current_address, Hash_T
 
     assert((target_address = table_search(table, EXPRESSION)) != -1);
 
-    /*****May need to add/subtract 4/8/12 bits*******/
-    int32_t offset = target_address - current_address;
+    int32_t offset = target_address - current_address - 8;
     offset >>= 2;
 
     //Set bits 23 - 0 to offset
