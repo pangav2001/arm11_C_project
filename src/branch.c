@@ -4,6 +4,8 @@
 
 #define EXPRESSION instructions->opcodes[0]
 
+#define ARM_OFFSET 8
+
 /*******************TEMPORARY******************************************/
 int32_t extract_bits(int32_t data, unsigned int start, unsigned int end)
 {
@@ -35,14 +37,9 @@ uint32_t branch_assembly(tokens_t *instructions, int16_t current_address, Hash_T
     int16_t target_address = 0;
 
     //Calculate the target address
-
-    //TODO [ks1020]
-    //Note hash returns 0 if not valid however 0 could be a valid address
-    // So make sure to change after
-
     assert((target_address = table_search(table, EXPRESSION)) != -1);
 
-    int32_t offset = target_address - current_address - 8;
+    int32_t offset = target_address - current_address - ARM_OFFSET;
     offset >>= 2;
 
     //Set bits 23 - 0 to offset
