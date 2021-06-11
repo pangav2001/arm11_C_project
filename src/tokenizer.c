@@ -19,7 +19,7 @@ int16_t is_label(char *line)
     return 0;
 }
 
-int16_t assign_label_address(char *line, int16_t address)
+int16_t assign_label_address(char *line, int16_t address, Hash_Table *table)
 {
     int16_t length = is_label(line);
     if (length)
@@ -27,10 +27,10 @@ int16_t assign_label_address(char *line, int16_t address)
         char *label = malloc(length + 1);
         strncpy(label, line, length);
         label[length] = '\0';
-        //TODO
-        //Add the label to hashmap
-        //and correct address
-        printf("%s\n", label);
+
+        //I can just do this right even if same key?
+        table_insert(table, label, address);
+
         free(label);
         return address; //label so address hasn't changed
     }
@@ -46,7 +46,7 @@ tokens_t *tokenize_instruction(char *line)
     char *instruction = strdup(line); //Had issues with line not being modifiable before, maybe remove after testing with actual buffer
     char *token;
     char *rest = instruction;
-    char **opcodes = calloc(MAX_OPCODE, sizeof(char *)); //remember to free this in assemble!
+    char **opcodes = calloc(MAX_OPCODE, sizeof(char *));
     int i;
     for (i = 0; (token = strtok_r(rest, ",", &rest)); i++)
     {
