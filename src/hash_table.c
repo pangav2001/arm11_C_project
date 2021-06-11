@@ -153,14 +153,14 @@ uint32_t table_search(Hash_Table *hash_table, char *key)
 
         if (head == NULL)
         {
-            return 0;
+            return -1;
         }
 
         head = head->next;
         entry = head->entry;
     }
 
-    return 0;
+    return -1;
 }
 
 // print each entry of the hash table along with its index
