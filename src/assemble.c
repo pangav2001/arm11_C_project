@@ -15,12 +15,14 @@ int main(int argc, char **argv)
   int num_instructions;
   char **instrucs = read_in_prog("../../arm11_testsuite/test_cases/beq02.s", &num_instructions);
 
+  Hash_Table *hash_table = new_table(2000); //How many
+
   //First Pass
 
   int16_t address = 0; //The current address
   for (int i = 0; i < num_instructions; i++)
   {
-    address = assign_label_address(instrucs[i], address);
+    address = assign_label_address(instrucs[i], address, hash_table);
   }
 
   //Second Pass
@@ -58,8 +60,9 @@ int main(int argc, char **argv)
       else if (tokens->mnemonic <= B)
       {
         //branch
-        // printf("B\n");
-        //printf("%u\n", branch_assembly(tokens, address, ));
+        printf("B\n");
+        
+        printf("%u\n", branch_assembly(tokens, address, hash_table));
       }
       else if (tokens->mnemonic == LSL_M)
       {
@@ -89,6 +92,7 @@ int main(int argc, char **argv)
     }
   }
 
+  free_table(hash_table);
   free(assembled_program);
 
   return EXIT_SUCCESS;
