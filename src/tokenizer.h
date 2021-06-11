@@ -22,9 +22,9 @@ int16_t assign_label_address(char *line, int16_t address, Hash_Table *table);
 #define BRANCH_INDEX 30
 #define SPECIAL_INDEX 50
 
-#define _1000 8
-#define _1010 10
-#define _1100 12
+#define B_1000 8
+#define B_1010 10
+#define B_1100 12
 
 enum Mnemonic
 {
@@ -34,10 +34,10 @@ enum Mnemonic
     SUB,
     RSB,
     ADD,
-    TST = DATA_PROCESSING_INDEX + _1000,
+    TST = DATA_PROCESSING_INDEX + B_1000,
     TEQ,
     CMP,
-    ORR = DATA_PROCESSING_INDEX + _1100,
+    ORR = DATA_PROCESSING_INDEX + B_1100,
     MOV,
     //Multiply
     MUL = MULTIPLY_INDEX,
@@ -48,7 +48,7 @@ enum Mnemonic
     //Branch
     BEQ = BRANCH_INDEX,
     BNE,
-    BGE = BRANCH_INDEX + _1010,
+    BGE = BRANCH_INDEX + B_1010,
     BLT,
     BGT,
     BLE,

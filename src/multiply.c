@@ -2,7 +2,7 @@
 #include <assert.h>
 
 #define COND 14
-#define _1001 9
+#define B_1001 9
 
 // mul, Rd, Rm, Rs
 // mla Rd, Rm, Rs, Rn
@@ -48,7 +48,7 @@ uint32_t multiply(tokens_t *instructions)
 
     //Set bits 7 - 4 to 1001
     result <<= 4;
-    result |= _1001;
+    result |= B_1001;
 
     //Set bits 3 - 0 to Rm
     result <<= 4;
