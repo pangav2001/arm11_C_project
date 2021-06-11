@@ -61,14 +61,29 @@ int main(int argc, char **argv)
       {
         //branch
         printf("B\n");
-        
+
         printf("%u\n", branch_assembly(tokens, address, hash_table));
       }
-      else if (tokens->mnemonic <= ANDEQ)
+      else if (tokens->mnemonic == LSL_M)
       {
         //special
-        printf("spec\n");
-        printf("%u\n", data_process(tokens));
+        // printf("spec\n");
+        tokens_t *tokens_lsl = (tokens_t *)malloc(sizeof(tokens_t));
+        tokens_lsl->mnemonic = MOV;
+        //Same number of arguments except for the extra Rn and lsl
+        tokens_lsl->num_opcode = tokens->num_opcode + 2;
+        tokens_lsl->opcodes = (char **)malloc(tokens_lsl->num_opcode * sizeof(char *));
+        tokens_lsl->opcodes[0] = tokens_lsl->opcodes[1] = tokens->opcodes[0];
+        tokens_lsl->opcodes[2] = "lsl";
+        for (int i = 1; i < tokens->num_opcode; i++)
+        {
+          strcpy(tokens_lsl->opcodes[i + 2], tokens->opcodes[i]);
+        }
+        printf("%u\n", data_process(tokens_lsl));
+        free_tokens(tokens_lsl);
+      }
+      else if (tokens->mnemonic == ANDEQ)
+      {
       }
       else
       {
