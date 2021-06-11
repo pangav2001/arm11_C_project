@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 {
 
   int num_instructions;
-  char **instrucs = read_in_prog("../../arm11_testsuite/test_cases/lsl01.s", &num_instructions);
+  char **instrucs = read_in_prog("../../arm11_testsuite/test_cases/beq01.s", &num_instructions);
 
   Hash_Table *hash_table = new_table(2000); //How many
 
@@ -61,14 +61,13 @@ int main(int argc, char **argv)
       {
         //branch
         printf("B\n");
-
         printf("%u\n", branch_assembly(tokens, address, hash_table));
       }
       else if (tokens->mnemonic == LSL_M)
       {
         //special
         // printf("spec\n");
-        
+
         // tokens_t *tokens_lsl = (tokens_t *)malloc(sizeof(tokens_t));
         // tokens_lsl->mnemonic = MOV;
         // //Same number of arguments except for the extra Rn and lsl

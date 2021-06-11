@@ -25,6 +25,7 @@ uint32_t branch_assembly(tokens_t *instructions, int16_t current_address, Hash_T
 
     //Set bits 31 - 28 to Cond
     result = instructions->mnemonic - BRANCH_INDEX;
+    assert(result >= BEQ - BRANCH_INDEX && result <= B - BRANCH_INDEX);
 
     //Set bits 27 - 25 to 101 and 24 to 0
     result <<= 4;
@@ -39,7 +40,7 @@ uint32_t branch_assembly(tokens_t *instructions, int16_t current_address, Hash_T
     //Note hash returns 0 if not valid however 0 could be a valid address
     // So make sure to change after
 
-    assert((target_address = table_search(table, EXPRESSION)));
+    assert((target_address = table_search(table, EXPRESSION)) != -1);
 
     /*****May need to add/subtract 4/8/12 bits*******/
     int32_t offset = target_address - current_address;
