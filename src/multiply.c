@@ -1,22 +1,24 @@
 #include "multiply.h"
-#include <stdarg.h>
+#include <assert.h>
 
 #define COND 14
 #define _1001 9
 
-uint32_t multiply(enum Mnemonic instruction, char *rd_string, char *rm_string, char *rs_string, ...)
+// mul, Rd, Rm, Rs
+// mla Rd, Rm, Rs, Rn
+
+uint32_t multiply(tokens_t *instructions)
 {
-    enum Register_Names rd = strtol(rd_string, NULL, 10);
-    enum Register_Names rm = strtol(rm_string, NULL, 10);
-    enum Register_Names rs = strtol(rs_string, NULL, 10);
+    assert(instructions->num_opcode > 2);
+
+    enum Register_Names rd = convert_register(instructions->opcodes[0]);
+    enum Register_Names rm = convert_register(instructions->opcodes[1]);
+    enum Register_Names rs = convert_register(instructions->opcodes[2]);
     enum Register_Names rn = 0;
-    if(instruction == MLA)
+    if(instructions->mnemonic == MLA)
     {
-        va_list ap;
-        va_start(ap, rs_string);
-        char *rn_string = va_arg(ap, char *);
-        rn = strtol(rn_string, NULL, 10);
-        va_end(ap);
+        assert(instructions->num_opcode == 4);
+        rn = convert_register(instructions->opcodes[3]);
     }
 
     //Set bits 31 - 28 to Cond
@@ -27,7 +29,7 @@ uint32_t multiply(enum Mnemonic instruction, char *rd_string, char *rm_string, c
 
     //Set bit 21(A)
     result <<= 1;
-    result |= instruction == MLA;
+    result |= instructions->mnemonic == MLA;
 
     //Set bit 20(S) to 0
     result <<= 1;
