@@ -34,6 +34,11 @@ uint32_t branch_assembly(tokens *instructions, int16_t current_address, Hash_Tab
     int16_t target_address = 0;
 
     //Calculate the target address
+
+    //TODO [ks1020]
+    //Note hash returns 0 if not valid however 0 could be a valid address
+    // So make sure to change after
+
     assert((target_address = table_search(table, EXPRESSION)));
 
     /*****May need to add/subtract 4/8/12 bits*******/
