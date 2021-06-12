@@ -4,8 +4,9 @@
 #include "tokenizer.h"
 #include "data_processing.h"
 #include "branch.h"
-//#include "sdt_assembly.h"
+#include "sdt_assembly.h"
 #include "multiply.h"
+#include "output.h"
 
 char **read_in_prog(char *filename, int *num_instr);
 
@@ -13,7 +14,7 @@ int main(int argc, char **argv)
 {
 
   int num_instructions;
-  char **instrucs = read_in_prog("../../arm11_testsuite/test_cases/beq01.s", &num_instructions);
+  char **instrucs = read_in_prog(argv[1], &num_instructions);
 
   Hash_Table *hash_table = new_table(2000); //How many
 
@@ -51,20 +52,21 @@ int main(int argc, char **argv)
       {
         //Multiply
         save_instruction(assembled_program, address , multiply(tokens));
-        printf("MUL\n");
-        printf("%u\n", multiply(tokens));
+        // printf("MUL\n");
+        // printf("%u\n", multiply(tokens));
       }
       else if (tokens->mnemonic <= STR)
       {
         //SDT
-        printf("SDT\n");
+        save_instruction(assembled_program, address, sdt_assembly(tokens, address, &start_location_for_data, assembled_program));
+        //printf("SDT\n");
       }
       else if (tokens->mnemonic <= B)
       {
         //branch
-        save_instruction(assembled_program, address, branch_assembly(tokens));
-        printf("B\n");
-        printf("%u\n", branch_assembly(tokens, address, hash_table));
+        save_instruction(assembled_program, address, branch_assembly(tokens, address, hash_table));
+        // printf("B\n");
+        // printf("%u\n", branch_assembly(tokens, address, hash_table));
       }
       else if (tokens->mnemonic == LSL_M)
       {
@@ -98,6 +100,7 @@ int main(int argc, char **argv)
     }
   }
 
+  write_to_binary(argv[2], assembled_program, start_location_for_data/4);
   free_table(hash_table);
   free(assembled_program);
 
@@ -152,7 +155,7 @@ char **read_in_prog(char *filename, int *num_instr)
 }
 
 void save_instruction(uint32_t *assembled_program, uint16_t address ,uint32_t data) {
-  assembled_program[address] = data;
+  assembled_program[address / 4] = data;
 }
 
 void write_reserved_memory(uint32_t *assembled_program, int *next_avaliable_address, uint32_t reserved_data) {
