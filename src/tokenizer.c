@@ -180,9 +180,10 @@ void remove_whitespace(char* text) {
             copy++;
     }
     //remove from end
-    int i;
-    for (i = 0; copy[i] && copy[i] != ' '; i++);
-    copy[i] = '\0';
+//    int i;
+//    for (int i = strlen(copy) - 1; copy[i] == ' '; i--);
+    //for (i = 0; copy[i] && copy[i] != ' '; i++);
+//    copy[i] = '\0';
     strcpy(text, copy);
 }
 
