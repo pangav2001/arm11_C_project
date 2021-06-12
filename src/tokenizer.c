@@ -42,7 +42,7 @@ tokens_t *tokenize_instruction(char *line)
     tokens_t *tokens = calloc(1, sizeof(tokens_t));
 
     enum Mnemonic mnemonic = extract_mnemonic(&line);
-    
+
     int num_opcodes;
     tokens->opcodes = extract_opcodes(line, &num_opcodes);
     tokens->num_opcode = num_opcodes;
@@ -128,12 +128,16 @@ enum Mnemonic convert_mnemonic(char *mnemonic)
     return -1;
 }
 
+void free_opcode(char **opcodes, int num_opcode) {
+    for (int i = 0; i < num_opcode; i++)
+    {
+        free(opcodes[i]);
+    }
+    free(opcodes);
+}
+
 void free_tokens(tokens_t *tokens)
 {
-    for (int i = 0; i < tokens->num_opcode; i++)
-    {
-        free(tokens->opcodes[i]);
-    }
-    free(tokens->opcodes);
+    free_opcode(tokens->opcodes, tokens->num_opcode);
     free(tokens);
 }
