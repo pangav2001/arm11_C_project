@@ -9,18 +9,6 @@
 
 #define OPERAND2(I) instructions->opcodes[operand2_start + I]
 
-#define STR_TO_INT(S, I)                 \
-    do                                   \
-    {                                    \
-        if (S[1] == '0' && S[2] == 'x')  \
-        {                                \
-            I = strtol(S + 3, NULL, 16); \
-        }                                \
-        else                             \
-        {                                \
-            I = strtol(S + 1, NULL, 10); \
-        }                                \
-    } while (0)
 
 enum Shift_Types convert_shift_types(char *str)
 {
@@ -83,32 +71,28 @@ uint32_t data_process(tokens_t *instructions)
     //Check that the registers were read correctly
     assert(rd >= R0 && rd <= CPSR);
     assert(rn >= R0 && rn <= CPSR);
+    
+    uint32_t result = 0;
 
     //Set bits 31 - 28 to Cond
-    uint32_t result = COND;
+    SET_BITS(28, COND);
 
     //Set bits 27 - 26 to 0
-    result <<= 2;
 
     //Set bit 25 to the I flag
-    result <<= 1;
-    result |= OPERAND2(0)[0] == '#';
+    SET_BITS(25, OPERAND2(0)[0] == '#');
 
     //Set bits 24 - 21 to the opcode
-    result <<= 4;
-    result |= instructions->mnemonic - DATA_PROCESSING_INDEX;
+    SET_BITS(21, instructions->mnemonic - DATA_PROCESSING_INDEX);
 
     //Set bit 20 to the S flag
-    result <<= 1;
-    result |= instructions->mnemonic >= TST && instructions->mnemonic <= CMP;
+    SET_BITS(20, instructions->mnemonic >= TST && instructions->mnemonic <= CMP);
 
     //Set bits 19 - 16 to the Rn register
-    result <<= 4;
-    result |= rn;
+    SET_BITS(16, rn);
 
     //Set bits 15-12 to the Rd register
-    result <<= 4;
-    result |= rd;
+    SET_BITS(12, rd);
 
     //Set bits 11 - 0 to operand2
 
@@ -119,8 +103,7 @@ uint32_t data_process(tokens_t *instructions)
 
         assert(immediate_result <= UINT8_MAX);
         //Set the right rotation to zero and immediate value to the result
-        result <<= 12;
-        result |= immediate_result;
+        SET_BITS(0, immediate_result);
     }
     else
     {
@@ -156,12 +139,10 @@ uint32_t data_process(tokens_t *instructions)
         }
 
         //Set bits 11 - 4 to shift
-        result <<= 8;
-        result |= shift;
+        SET_BITS(4, result);
 
         //Set bits 3 - 0 to the Rm register
-        result <<= 4;
-        result |= rm;
+        SET_BITS(0, rm);
     }
 
     return result;

@@ -1,131 +1,146 @@
 #include "sdt_assembly.h"
+#include "data_processing.h"
+#include "tokenizer.h"
+#include "assemble.h"
+#include "emulate_src/decode.h"
+#include <assert.h>
 
-#define COND 0xE // binary 1110 (i.e instruction always happens)
+#define COND 14 // binary 1110 (i.e instruction always happens)
 #define ASCII_0 48
+#define UINT11_MAX 2047
+
+#define ADDRESS instructions->opcodes[1]
 
 // address - maybe char*
-uint32_t sdt_assembly(enum Mnemonic instruction, enum Register_Names rd, char* address,
-int* current_address, int* next_available_address){
+uint32_t sdt_assembly(tokens_t *instructions, uint32_t current_address, uint32_t *next_available_address, uint32_t *assembled_program)
+{
 
-    // bits 31-28 to cond
-    uint32_t result = COND;
-    result <<= 28;
+    /*
+    I = 0 -> Offset is immediate offset
+    I = 1 -> Offset is shifted register
 
-    //bit 27 - 26 = 01
-    result = result | (1 << 26);
-    result = result & ~(1 << 27);
+    P = 0 -> Post_indexing (offset is add/sub to base reg after transfer)
+    P = 1 -> Pre_indexing (offset is add/sub to base reg before transfer)
 
-    //I is always 0 in not optional instructions
-    result = result | (1 << 25);
+    U = 0 -> Offset added to base
+    U = 1 -> Offset subtracted from base
 
-    // bit 22 - 21 = 00 -- redundant
+    L = 0 -> Load
+    L = 1 -> Store
 
-    //always add offset - U will be 1 (DOUBLE CHECK this!)
-    result = result & ~(1 << 23);
+    Rn: base register
 
-    // bit 15 - 12 has Rd_number
-    result |= rd << 12;
-  
-    uint32_t expression;
+    Rd: source/destination register
 
-    // checking for numeric constant case
-    bool numeric_constant = false;
-    if(address[0] == '='){
-        numeric_constant = true;
-        expression = strtol(address+3,NULL,16); // convert hex to int
+    Offset: either 12 bit immediate value or a register (possibly shifted)
+    */
+
+    if (ADDRESS[0] == '=')
+    {
+        assert(instructions->mnemonic == LDR);
+
+        uint16_t expression;
+        STR_TO_INT(ADDRESS, expression);
+
+        //If the expression is less than 0xFF call mov rd, #expression
+        if (expression <= 0xFF)
+        {
+            instructions->mnemonic = MOV;
+            ADDRESS[0] = '#';
+            return data_process(instructions);
+        }
+
+        save_instruction(assembled_program, next_available_address, expression);
+        
+        uint32_t offset = *next_available_address - current_address;
+
+        *next_available_address += 4;
+
+        //CHANGE R15 TO PC
+        sprintf(instructions->opcodes[1], "[R15, %u]", offset);
+
+        return sdt_assembly(instructions, current_address, next_available_address, assembled_program);
     }
 
-    
-    enum Register_Names Rn = NULL; 
-    bool pre_index = false;
+    uint32_t result = 0;
+    enum Register_Names rd = convert_register(instructions->opcodes[0]);
 
-    // check if pre/post index if not numeric constant
-    if(!numeric_constant){
+    int num_bracket_opcodes = 0;
+    //Remove the last ']' from <expression>
+    instructions->opcodes[1][strlen(instructions->opcodes[1]) - 1] = '\0';
 
-        // determine register 
-        char* rn_pos;
-        rn_pos = strstr(address,"r");
-        rn_pos++;   //since register int is after r
-        Rn =(int) *rn_pos - ASCII_0; // since *rn_pos returns ascii value
+    //Tokenize the opcodes within []
+    char **bracket_opcodes = extract_opcodes(instructions->opcodes[1] + 1, &num_bracket_opcodes);
+    assert(num_bracket_opcodes);
 
-        char* hashtag_pos;
-        hashtag_pos = strstr(address,"#");
-    
-        if(hashtag_pos){
-            // to distinguish between [Rn,<#expression>] && [Rn],<#expression>
-            char* closing_bracket;
-            closing_bracket = strstr(address,"]");
-            
-            if(hashtag_pos < closing_bracket){
-                pre_index = true;
-                *closing_bracket = '\0'; //maybe unnecessary but to clearly indicate where number should stop
-            }else{
-                pre_index = false;
+    //Set the base register Rn
+    enum Register_Names rn = convert_register(bracket_opcodes[0]);
+
+    uint16_t offset = 0;
+
+    //Check for pre/post index
+    if (instructions->num_opcode == 2)
+    {
+        //Pre-Index
+
+        //Set bit 24(P) to 1
+        SET_BITS(24, 1);
+
+        if (num_bracket_opcodes > 1)
+        {
+            if (bracket_opcodes[1][0] == '#')
+            {
+                STR_TO_INT(bracket_opcodes[1], offset);
             }
-            
-            expression = strtol(hashtag_pos++,NULL,10); //DOUBLE CHECK
+            else
+            {
+                //Set bit 25(I) to 1
+                SET_BITS(25, 1);
 
-        }else{
-            // only pre_index has no #
-            pre_index = true; 
-            expression = 0;
+                //TODO optional
+            }
+        }
+    }
+    else
+    {
+        if (instructions->opcodes[2][0] == '#')
+        {
+            STR_TO_INT(bracket_opcodes[2], offset);
+        }
+        else
+        {
+            //Set bit 25(I) to 1
+            SET_BITS(25, 1);
+            //TODO optional
         }
     }
 
+    //Set bits 31 - 28 to Cond
+    SET_BITS(28, COND);
 
-    switch(instruction){
-        case LDR:
-        //Set L = 1 (bit 19)
-        result = (result >> 19) | 1;
+    //Set bits 27 - 26 to 01
+    SET_BITS(26, 1);
 
-        //address in form <=expression>
-        if(numeric_constant){
-            // if address is just a numeric constant - then pre indexed
-            pre_index = true;
+    //Set bit 25 to the I flag
+    //TODO
 
-            if(expression <= 0xFF){
-                // return mov instruction i.e mov r0 #0x42
-                char str_expression[5];
-                char input[] = "#";
-                strcpy(str_expression,address++);
-                strcat(input, str_expression);
-                return data_process(MOV,rd,input);
+    //Set bit 23 to the U flag
+    //TODO
 
-            }else{
-            // expression at end of assembled program
-            *next_available_address = expression;
-            int offset =  next_available_address - (current_address - 8); // -8 due to pipeline being two instructions behind
-            char newAddress[100] = "[";
-            char PC_str[] = get_reg(PC);
-            char offset_str[] = offset;
-            char closing_bracket[] = "]";
-            strcat(newAddress,PC_str);
-            strcat(newAddress,offset_str);
-            strcat(newAddress,closing_bracket);
+    //Set bits 22 - 21 to 0
 
-            return sdt_assembly(LDR,rd,newAddress,current_address++,next_available_address++);
-            }
-        }
-        break;
+    //Set bit 20 to the L flag
+    SET_BITS(20, instructions->mnemonic == LDR);
 
-        case STR:
-        //Set L = 0 (bit 19)
-        result = result & ~(1 << 19);
-        break;
-    }
+    //Set bits 19 - 16 to the Rn register
+    SET_BITS(16, rn);
 
+    //Set bits 15 - 12 to the Rd register
+    SET_BITS(12, rd);
 
-    if(pre_index){
-        // set the pre-index bit (bit 24)
-        result = (result >> 24) | 1; 
-    }else{
-        // zero the pre-index bit (bit 24)
-        result = (result >> 24) & 0; 
-    }
+    //Set bits 11 - 0 to offset
+    assert(offset <= UINT11_MAX);
+    SET_BITS(0, offset);
 
-    // set Rn to rn
-    result |= Rn << 16; 
-    //set offset to expression
-    result |= expression << 0;   
-
+    return result;
 }
