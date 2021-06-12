@@ -64,7 +64,29 @@ char** extract_opcodes(char* line, int *num_opcodes) {
         remove_whitespace(curr);
         opcodes[i] = curr;
     }
+
     *num_opcodes = i;
+
+    for (int i = 0; i < *num_opcodes; i++) { //case where , within []
+        if (opcodes[i][0] == '[' && opcodes[i][strlen(opcodes[i]) - 1] != ']') {
+            char *updated = calloc(strlen(opcodes[i]) + strlen(opcodes[i + 1]) + 2, sizeof(char));
+            strcat(updated,opcodes[i]);
+            strcat(updated, ",");
+            strcat(updated,opcodes[i + 1]);
+            free(opcodes[i]);
+            opcodes[i] = updated;
+            //move everything over and free last one
+            int j;
+            for (j = i + 1; j < *num_opcodes - 1; j++) {
+                opcodes[j] = realloc(opcodes[j], sizeof(opcodes[j + 1]));
+                strcpy(opcodes[j], opcodes[j + 1]);
+            }
+            free(opcodes[j]); //free the last
+            *num_opcodes -= 1;
+            i--;
+        }
+    }
+
     free(instruction);
     return opcodes;
 }
