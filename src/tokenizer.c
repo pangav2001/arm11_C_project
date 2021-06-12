@@ -107,6 +107,9 @@ enum Mnemonic extract_mnemonic(char **line)
 
 enum Register_Names convert_register(char *reg)
 {
+    if (strcmp(reg, "PC") == 0) {
+        return PC;
+    }
     reg++; //removes leading r
     return strtol(reg, NULL, 10);
 }
