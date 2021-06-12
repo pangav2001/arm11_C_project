@@ -182,6 +182,7 @@ void remove_whitespace(char* text) {
     for(int i = 0; text[i] == ' '; i++) {
             copy++;
     }
+    
     //remove from end
 //    int i;
 //    for (int i = strlen(copy) - 1; copy[i] == ' '; i--);
