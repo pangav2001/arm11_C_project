@@ -3,7 +3,7 @@
 void write_to_binary(char* fileName, uint32_t *data, int size)
 {
     FILE *outFile;
-    int32_t *buffer;
+    uint32_t *buffer;
 
     outFile = fopen(fileName, "wb");
 
@@ -13,7 +13,7 @@ void write_to_binary(char* fileName, uint32_t *data, int size)
         exit(1);
     }
 
-    buffer = calloc(1, sizeof(int32_t));
+    buffer = calloc(1, sizeof(uint32_t));
     if (buffer == NULL)
     {
         fputs("Memory error!", stderr);
