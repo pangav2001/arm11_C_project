@@ -107,6 +107,9 @@ enum Mnemonic extract_mnemonic(char **line)
 
 enum Register_Names convert_register(char *reg)
 {
+    if (strcmp(reg, "PC") == 0) {
+        return PC;
+    }
     reg++; //removes leading r
     return strtol(reg, NULL, 10);
 }
@@ -179,10 +182,13 @@ void remove_whitespace(char* text) {
     for(int i = 0; text[i] == ' '; i++) {
             copy++;
     }
+    
     //remove from end
-    int i;
-    for (i = 0; copy[i] && copy[i] != ' '; i++);
-    copy[i] = '\0';
+//    int i;
+//    for (int i = strlen(copy) - 1; copy[i] == ' '; i--);
+    //for (i = 0; copy[i] && copy[i] != ' '; i++);
+//    copy[i] = '\0';
     strcpy(text, copy);
+    free(copy);
 }
 
