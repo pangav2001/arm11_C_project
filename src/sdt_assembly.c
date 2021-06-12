@@ -39,7 +39,7 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
     {
         assert(instructions->mnemonic == LDR);
 
-        uint16_t expression;
+        uint32_t expression;
         expression = string_to_int(ADDRESS + 1);
 
         //If the expression is less than 0xFF call mov rd, #expression
@@ -52,12 +52,13 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
 
         save_instruction(assembled_program, *next_available_address, expression);
         
-        uint16_t offset = *next_available_address - current_address;
+        //Subtracted 8 for the ARM pipeline
+        uint16_t offset = *next_available_address - current_address - 8;
 
         *next_available_address += 4;
 
         //CHANGE R15 TO PC
-        sprintf(instructions->opcodes[1], "[R15, %u]", offset);
+        sprintf(instructions->opcodes[1], "[R15, #%u]", offset);
 
         return sdt_assembly(instructions, current_address, next_available_address, assembled_program);
     }
@@ -105,7 +106,7 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
     {
         if (instructions->opcodes[2][0] == '#')
         {
-            offset = (bracket_opcodes[2] + 1);
+            offset = string_to_int(bracket_opcodes[2] + 1);
         }
         else
         {
