@@ -139,7 +139,7 @@ uint32_t data_process(tokens_t *instructions)
         }
 
         //Set bits 11 - 4 to shift
-        SET_BITS(4, result);
+        SET_BITS(4, shift);
 
         //Set bits 3 - 0 to the Rm register
         SET_BITS(0, rm);
