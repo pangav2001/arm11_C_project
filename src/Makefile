@@ -11,7 +11,7 @@ all: assemble #emulate
 
 
 #Build the assembler executable
-assemble: assemble.o multiply.o tokenizer.o data_processing.o branch.o hash_table.o output.o
+assemble: assemble.o multiply.o tokenizer.o data_processing.o branch.o hash_table.o output.o sdt_assembly.o
 
 tokenizer.o: tokenizer.h
 
@@ -25,6 +25,7 @@ hash_table.o: hash_table.h
 
 output.o: output.h
 
+sdt_assembly.o: sdt_assembly.h
 
 #Build the emulator executable
 #emulate: emulate.o
