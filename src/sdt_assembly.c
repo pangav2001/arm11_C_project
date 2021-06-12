@@ -141,4 +141,6 @@ uint32_t sdt_assembly(tokens_t *instructions, uint32_t current_address, uint32_t
     //Set bits 11 - 0 to offset
     assert(offset <= UINT11_MAX);
     SET_BITS(0, offset);
+
+    return result;
 }
