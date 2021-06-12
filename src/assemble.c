@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 
   //Second Pass
 
-  //uint16_t start_location_for_data = address; //This is the current location from where we can store data
+  uint16_t start_location_for_data = address; //This is the current location from where we can store data
   //such as offsets too large to fit into the instruction
 
   uint32_t *assembled_program = calloc(2 * num_instructions, sizeof(uint32_t)); //Cannot have more than 2* in output
@@ -43,12 +43,14 @@ int main(int argc, char **argv)
       if (tokens->mnemonic <= MOV)
       {
         //Data Processing
+        save_instruction(assembled_program, address, data_process(tokens));
         printf("DP\n");
         printf("%u\n", data_process(tokens));
       }
       else if (tokens->mnemonic <= MLA)
       {
         //Multiply
+        save_instruction(assembled_program, address , multiply(tokens));
         printf("MUL\n");
         printf("%u\n", multiply(tokens));
       }
@@ -60,6 +62,7 @@ int main(int argc, char **argv)
       else if (tokens->mnemonic <= B)
       {
         //branch
+        save_instruction(assembled_program, address, branch_assembly(tokens));
         printf("B\n");
         printf("%u\n", branch_assembly(tokens, address, hash_table));
       }
@@ -146,4 +149,13 @@ char **read_in_prog(char *filename, int *num_instr)
   }
   instructions[num_instructions] = NULL;
   return instructions;
+}
+
+void save_instruction(uint32_t *assembled_program, uint16_t address ,uint32_t data) {
+  assembled_program[address] = data;
+}
+
+void write_reserved_memory(uint32_t *assembled_program, int *next_avaliable_address, uint32_t reserved_data) {
+  assembled_program[*next_avaliable_address] = reserved_data;
+  *next_avaliable_address += 4;
 }
