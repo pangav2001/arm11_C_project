@@ -131,7 +131,7 @@ uint32_t data_process(tokens_t *instructions)
         if (instructions->num_opcode > operand2_start + 1)
         {
             enum Shift_Types shift_type = convert_shift_types(OPERAND2(1));
-            if (OPERAND2(2)[0] == '#')
+            if (OPERAND2(1)[0] == '#')
             {
                 //Set bits 11 - 7 to the immediate value
                 shift = string_to_int(OPERAND2(2) + 1);
