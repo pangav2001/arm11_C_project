@@ -8,7 +8,7 @@
 #define ADDRESS instructions->opcodes[1]
 
 // address - maybe char*
-uint32_t sdt_assembly(tokens_t *instructions, int current_address, int *next_available_address)
+uint32_t sdt_assembly(tokens_t *instructions, uint32_t current_address, uint32_t *next_available_address)
 {
 
     /*

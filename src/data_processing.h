@@ -25,4 +25,7 @@ uint32_t data_process(tokens_t *instructions);
         }                                \
     } while (0)
 
+
+#define SET_BITS(LSB, VAL) result |= (VAL) << (LSB)
+
 #endif
