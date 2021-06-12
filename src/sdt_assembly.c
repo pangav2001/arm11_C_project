@@ -12,7 +12,7 @@
 #define ADDRESS instructions->opcodes[1]
 
 // address - maybe char*
-uint32_t sdt_assembly(tokens_t *instructions, uint32_t current_address, uint32_t *next_available_address, uint32_t *assembled_program)
+uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t *next_available_address, uint32_t *assembled_program)
 {
 
     /*
@@ -50,9 +50,9 @@ uint32_t sdt_assembly(tokens_t *instructions, uint32_t current_address, uint32_t
             return data_process(instructions);
         }
 
-        save_instruction(assembled_program, next_available_address, expression);
+        save_instruction(assembled_program, *next_available_address, expression);
         
-        uint32_t offset = *next_available_address - current_address;
+        uint16_t offset = *next_available_address - current_address;
 
         *next_available_address += 4;
 
