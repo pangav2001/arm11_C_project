@@ -5,6 +5,7 @@
 #include <stdio.h>
 
 #define COND 14
+#define UINT4_MAX 15
 #define UINT5_MAX 31
 
 #define OPERAND2(I) instructions->opcodes[operand2_start + I]
@@ -99,12 +100,28 @@ uint32_t data_process(tokens_t *instructions)
     if (OPERAND2(0)[0] == '#')
     {
         uint32_t immediate_result;
+        uint8_t rotate = 0;
         
         immediate_result = string_to_int(OPERAND2(0) + 1);
-        //STR_TO_INT(OPERAND2(0), immediate_result);
+        
+        int right_shifts = 0;
+        if (immediate_result > UINT8_MAX)
+        {
+            while (immediate_result % 4 == 0)
+            {
+                right_shifts += 2;
+                immediate_result >>= 2;
+            }
+
+        rotate = (32 - right_shifts) / 2;
+        }
 
         assert(immediate_result <= UINT8_MAX);
+        assert(rotate <= UINT4_MAX);
+
+
         //Set the right rotation to zero and immediate value to the result
+        SET_BITS(8, rotate);
         SET_BITS(0, immediate_result);
     }
     else
@@ -117,7 +134,7 @@ uint32_t data_process(tokens_t *instructions)
             if (OPERAND2(2)[0] == '#')
             {
                 //Set bits 11 - 7 to the immediate value
-                STR_TO_INT(OPERAND2(2), shift);
+                shift = string_to_int(OPERAND2(2) + 1);
                 assert(shift <= UINT5_MAX);
             }
             else

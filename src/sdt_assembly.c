@@ -40,7 +40,7 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
         assert(instructions->mnemonic == LDR);
 
         uint16_t expression;
-        STR_TO_INT(ADDRESS, expression);
+        expression = string_to_int(ADDRESS + 1);
 
         //If the expression is less than 0xFF call mov rd, #expression
         if (expression <= 0xFF)
@@ -90,7 +90,7 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
         {
             if (bracket_opcodes[1][0] == '#')
             {
-                STR_TO_INT(bracket_opcodes[1], offset);
+                offset = string_to_int(bracket_opcodes[1] + 1);
             }
             else
             {
@@ -105,7 +105,7 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
     {
         if (instructions->opcodes[2][0] == '#')
         {
-            STR_TO_INT(bracket_opcodes[2], offset);
+            offset = (bracket_opcodes[2] + 1);
         }
         else
         {

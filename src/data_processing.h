@@ -12,20 +12,6 @@
 // <tst, teq, cmp> Rn, Operand2
 uint32_t data_process(tokens_t *instructions);
 
-#define STR_TO_INT(S, I)                 \
-    do                                   \
-    {                                    \
-        if (S[1] == '0' && S[2] == 'x')  \
-        {                                \
-            I = strtol(S + 3, NULL, 16); \
-        }                                \
-        else                             \
-        {                                \
-            I = strtol(S + 1, NULL, 10); \
-        }                                \
-    } while (0)
-
-
 #define SET_BITS(LSB, VAL) result |= (VAL) << (LSB)
 
 #endif
