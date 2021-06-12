@@ -7,6 +7,7 @@
 #include "sdt_assembly.h"
 #include "multiply.h"
 #include "output.h"
+#include "assemble.h"
 
 char **read_in_prog(char *filename, int *num_instr);
 

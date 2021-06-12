@@ -129,6 +129,14 @@ enum Mnemonic convert_mnemonic(char *mnemonic)
     return -1;
 }
 
+uint32_t string_to_int(char *number) {
+    if (number[0] == '0' && number[1] == 'x') { //base16 case
+        return strtol(number + 2, NULL, 16);
+    }
+    
+    return strtol(number, NULL, 10);
+}
+
 void free_opcode(char **opcodes, int num_opcode) {
     for (int i = 0; i < num_opcode; i++)
     {
@@ -155,3 +163,4 @@ void remove_whitespace(char* text) {
     copy[i] = '\0';
     strcpy(text, copy);
 }
+

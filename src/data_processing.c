@@ -98,8 +98,10 @@ uint32_t data_process(tokens_t *instructions)
 
     if (OPERAND2(0)[0] == '#')
     {
-        uint16_t immediate_result;
-        STR_TO_INT(OPERAND2(0), immediate_result);
+        uint32_t immediate_result;
+        
+        immediate_result = string_to_int(OPERAND2(0) + 1);
+        //STR_TO_INT(OPERAND2(0), immediate_result);
 
         assert(immediate_result <= UINT8_MAX);
         //Set the right rotation to zero and immediate value to the result
