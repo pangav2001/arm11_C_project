@@ -137,7 +137,7 @@ void table_insert(Hash_Table *hash_table, char *key, uint32_t value)
 }
 
 // search the hash table for the entry with the given key
-// and return its value; if there's no such key, return 0
+// and return its value; if there's no such key, return -1
 uint32_t table_search(Hash_Table *hash_table, char *key)
 {
     int index = hash(key, hash_table->size);
