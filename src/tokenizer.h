@@ -81,6 +81,8 @@ enum Register_Names convert_register(char *reg);
 
 enum Mnemonic convert_mnemonic(char *mnemonic);
 
+uint32_t string_to_int(char *number);
+
 void free_opcode(char **opcodes, int num_opcode);
 
 void free_tokens(tokens_t *tokens_t);
