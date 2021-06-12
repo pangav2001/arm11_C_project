@@ -61,6 +61,7 @@ char** extract_opcodes(char* line, int *num_opcodes) {
         //printf("%s\n", token);
         char *curr = calloc(1, strlen(token));
         strcpy(curr, token);
+        remove_whitespace(curr);
         opcodes[i] = curr;
     }
     *num_opcodes = i;
@@ -140,4 +141,17 @@ void free_tokens(tokens_t *tokens)
 {
     free_opcode(tokens->opcodes, tokens->num_opcode);
     free(tokens);
+}
+
+void remove_whitespace(char* text) {
+    char* copy = strdup(text);
+    //Remove from start
+    for(int i = 0; text[i] == ' '; i++) {
+            copy++;
+    }
+    //remove from end
+    int i;
+    for (i = 0; copy[i] && copy[i] != ' '; i++);
+    copy[i] = '\0';
+    strcpy(text, copy);
 }
