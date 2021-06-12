@@ -85,4 +85,6 @@ void free_opcode(char **opcodes, int num_opcode);
 
 void free_tokens(tokens_t *tokens_t);
 
+void remove_whitespace(char* text);
+
 #endif
