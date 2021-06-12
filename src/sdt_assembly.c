@@ -125,7 +125,7 @@ uint32_t sdt_assembly(tokens_t *instructions, uint32_t current_address, uint32_t
     //TODO
 
     //Set bit 23 to the U flag
-    //TODO
+    SET_BITS(23, 1); //TEMP
 
     //Set bits 22 - 21 to 0
 
