@@ -1,6 +1,7 @@
 #include "sdt_assembly.h"
 #include "data_processing.h"
 #include "tokenizer.h"
+#include "assemble.h"
 #include "emulate_src/decode.h"
 #include <assert.h>
 
@@ -11,7 +12,7 @@
 #define ADDRESS instructions->opcodes[1]
 
 // address - maybe char*
-uint32_t sdt_assembly(tokens_t *instructions, uint32_t current_address, uint32_t *next_available_address)
+uint32_t sdt_assembly(tokens_t *instructions, uint32_t current_address, uint32_t *next_available_address, uint32_t *assembled_program)
 {
 
     /*
@@ -48,6 +49,17 @@ uint32_t sdt_assembly(tokens_t *instructions, uint32_t current_address, uint32_t
             ADDRESS[0] = '#';
             return data_process(instructions);
         }
+
+        save_instruction(assembled_program, next_available_address, expression);
+        
+        uint32_t offset = *next_available_address - current_address;
+
+        *next_available_address += 4;
+
+        //CHANGE R15 TO PC
+        sprintf(instructions->opcodes[1], "[PC, %u]", offset);
+
+        return sdt_assembly(instructions, current_address, next_available_address, assembled_program);
     }
 
     uint32_t result = 0;

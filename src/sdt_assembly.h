@@ -10,6 +10,6 @@
 #include "emulate_src/registers.h"
 #include "emulate_src/memory.h"
 
-uint32_t sdt_assembly(tokens_t* instructions, uint32_t current_address, uint32_t *next_available_address);
+uint32_t sdt_assembly(tokens_t* instructions, uint32_t current_address, uint32_t *next_available_address, uint32_t *assembled_program);
 
 #endif
