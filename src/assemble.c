@@ -90,6 +90,7 @@ int main(int argc, char **argv)
       }
       else if (tokens->mnemonic == ANDEQ)
       {
+        save_instruction(assembled_program, address, 0);
       }
       else
       {
