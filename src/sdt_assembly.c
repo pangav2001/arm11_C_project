@@ -7,7 +7,7 @@
 
 #define COND 14 // binary 1110 (i.e instruction always happens)
 #define ASCII_0 48
-#define UINT11_MAX 2047
+#define UINT12_MAX 4095
 
 #define ADDRESS instructions->opcodes[1]
 
@@ -22,11 +22,11 @@ uint32_t sdt_assembly(tokens_t *instructions, uint32_t current_address, uint32_t
     P = 0 -> Post_indexing (offset is add/sub to base reg after transfer)
     P = 1 -> Pre_indexing (offset is add/sub to base reg before transfer)
 
-    U = 0 -> Offset added to base
-    U = 1 -> Offset subtracted from base
+    U = 0 -> Offset subtracted to base
+    U = 1 -> Offset added from base
 
-    L = 0 -> Load
-    L = 1 -> Store
+    L = 0 -> Store
+    L = 1 -> Load
 
     Rn: base register
 
@@ -139,7 +139,7 @@ uint32_t sdt_assembly(tokens_t *instructions, uint32_t current_address, uint32_t
     SET_BITS(12, rd);
 
     //Set bits 11 - 0 to offset
-    assert(offset <= UINT11_MAX);
+    assert(offset <= UINT12_MAX);
     SET_BITS(0, offset);
 
     return result;
