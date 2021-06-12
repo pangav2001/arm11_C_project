@@ -57,8 +57,7 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
 
         *next_available_address += 4;
 
-        //CHANGE R15 TO PC
-        sprintf(instructions->opcodes[1], "[R15, #%u]", offset);
+        sprintf(instructions->opcodes[1], "[PC, #%u]", offset);
 
         return sdt_assembly(instructions, current_address, next_available_address, assembled_program);
     }
