@@ -1,5 +1,6 @@
 #include "branch.h"
 #include <assert.h>
+#include "data_processing.h"
 // #include "emulate_src/decode.h"
 
 #define EXPRESSION instructions->opcodes[0]
@@ -23,15 +24,15 @@ int32_t extract_bits(int32_t data, unsigned int start, unsigned int end)
 
 uint32_t branch_assembly(tokens_t *instructions, int16_t current_address, Hash_Table *table)
 {
-    uint32_t result;
+    uint32_t result = 0;
+    assert(instructions->mnemonic >= BEQ && instructions->mnemonic <= B);
 
     //Set bits 31 - 28 to Cond
-    result = instructions->mnemonic - BRANCH_INDEX;
-    assert(result >= BEQ - BRANCH_INDEX && result <= B - BRANCH_INDEX);
+    SET_BITS(28, instructions->mnemonic - BRANCH_INDEX);
+
 
     //Set bits 27 - 25 to 101 and 24 to 0
-    result <<= 4;
-    result |= B_1010;
+    SET_BITS(24, B_1010);
 
     //Calculate offset
     int16_t target_address = 0;
@@ -43,8 +44,7 @@ uint32_t branch_assembly(tokens_t *instructions, int16_t current_address, Hash_T
     offset >>= 2;
 
     //Set bits 23 - 0 to offset
-    result <<= 24;
-    result |= extract_bits(offset, 0, 23);
+    SET_BITS(0, extract_bits(offset, 0, 23));
 
     return result;
 }
