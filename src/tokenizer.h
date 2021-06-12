@@ -75,6 +75,8 @@ tokens_t *tokenize_instruction(char *line);
 
 enum Mnemonic extract_mnemonic(char **line);
 
+char** extract_opcodes(char* line, int *num_opcodes);
+
 enum Register_Names convert_register(char *reg);
 
 enum Mnemonic convert_mnemonic(char *mnemonic);

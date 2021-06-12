@@ -42,7 +42,15 @@ tokens_t *tokenize_instruction(char *line)
     tokens_t *tokens = calloc(1, sizeof(tokens_t));
 
     enum Mnemonic mnemonic = extract_mnemonic(&line);
+    
+    int num_opcodes;
+    tokens->opcodes = extract_opcodes(line, &num_opcodes);
+    tokens->num_opcode = num_opcodes;
+    tokens->mnemonic = mnemonic;
+    return tokens;
+}
 
+char** extract_opcodes(char* line, int *num_opcodes) {
     char *instruction = strdup(line); //Had issues with line not being modifiable before, maybe remove after testing with actual buffer
     char *token;
     char *rest = instruction;
@@ -55,12 +63,9 @@ tokens_t *tokenize_instruction(char *line)
         strcpy(curr, token);
         opcodes[i] = curr;
     }
-    tokens->mnemonic = mnemonic;
-    tokens->num_opcode = i;
-    tokens->opcodes = opcodes;
-
+    *num_opcodes = i;
     free(instruction);
-    return tokens;
+    return opcodes;
 }
 
 //extracts the mnemonic and updates the pointer to after the first " ";
