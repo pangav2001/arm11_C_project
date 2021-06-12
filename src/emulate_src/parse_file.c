@@ -43,5 +43,7 @@ int32_t read_in_binary(char* fileName)
     
     fclose(inFile);
 
+    free(buffer);
+
     return fileSize;
 }
