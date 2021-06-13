@@ -32,7 +32,7 @@ static uint16_t inline calculate_offset(char **expression, uint32_t *result, uin
 
     //Set bit 23(U) to 1 since number is positive
     SET_BITS(*result, 23, 1);
-    
+
     //Set bit 25(I) to 1
     SET_BITS(*result, 25, 1);
 
@@ -142,7 +142,8 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
     }
     else
     {
-        calculate_offset(instructions->opcodes + 2, &result, instructions->num_opcode - 1);
+        //Post-Index
+        offset = calculate_offset(instructions->opcodes + 2, &result, instructions->num_opcode - 1);
     }
 
     //Set bits 31 - 28 to Cond
