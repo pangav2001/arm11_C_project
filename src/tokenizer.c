@@ -189,6 +189,6 @@ void remove_whitespace(char* text) {
     //for (i = 0; copy[i] && copy[i] != ' '; i++);
 //    copy[i] = '\0';
     strcpy(text, copy);
-    free(copy);
+//    free(copy);
 }
 
