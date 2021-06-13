@@ -32,8 +32,6 @@ unsigned long hash(char *str, int modulo)
         hash = ((hash << 5) + hash) ^ c; // hash(i - 1) * 33 ^ str[i]
 
     return hash % modulo;
-
-    //return atoi(str) % 5;
 }
 
 // allocate memory for a new entry and copy the given
@@ -248,15 +246,6 @@ List_Node *list_insert(List_Node *linked_list, Entry *entry)
     }
 }
 
-// List_Node *list_insert(List_Node **linked_list, Entry *entry)
-// {
-//     List_Node *node = (List_Node *)malloc(sizeof(List_Node));
-
-//     node->entry = entry;
-//     node->next = *linked_list;
-//     *linked_list = node;
-// }
-
 // pop the head of the list and return its contents
 Entry *list_pop(List_Node **linked_list)
 {
@@ -403,29 +392,3 @@ void table_remove(Hash_Table *hash_table, char *key)
         }
     }
 }
-
-// int main()
-// {
-//     Hash_Table *hash_table = new_table(SIZE);
-//     table_insert(hash_table, "1", 10);
-//     table_insert(hash_table, "2", 20);
-//     table_insert(hash_table, "3", 30);
-//     table_insert(hash_table, "4", 40);
-//     table_insert(hash_table, "5", 50);
-//     table_insert(hash_table, "7", 60);
-//     table_insert(hash_table, "12", 140);
-//     print_table(hash_table);
-//     table_remove(hash_table, "3");
-//     print_table(hash_table);
-//     table_remove(hash_table, "2");
-//     print_table(hash_table);
-//     table_remove(hash_table, "1");
-//     table_remove(hash_table, "4");
-//     table_remove(hash_table, "5");
-//     table_remove(hash_table, "7");
-//     print_table(hash_table);
-//     table_remove(hash_table, "12");
-//     print_table(hash_table);
-//     free_table(hash_table);
-//     return 0;
-// }

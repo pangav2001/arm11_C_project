@@ -5,9 +5,6 @@
 #define COND 14
 #define B_1001 9
 
-// mul, Rd, Rm, Rs
-// mla Rd, Rm, Rs, Rn
-
 uint32_t assemble_multiply(tokens_t *instructions)
 {
     assert(instructions->num_opcode > 2);

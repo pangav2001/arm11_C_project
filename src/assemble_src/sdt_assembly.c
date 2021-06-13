@@ -58,27 +58,6 @@ static uint16_t inline calculate_offset(char **expression, uint32_t *result, uin
 
 uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t *next_available_address, uint32_t *assembled_program)
 {
-
-    /*
-    I = 0 -> Offset is immediate offset
-    I = 1 -> Offset is shifted register
-
-    P = 0 -> Post_indexing (offset is add/sub to base reg after transfer)
-    P = 1 -> Pre_indexing (offset is add/sub to base reg before transfer)
-
-    U = 0 -> Offset subtracted to base
-    U = 1 -> Offset added from base
-
-    L = 0 -> Store
-    L = 1 -> Load
-
-    Rn: base register
-
-    Rd: source/destination register
-
-    Offset: either 12 bit immediate value or a register (possibly shifted)
-    */
-
     if (ADDRESS[0] == '=')
     {
         assert(instructions->mnemonic == LDR);

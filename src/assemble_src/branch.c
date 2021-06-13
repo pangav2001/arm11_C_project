@@ -1,7 +1,7 @@
 #include "headers/branch.h"
 #include <assert.h>
 #include "headers/data_processing.h"
-// #include "emulate_src/decode.h"
+#include "../emulate_src/headers/decode.h"
 
 #define EXPRESSION instructions->opcodes[0]
 

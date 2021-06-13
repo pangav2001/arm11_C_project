@@ -5,43 +5,6 @@
 
 #define NUM_REG 17
 
-/* Using a 2D array to represent each byte of each register seperately
-
-#define BYTE_REG 4
-
-static int8_t **registers = NULL;
-
-
-void initialize(void)
-{
-    if (registers != NULL)
-    {
-        registers = (int8_t **)calloc(NUM_REG, sizeof(int8_t *));
-
-        assert(registers != NULL);
-
-        registers[0] = (int8_t *)calloc(NUM_REG * BYTE_REG, sizeof(int8_t));
-
-        if (!registers[0])
-        {
-            free(registers);
-            printf("Throw some error *****");
-            return; //throw some error or something
-        }
-
-        for (int i = 1; i < NUM_REG; i++)
-        {
-            registers[i] = registers[i - 1] + BYTE_REG;
-        }
-    }
-    else
-    {
-        printf("Registers are already initialized");
-    }
-}
-
-*/
-
 static int32_t *registers = NULL;
 
 void initialize_registers(void) {
