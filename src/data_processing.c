@@ -30,7 +30,6 @@ enum Shift_Types convert_shift_types(char *str)
     exit(1);
 }
 
-
 uint8_t calculate_register_shift(char *epxression)
 {
     uint8_t shift = 0;
@@ -42,36 +41,32 @@ uint8_t calculate_register_shift(char *epxression)
     enum Shift_Types shift_type = convert_shift_types(shift_type_string);
     free(shift_type_string);
 
-    if (epxression[0] == '#')
+    if (rs_string[0] == '#')
     {
-        //Set bits 11 - 7 to the immediate value
-        shift = string_to_int(epxression + 1);
-        assert(shift <= UINT5_MAX);
+        //Set bits 11 - 7 (7 - 3 of shift) to the immediate value
+        uint8_t immediate_val = string_to_int(rs_string + 1);
+        assert(immediate_val <= UINT5_MAX);
+        SET_BITS(shift, 3, immediate_val);
     }
     else
     {
-        //Set bits 11 - 8 to the Rs register
+        //Set bits 11 - 8 (7 - 4 of shift) to the Rs register
         enum Register_Names rs = convert_register(rs_string);
-        free(rs_string);
 
         assert(rs >= R0 && rs <= CPSR);
-        shift = rs;
-
-        //Set bit 7 to 0
-        shift <<= 1;
+        SET_BITS(shift, 4, rs);
     }
 
-    //Set bits 6 - 5 to the shift type
-    shift <<= 2;
-    shift |= shift_type;
+    //Set bits 6 - 5 (2 - 1 of shift) to the shift type
+    SET_BITS(shift, 1, shift_type);
 
-    //Set bit 4 to the shift type flag
-    shift <<= 1;
-    shift |= epxression[0] != '#';
+    //Set bit 4 (0 of shift) to the shift type flag
+    SET_BITS(shift, 0, rs_string[0] != '#');
+
+    free(rs_string);
 
     return shift;
 }
-
 
 uint32_t data_process(tokens_t *instructions)
 {
