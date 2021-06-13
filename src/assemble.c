@@ -1,13 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "headers/tokenizer.h"
-#include "headers/data_processing.h"
-#include "headers/branch.h"
-#include "headers/sdt_assembly.h"
-#include "headers/multiply.h"
-#include "headers/output.h"
-#include "headers/assemble.h"
+#include "assemble_src/headers/tokenizer.h"
+#include "assemble_src/headers/data_processing.h"
+#include "assemble_src/headers/branch.h"
+#include "assemble_src/headers/sdt_assembly.h"
+#include "assemble_src/headers/multiply.h"
+#include "assemble_src/headers/output.h"
+#include "assemble_src/headers/assemble.h"
 
 char **read_in_prog(char *filename, int *num_instr);
 
