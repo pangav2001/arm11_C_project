@@ -111,41 +111,31 @@ char **read_in_prog(char *filename, int *num_instr)
   char **instructions;
 
   if ((input_file = fopen(filename, "r")) == NULL)
-    {
-      perror("input.txt");
-      exit(1);
-    }
-
-  for (int i = 0; i < 2; i++)
   {
-    switch (i)
+    perror("input.txt");
+    exit(1);
+  }
+
+  //Count instr
+  instructions = calloc(1000, sizeof(char *)); //to allow to be null terminated
+  int j = 0;
+  while (fgets(buffer, sizeof(buffer), input_file) != NULL)
+  {
+    if (buffer[0] != '\n')
     {
-    case 0:
-      //Count instr
-      while (fgets(buffer, sizeof(buffer), input_file) != NULL)
-      {
-        if (buffer[0] != '\n')
-        {
-          num_instructions++;
-        }
-      }
-      break;
-    case 1:
-      rewind(input_file);
-      *num_instr = num_instructions;
-      instructions = calloc(num_instructions + 1, sizeof(char *)); //to allow to be null terminated
-      int j = 0;
-      while (fgets(buffer, sizeof(buffer), input_file) != NULL)
-      {
-        //int tst = strlen(buffer);
-        instructions[j] = calloc(strlen(buffer), sizeof(char));
-        strncpy(instructions[j], buffer, strlen(buffer));
-        instructions[j][strlen(buffer) - 1] = '\0'; //remove \n
-        j++;
-      }
-      break;
+      printf("buffer: %s", buffer);
+      num_instructions++;
+      instructions[j] = calloc(strlen(buffer), sizeof(char));
+      strncpy(instructions[j], buffer, strlen(buffer));
+      instructions[j][strlen(buffer) - 1] = '\0'; //remove \n
+      j++;
     }
   }
+  *num_instr = num_instructions;
+  instructions = realloc(instructions, (num_instructions + 1) * sizeof(char *));
+
+  printf("Num of instructions: %d\n", num_instructions);
+
   instructions[num_instructions] = NULL;
   fclose(input_file);
   return instructions;
