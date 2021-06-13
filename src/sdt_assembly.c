@@ -11,7 +11,32 @@
 
 #define ADDRESS instructions->opcodes[1]
 
-// address - maybe char*
+static uint16_t inline calculate_offset(char *expression, uint32_t *result)
+{
+
+    if (expression[0] == '#')
+    {
+        if (expression[1] == '-' || expression[1] == '+')
+        {
+            //Set bit 23(U) to 1 if the number is positive
+            SET_BITS(*result, 23, expression[1] == '+');
+
+            return string_to_int(expression + 2);
+        }
+
+        //Set bit 23(U) to 1 since number is positive
+        SET_BITS(*result, 23, 1);
+
+        return string_to_int(expression + 1);
+    }
+
+    //Set bit 25(I) to 1
+    SET_BITS(*result, 25, 1);
+    return 0;
+
+    //TODO optional
+}
+
 uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t *next_available_address, uint32_t *assembled_program)
 {
 
@@ -84,77 +109,28 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
         //Pre-Index
 
         //Set bit 24(P) to 1
-        SET_BITS(24, 1);
+        SET_BITS(result, 24, 1);
 
         if (num_bracket_opcodes > 1)
         {
-            /***************************SAME FUNCTIONS*************************/
-            if (bracket_opcodes[1][0] == '#')
-            {
-                if (bracket_opcodes[1][1] == '-' || bracket_opcodes[1][1] == '+')
-                {
-                    offset = string_to_int(bracket_opcodes[1] + 2);
-
-                    //Set bit 23(U) to 1 if the number is positive
-                    SET_BITS(23, bracket_opcodes[1][1] == '+');
-                }
-                else
-                {
-                    //Set bit 23(U) to 1 since number is positive
-                    SET_BITS(23, 1);
-
-                    offset = string_to_int(bracket_opcodes[1] + 1);
-                }
-            }
-            else
-            {
-                //Set bit 25(I) to 1
-                SET_BITS(25, 1);
-
-                //TODO optional
-            }
-            /***************************SAME FUNCTIONS*************************/
+            offset = calculate_offset(bracket_opcodes[1], &result);
         }
         else
         {
             //Set bit 23(U) to 1 since number is positive
-            SET_BITS(23, 1);
+            SET_BITS(result, 23, 1);
         }
     }
     else
     {
-        /***************************SAME FUNCTIONS*************************/
-        if (instructions->opcodes[2][0] == '#')
-        {
-            if (bracket_opcodes[2][1] == '-' || bracket_opcodes[2][1] == '+')
-            {
-                //Set bit 23(U) to 1 if the number is positive
-                SET_BITS(23, bracket_opcodes[2][1] == '+');
-
-                offset = string_to_int(bracket_opcodes[2] + 2);
-            }
-            else
-            {
-                //Set bit 23(U) to 1 since number is positive
-                SET_BITS(23, 1);
-
-                offset = string_to_int(bracket_opcodes[2] + 1);
-            }
-        }
-        else
-        {
-            //Set bit 25(I) to 1
-            SET_BITS(25, 1);
-            //TODO optional
-        }
-        /***************************SAME FUNCTIONS*************************/
+        calculate_offset(bracket_opcodes[2], &result);
     }
 
     //Set bits 31 - 28 to Cond
-    SET_BITS(28, COND);
+    SET_BITS(result, 28, COND);
 
     //Set bits 27 - 26 to 01
-    SET_BITS(26, 1);
+    SET_BITS(result, 26, 1);
 
     //Set bit 25 to the I flag
     //TODO
@@ -162,17 +138,17 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
     //Set bits 22 - 21 to 0
 
     //Set bit 20 to the L flag
-    SET_BITS(20, instructions->mnemonic == LDR);
+    SET_BITS(result, 20, instructions->mnemonic == LDR);
 
     //Set bits 19 - 16 to the Rn register
-    SET_BITS(16, rn);
+    SET_BITS(result, 16, rn);
 
     //Set bits 15 - 12 to the Rd register
-    SET_BITS(12, rd);
+    SET_BITS(result, 12, rd);
 
     //Set bits 11 - 0 to offset
     assert(offset <= UINT12_MAX);
-    SET_BITS(0, offset);
+    SET_BITS(result, 0, offset);
 
     return result;
 }
