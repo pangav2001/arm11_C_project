@@ -130,7 +130,14 @@ uint32_t data_process(tokens_t *instructions)
         uint8_t shift = 0;
         if (instructions->num_opcode > operand2_start + 1)
         {
-            enum Shift_Types shift_type = convert_shift_types(OPERAND2(1));
+            //Change magic numbers
+            char *shift_type_string = malloc(5 * sizeof(char));
+            char *rs_string = malloc(5 * sizeof(char));
+
+            sscanf(OPERAND2(1), "%s %s", shift_type_string, rs_string);
+            enum Shift_Types shift_type = convert_shift_types(shift_type_string);
+            free(shift_type_string);
+
             if (OPERAND2(1)[0] == '#')
             {
                 //Set bits 11 - 7 to the immediate value
@@ -140,7 +147,9 @@ uint32_t data_process(tokens_t *instructions)
             else
             {
                 //Set bits 11 - 8 to the Rs register
-                enum Register_Names rs = convert_register(OPERAND2(2));
+                enum Register_Names rs = convert_register(rs_string);
+                free(rs_string);
+
                 assert(rs >= R0 && rs <= CPSR);
                 shift = rs;
 
@@ -154,7 +163,7 @@ uint32_t data_process(tokens_t *instructions)
 
             //Set bit 4 to the shift type flag
             shift <<= 1;
-            shift |= OPERAND2(2)[0] != '#';
+            shift |= OPERAND2(1)[0] != '#';
         }
 
         //Set bits 11 - 4 to shift
