@@ -78,44 +78,53 @@ int main(int argc, char **argv)
         // {
         //   printf("%s\n", tokens->opcodes[i]);
         // }
-        tokens_t *tokens_lsl = calloc(1, sizeof(tokens_t));
-        tokens_lsl->mnemonic = MOV;
-        tokens_lsl->num_opcode = tokens->num_opcode + 1;
-        // tokens->mnemonic = MOV;
-        // tokens->num_opcode += 2;
-        char *rn = calloc(strlen(tokens->opcodes[0]), sizeof(char));
-        strcpy(rn, tokens->opcodes[0]);
-        char *expr = calloc(strlen(tokens->opcodes[1]), sizeof(char));
-        strcpy(expr, tokens->opcodes[1]);
-        char *lsl = "lsl ";
-        char *lsl_expr = calloc(strlen(lsl) + strlen(expr) + 1, sizeof(char));
-        strcpy(lsl_expr, lsl);
-        strcat(lsl_expr, expr);
-        //strcpy(tokens->opcodes[1], rn);
-//        free_tokens(tokens);
-        //char **opcodes = calloc(MAX_OPCODE, sizeof(char *));
-        tokens_lsl->opcodes = (char **)calloc(MAX_OPCODE, sizeof(char *));
-        tokens_lsl->opcodes[0] = rn;
-        tokens_lsl->opcodes[1] = rn;
-        tokens_lsl->opcodes[2] = lsl_expr;
-        //tokens_lsl->opcodes[3] = expr;
+//         tokens_t *tokens_lsl = calloc(1, sizeof(tokens_t));
+//         tokens_lsl->mnemonic = MOV;
+//         tokens_lsl->num_opcode = tokens->num_opcode + 1;
+//         // tokens->mnemonic = MOV;
+//         // tokens->num_opcode += 2;
+//         char *rn = calloc(strlen(tokens->opcodes[0]), sizeof(char));
+//         strcpy(rn, tokens->opcodes[0]);
+//         char *expr = calloc(strlen(tokens->opcodes[1]), sizeof(char));
+//         strcpy(expr, tokens->opcodes[1]);
+//         char *lsl = "lsl ";
+//         char *lsl_expr = calloc(strlen(lsl) + strlen(expr) + 1, sizeof(char));
+//         strcpy(lsl_expr, lsl);
+//         strcat(lsl_expr, expr);
+//         //strcpy(tokens->opcodes[1], rn);
+// //        free_tokens(tokens);
+//         //char **opcodes = calloc(MAX_OPCODE, sizeof(char *));
+//         tokens_lsl->opcodes = (char **)calloc(MAX_OPCODE, sizeof(char *));
+//         tokens_lsl->opcodes[0] = rn;
+//         tokens_lsl->opcodes[1] = rn;
+//         tokens_lsl->opcodes[2] = lsl_expr;
+//         //tokens_lsl->opcodes[3] = expr;
       
-        // tokens->opcodes[3] = expr;
-        // tokens->opcodes[1] = rn;
-        // tokens->opcodes[2] = lsl;
+//         // tokens->opcodes[3] = expr;
+//         // tokens->opcodes[1] = rn;
+//         // tokens->opcodes[2] = lsl;
 
-        for(int i = 0; i < 3; i++)
-        {
-          printf("%s\n", tokens_lsl->opcodes[i]);
-        }
+//         for(int i = 0; i < 3; i++)
+//         {
+//           printf("%s\n", tokens_lsl->opcodes[i]);
+//         }
 
-        // for(int i = 0; i < tokens->num_opcode; i++)
-        // {
-        //   printf("%s\n", tokens->opcodes[i]);
-        // }
-        //printf("opcodes: %d\n", tokens->num_opcode);
-        save_instruction(assembled_program, address, data_process(tokens_lsl));
-        free_tokens(tokens_lsl);
+//         // for(int i = 0; i < tokens->num_opcode; i++)
+//         // {
+//         //   printf("%s\n", tokens->opcodes[i]);
+//         // }
+//         //printf("opcodes: %d\n", tokens->num_opcode);
+//         save_instruction(assembled_program, address, data_process(tokens_lsl));
+//         free_tokens(tokens_lsl);
+
+      char *instruction = malloc(MAX_LINE_LENGTH * sizeof(char));
+      sprintf(instruction, "mov %s,%s,lsl %s", tokens->opcodes[0], tokens->opcodes[0], tokens->opcodes[1]);
+      tokens_t *tokens_lsl = tokenize_instruction(instruction); 
+      save_instruction(assembled_program, address, data_process(tokens_lsl));
+      free_tokens(tokens_lsl);
+      free(instruction);
+
+
       }
       else if (tokens->mnemonic == ANDEQ)
       {
