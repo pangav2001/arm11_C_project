@@ -6,8 +6,8 @@
 #include <assert.h>
 
 #define COND 14 // binary 1110 (i.e instruction always happens)
-#define ASCII_0 48
 #define UINT12_MAX 4095
+#define ARM_PIPELINE_OFFSET 8
 
 #define ADDRESS instructions->opcodes[1]
 
@@ -75,8 +75,7 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
 
         save_instruction(assembled_program, *next_available_address, expression);
 
-        //Subtracted 8 for the ARM pipeline
-        uint16_t offset = *next_available_address - current_address - 8;
+        uint16_t offset = *next_available_address - current_address - ARM_PIPELINE_OFFSET;
 
         *next_available_address += 4;
 
@@ -109,6 +108,7 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
         //Set bit 24(P) to 1
         SET_BITS(result, 24, 1);
 
+        //Check if the instruction is in the from Mnemonic Register [Register]
         if (num_bracket_opcodes > 1)
         {
             offset = calculate_offset(bracket_opcodes + 1, &result, num_bracket_opcodes);
