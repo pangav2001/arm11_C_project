@@ -1,5 +1,5 @@
-#include "multiply.h"
-#include "data_processing.h"
+#include "headers/multiply.h"
+#include "headers/data_processing.h"
 #include <assert.h>
 
 #define COND 14
@@ -8,7 +8,7 @@
 // mul, Rd, Rm, Rs
 // mla Rd, Rm, Rs, Rn
 
-uint32_t multiply(tokens_t *instructions)
+uint32_t assemble_multiply(tokens_t *instructions)
 {
     assert(instructions->num_opcode > 2);
 

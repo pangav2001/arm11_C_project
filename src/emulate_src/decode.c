@@ -1,4 +1,4 @@
-#include "decode.h"
+#include "headers/decode.h"
 
 //variables named with 'o' represent a one
 //and 'z' represent a zero

@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "flags.h"
-#include "registers.h"
-#include "decode.h"
+#include "headers/flags.h"
+#include "headers/registers.h"
+#include "headers/decode.h"
 
 int check_cond(enum Condition_Code condition_code) {
     switch (condition_code) {

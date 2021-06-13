@@ -1,7 +1,7 @@
 #include <stdint.h>
-#include "multiply.h"
-#include "registers.h"
-#include "flags.h"
+#include "headers/multiply.h"
+#include "headers/registers.h"
+#include "headers/flags.h"
 #include <assert.h>
 
 

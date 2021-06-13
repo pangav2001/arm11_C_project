@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 #include <stddef.h>
-#include "emulate_src/registers.h"
+#include "../../emulate_src/headers/registers.h"
 #include "hash_table.h"
 
 #define MAX_LINE_LENGTH 511

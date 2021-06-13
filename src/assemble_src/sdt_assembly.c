@@ -1,8 +1,8 @@
-#include "sdt_assembly.h"
-#include "data_processing.h"
-#include "tokenizer.h"
-#include "assemble.h"
-#include "emulate_src/decode.h"
+#include "headers/sdt_assembly.h"
+#include "headers/data_processing.h"
+#include "headers/tokenizer.h"
+#include "headers/assemble.h"
+#include "../emulate_src/headers/decode.h"
 #include <assert.h>
 
 #define COND 14 // binary 1110 (i.e instruction always happens)

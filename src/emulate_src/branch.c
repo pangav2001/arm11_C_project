@@ -1,6 +1,6 @@
 #include <stdlib.h>
-#include "branch.h"
-#include "registers.h"
+#include "headers/branch.h"
+#include "headers/registers.h"
 #include <assert.h>
 #include <stdio.h>
 

@@ -1,11 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "memory.h"
-#include "registers.h"
-#include "parse_file.h"
-#include "decode.h"
-#include "data_processing.h"
-#include "emulate_output.h"
+#include "headers/memory.h"
+#include "headers/registers.h"
+#include "headers/parse_file.h"
+#include "headers/decode.h"
+#include "headers/data_processing.h"
+#include "headers/emulate_output.h"
 
 
 int main(int argc, char **argv) {

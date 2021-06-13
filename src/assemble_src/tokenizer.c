@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#include "tokenizer.h"
+#include "headers/tokenizer.h"
 
 //returns 0 if not label
 //returns length of label otherwise

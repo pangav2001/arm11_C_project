@@ -2,7 +2,7 @@
 #define DP_ASS
 
 #include "tokenizer.h"
-#include "emulate_src/registers.h"
+#include "../../emulate_src/headers/decode.h"
 #include <stdint.h>
 
 
