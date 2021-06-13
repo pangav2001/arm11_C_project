@@ -117,13 +117,14 @@ char **read_in_prog(char *filename, int *num_instr)
   int num_instructions = 0;
   char **instructions;
 
-  for (int i = 0; i < 2; i++)
-  {
-    if ((input_file = fopen(filename, "r")) == NULL)
+  if ((input_file = fopen(filename, "r")) == NULL)
     {
       perror("input.txt");
       exit(1);
     }
+
+  for (int i = 0; i < 2; i++)
+  {
     switch (i)
     {
     case 0:
@@ -137,6 +138,7 @@ char **read_in_prog(char *filename, int *num_instr)
       }
       break;
     case 1:
+      rewind(input_file);
       *num_instr = num_instructions;
       instructions = calloc(num_instructions + 1, sizeof(char *)); //to allow to be null terminated
       int j = 0;
@@ -150,9 +152,9 @@ char **read_in_prog(char *filename, int *num_instr)
       }
       break;
     }
-    fclose(input_file);
   }
   instructions[num_instructions] = NULL;
+  fclose(input_file);
   return instructions;
 }
 
