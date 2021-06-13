@@ -8,6 +8,9 @@
 #define UINT4_MAX 15
 #define UINT5_MAX 31
 
+#define MAX_SHIFT_LENGTH 4 //With the '\0'
+#define MAX_RS_LENGTH 12 //2^32 - 1 including '#' and '\0' 
+
 #define OPERAND2(I) instructions->opcodes[operand2_start + I]
 
 enum Shift_Types convert_shift_types(char *str)
@@ -33,10 +36,13 @@ enum Shift_Types convert_shift_types(char *str)
 uint8_t calculate_register_shift(char *epxression)
 {
     uint8_t shift = 0;
-    //Change magic numbers
-    char *shift_type_string = malloc(5 * sizeof(char));
-    char *rs_string = malloc(5 * sizeof(char));
+    char *shift_type_string = malloc(MAX_SHIFT_LENGTH * sizeof(char));
+    assert(shift_type_string);
 
+    char *rs_string = malloc(MAX_RS_LENGTH * sizeof(char));
+    assert(rs_string);
+
+    //Split the shift expression into the shift type and shift value
     sscanf(epxression, "%s %s", shift_type_string, rs_string);
     enum Shift_Types shift_type = convert_shift_types(shift_type_string);
     free(shift_type_string);
