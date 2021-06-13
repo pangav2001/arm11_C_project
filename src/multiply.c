@@ -25,29 +25,29 @@ uint32_t multiply(tokens_t *instructions)
     uint32_t result = 0;
 
     //Set bits 31 - 28 to Cond
-    SET_BITS(28, COND);
+    SET_BITS(result, 28, COND);
 
     //Set bits 27 - 22 to 0
 
     //Set bit 21(A)
-    SET_BITS(21, instructions->mnemonic == MLA);
+    SET_BITS(result, 21, instructions->mnemonic == MLA);
 
     //Set bit 20(S) to 0
 
     //Set bits 19 - 16 to Rd
-    SET_BITS(16, rd);
+    SET_BITS(result, 16, rd);
 
     //Set bits 15 - 12 to Rn
-    SET_BITS(12, rn);
+    SET_BITS(result, 12, rn);
 
     //Set bits 11 - 8 to Rs
-    SET_BITS(8, rs);
+    SET_BITS(result, 8, rs);
 
     //Set bits 7 - 4 to 1001
-    SET_BITS(4, B_1001);
+    SET_BITS(result, 4, B_1001);
 
     //Set bits 3 - 0 to Rm
-    SET_BITS(0, rm);
+    SET_BITS(result, 0, rm);
 
     return result;
 }
