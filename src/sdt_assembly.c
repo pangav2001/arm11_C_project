@@ -88,6 +88,7 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
 
         if (num_bracket_opcodes > 1)
         {
+            /***************************SAME FUNCTIONS*************************/
             if (bracket_opcodes[1][0] == '#')
             {
                 if (bracket_opcodes[1][1] == '-' || bracket_opcodes[1][1] == '+')
@@ -112,6 +113,7 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
 
                 //TODO optional
             }
+            /***************************SAME FUNCTIONS*************************/
         }
         else
         {
@@ -121,6 +123,7 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
     }
     else
     {
+        /***************************SAME FUNCTIONS*************************/
         if (instructions->opcodes[2][0] == '#')
         {
             if (bracket_opcodes[2][1] == '-' || bracket_opcodes[2][1] == '+')
@@ -144,6 +147,7 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
             SET_BITS(25, 1);
             //TODO optional
         }
+        /***************************SAME FUNCTIONS*************************/
     }
 
     //Set bits 31 - 28 to Cond
