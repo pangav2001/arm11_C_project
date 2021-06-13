@@ -1,25 +1,10 @@
 #include "headers/branch.h"
 #include <assert.h>
 #include "headers/data_processing.h"
-#include "../emulate_src/headers/decode.h"
 
 #define EXPRESSION instructions->opcodes[0]
 
 #define ARM_OFFSET 8
-
-/*******************TEMPORARY******************************************/
-int32_t extract_bits(int32_t data, unsigned int start, unsigned int end)
-{
-    assert(start <= end);
-    unsigned int mask = 0;
-    for (unsigned i = start; i <= end; i++)
-    {
-        mask |= 1 << i;
-    }
-
-    return (mask & data) >> start;
-}
-/*******************TEMPORARY******************************************/
 
 
 uint32_t branch_assembly(tokens_t *instructions, int16_t current_address, Hash_Table *table)
@@ -42,9 +27,10 @@ uint32_t branch_assembly(tokens_t *instructions, int16_t current_address, Hash_T
 
     int32_t offset = target_address - current_address - ARM_OFFSET;
     offset >>= 2;
+    offset &= (1<<24) - 1;
 
     //Set bits 23 - 0 to offset
-    SET_BITS(result, 0, extract_bits(offset, 0, 23));
+    SET_BITS(result, 0, offset);
 
     return result;
 }
