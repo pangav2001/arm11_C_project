@@ -5,7 +5,7 @@
 #include "memory.h"
 #include "flags.h"
 #include "decode.h"
-#include "../tokenizer.h"
+#include "../../assemble_src/headers/tokenizer.h"
 #include <stdint.h>
 
 

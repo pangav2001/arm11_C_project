@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include "single_data_transfer.h"
-#include "decode.h"
-#include "memory.h"
-#include "data_processing.h"
+#include "headers/single_data_transfer.h"
+#include "headers/decode.h"
+#include "headers/memory.h"
+#include "headers/data_processing.h"
 
 #define MAX_ADDRESS 65536
 

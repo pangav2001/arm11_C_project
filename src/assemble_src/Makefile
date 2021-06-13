@@ -16,17 +16,17 @@ $(LIB):	$(LIBOBJS)
 
 
 #Build the assembler executable
-assemble.o: assemble.o multiply.o tokenizer.o data_processing.o branch.o hash_table.o output.o sdt_assembly.o
+assemble.o: headers/assemble.h multiply.o tokenizer.o data_processing.o branch.o hash_table.o output.o sdt_assembly.o
 
 
 #Build the object files for assembler
-tokenizer.o: tokenizer.h
-multiply.o: multiply.h
-data_processing.o: data_processing.h
-branch.o: branch.h
-hash_table.o: hash_table.h
-output.o: output.h
-sdt_assembly.o: sdt_assembly.h
+tokenizer.o: headers/tokenizer.h
+multiply.o: headers/multiply.h
+data_processing.o: headers/data_processing.h
+branch.o: headers/branch.h
+hash_table.o: headers/hash_table.h
+output.o: headers/output.h
+sdt_assembly.o: headers/sdt_assembly.h
 
 
 clean:

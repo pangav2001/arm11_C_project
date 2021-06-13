@@ -1,4 +1,4 @@
-#include "output.h"
+#include "headers/output.h"
 
 void write_to_binary(char* fileName, uint32_t *data, int size)
 {

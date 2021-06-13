@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "parse_file.h"
-#include "memory.h"
+#include "headers/parse_file.h"
+#include "headers/memory.h"
 
 int32_t read_in_binary(char* fileName)
 {

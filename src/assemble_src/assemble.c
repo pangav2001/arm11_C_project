@@ -1,13 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "tokenizer.h"
-#include "data_processing.h"
-#include "branch.h"
-#include "sdt_assembly.h"
-#include "multiply.h"
-#include "output.h"
-#include "assemble.h"
+#include "headers/tokenizer.h"
+#include "headers/data_processing.h"
+#include "headers/branch.h"
+#include "headers/sdt_assembly.h"
+#include "headers/multiply.h"
+#include "headers/output.h"
+#include "headers/assemble.h"
 
 char **read_in_prog(char *filename, int *num_instr);
 
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
       else if (tokens->mnemonic <= MLA)
       {
         //Multiply
-        save_instruction(assembled_program, address, multiply(tokens));
+        save_instruction(assembled_program, address, assemble_multiply(tokens));
         // printf("MUL\n");
         // printf("%u\n", multiply(tokens));
       }
