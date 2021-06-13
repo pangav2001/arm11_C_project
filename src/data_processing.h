@@ -12,6 +12,8 @@
 // <tst, teq, cmp> Rn, Operand2
 uint32_t data_process(tokens_t *instructions);
 
-#define SET_BITS(LSB, VAL) result |= (VAL) << (LSB)
+uint8_t calculate_register_shift(char *epxression);
+
+#define SET_BITS(NUM, LSB, VAL) (NUM) |= (VAL) << (LSB)
 
 #endif
