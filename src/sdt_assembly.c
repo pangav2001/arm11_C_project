@@ -11,28 +11,47 @@
 
 #define ADDRESS instructions->opcodes[1]
 
-static uint16_t inline calculate_offset(char *expression, uint32_t *result)
+static uint16_t inline calculate_offset(char **expression, uint32_t *result, uint8_t num_opcode)
 {
 
-    if (expression[0] == '#')
+    if (expression[0][0] == '#')
     {
-        if (expression[1] == '-' || expression[1] == '+')
+        if (expression[0][1] == '-' || expression[0][1] == '+')
         {
             //Set bit 23(U) to 1 if the number is positive
-            SET_BITS(*result, 23, expression[1] == '+');
+            SET_BITS(*result, 23, expression[0][1] == '+');
 
-            return string_to_int(expression + 2);
+            return string_to_int(expression[0] + 2);
         }
 
         //Set bit 23(U) to 1 since number is positive
         SET_BITS(*result, 23, 1);
 
-        return string_to_int(expression + 1);
+        return string_to_int(expression[0] + 1);
     }
 
+    //Set bit 23(U) to 1 since number is positive
+    SET_BITS(*result, 23, 1);
+    
     //Set bit 25(I) to 1
     SET_BITS(*result, 25, 1);
-    return 0;
+
+    enum Register_Names rm = convert_register(expression[0]);
+    uint8_t shift = 0;
+    uint16_t offset = 0;
+
+    if (num_opcode > 2)
+    {
+        shift = calculate_register_shift(expression[1]);
+    }
+
+    //Set bits 11 - 4 to shift
+    SET_BITS(offset, 4, shift);
+
+    //Set bits 3 - 0 to the Rm register
+    SET_BITS(offset, 0, rm);
+
+    return offset;
 
     //TODO optional
 }
@@ -113,7 +132,7 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
 
         if (num_bracket_opcodes > 1)
         {
-            offset = calculate_offset(bracket_opcodes[1], &result);
+            offset = calculate_offset(bracket_opcodes + 1, &result, num_bracket_opcodes);
         }
         else
         {
@@ -123,7 +142,7 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
     }
     else
     {
-        calculate_offset(bracket_opcodes[2], &result);
+        calculate_offset(instructions->opcodes + 2, &result, instructions->num_opcode - 1);
     }
 
     //Set bits 31 - 28 to Cond
@@ -131,9 +150,6 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
 
     //Set bits 27 - 26 to 01
     SET_BITS(result, 26, 1);
-
-    //Set bit 25 to the I flag
-    //TODO
 
     //Set bits 22 - 21 to 0
 
