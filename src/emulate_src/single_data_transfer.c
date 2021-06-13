@@ -87,7 +87,8 @@ static int32_t add_sub(int8_t sign, int32_t a, int32_t b)
     case (1):
         return a + b;
     default:
-        return -1; //throw an error
+        perror("Unsupported sign");
+        exit(1);
     }
 }
 

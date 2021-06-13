@@ -6,8 +6,8 @@
 #include <assert.h>
 
 #define COND 14 // binary 1110 (i.e instruction always happens)
-#define ASCII_0 48
 #define UINT12_MAX 4095
+#define ARM_PIPELINE_OFFSET 8
 
 #define ADDRESS instructions->opcodes[1]
 
@@ -58,27 +58,6 @@ static uint16_t inline calculate_offset(char **expression, uint32_t *result, uin
 
 uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t *next_available_address, uint32_t *assembled_program)
 {
-
-    /*
-    I = 0 -> Offset is immediate offset
-    I = 1 -> Offset is shifted register
-
-    P = 0 -> Post_indexing (offset is add/sub to base reg after transfer)
-    P = 1 -> Pre_indexing (offset is add/sub to base reg before transfer)
-
-    U = 0 -> Offset subtracted to base
-    U = 1 -> Offset added from base
-
-    L = 0 -> Store
-    L = 1 -> Load
-
-    Rn: base register
-
-    Rd: source/destination register
-
-    Offset: either 12 bit immediate value or a register (possibly shifted)
-    */
-
     if (ADDRESS[0] == '=')
     {
         assert(instructions->mnemonic == LDR);
@@ -96,8 +75,7 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
 
         save_instruction(assembled_program, *next_available_address, expression);
 
-        //Subtracted 8 for the ARM pipeline
-        uint16_t offset = *next_available_address - current_address - 8;
+        uint16_t offset = *next_available_address - current_address - ARM_PIPELINE_OFFSET;
 
         *next_available_address += 4;
 
@@ -130,6 +108,7 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
         //Set bit 24(P) to 1
         SET_BITS(result, 24, 1);
 
+        //Check if the instruction is in the from Mnemonic Register [Register]
         if (num_bracket_opcodes > 1)
         {
             offset = calculate_offset(bracket_opcodes + 1, &result, num_bracket_opcodes);

@@ -46,34 +46,25 @@ int main(int argc, char **argv)
       {
         //Data Processing
         save_instruction(assembled_program, address, data_process(tokens));
-        printf("DP\n");
-        printf("%u\n", data_process(tokens));
       }
       else if (tokens->mnemonic <= MLA)
       {
         //Multiply
         save_instruction(assembled_program, address, assemble_multiply(tokens));
-        // printf("MUL\n");
-        // printf("%u\n", multiply(tokens));
       }
       else if (tokens->mnemonic <= STR)
       {
         //SDT
         save_instruction(assembled_program, address, sdt_assembly(tokens, address, &start_location_for_data, assembled_program));
-        //printf("SDT\n");
       }
       else if (tokens->mnemonic <= B)
       {
-        //branch
+        //Branch
         save_instruction(assembled_program, address, branch_assembly(tokens, address, hash_table));
-        // printf("B\n");
-        // printf("%u\n", branch_assembly(tokens, address, hash_table));
       }
       else if (tokens->mnemonic == LSL_M)
       {
-        //special
-        // printf("spec\n");
-
+        //LSL
         char *instruction = malloc(MAX_LINE_LENGTH * sizeof(char));
         sprintf(instruction, "mov %s,%s,lsl %s", tokens->opcodes[0], tokens->opcodes[0], tokens->opcodes[1]);
         tokens_t *tokens_lsl = tokenize_instruction(instruction);
@@ -83,11 +74,13 @@ int main(int argc, char **argv)
       }
       else if (tokens->mnemonic == ANDEQ)
       {
+        //ANDEQ
         save_instruction(assembled_program, address, 0);
       }
       else
       {
-        //Not supported
+        perror("Unsupported operation");
+        exit(1);
       }
 
       free_tokens(tokens);
