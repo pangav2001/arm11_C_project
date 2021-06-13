@@ -51,14 +51,13 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
         }
 
         save_instruction(assembled_program, *next_available_address, expression);
-        
+
         //Subtracted 8 for the ARM pipeline
         uint16_t offset = *next_available_address - current_address - 8;
 
         *next_available_address += 4;
 
-        //CHANGE R15 TO PC
-        sprintf(instructions->opcodes[1], "[R15, #%u]", offset);
+        sprintf(instructions->opcodes[1], "[PC, #%u]", offset);
 
         return sdt_assembly(instructions, current_address, next_available_address, assembled_program);
     }
@@ -89,9 +88,23 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
 
         if (num_bracket_opcodes > 1)
         {
+            /***************************SAME FUNCTIONS*************************/
             if (bracket_opcodes[1][0] == '#')
             {
-                offset = string_to_int(bracket_opcodes[1] + 1);
+                if (bracket_opcodes[1][1] == '-' || bracket_opcodes[1][1] == '+')
+                {
+                    offset = string_to_int(bracket_opcodes[1] + 2);
+
+                    //Set bit 23(U) to 1 if the number is positive
+                    SET_BITS(23, bracket_opcodes[1][1] == '+');
+                }
+                else
+                {
+                    //Set bit 23(U) to 1 since number is positive
+                    SET_BITS(23, 1);
+
+                    offset = string_to_int(bracket_opcodes[1] + 1);
+                }
             }
             else
             {
@@ -100,13 +113,33 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
 
                 //TODO optional
             }
+            /***************************SAME FUNCTIONS*************************/
+        }
+        else
+        {
+            //Set bit 23(U) to 1 since number is positive
+            SET_BITS(23, 1);
         }
     }
     else
     {
+        /***************************SAME FUNCTIONS*************************/
         if (instructions->opcodes[2][0] == '#')
         {
-            offset = string_to_int(bracket_opcodes[2] + 1);
+            if (bracket_opcodes[2][1] == '-' || bracket_opcodes[2][1] == '+')
+            {
+                //Set bit 23(U) to 1 if the number is positive
+                SET_BITS(23, bracket_opcodes[2][1] == '+');
+
+                offset = string_to_int(bracket_opcodes[2] + 2);
+            }
+            else
+            {
+                //Set bit 23(U) to 1 since number is positive
+                SET_BITS(23, 1);
+
+                offset = string_to_int(bracket_opcodes[2] + 1);
+            }
         }
         else
         {
@@ -114,6 +147,7 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
             SET_BITS(25, 1);
             //TODO optional
         }
+        /***************************SAME FUNCTIONS*************************/
     }
 
     //Set bits 31 - 28 to Cond
@@ -124,9 +158,6 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
 
     //Set bit 25 to the I flag
     //TODO
-
-    //Set bit 23 to the U flag
-    SET_BITS(23, 1); //TEMP
 
     //Set bits 22 - 21 to 0
 
