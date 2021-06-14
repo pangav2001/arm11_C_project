@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include "curses.h"
+#include "actors.h"
 
 #define DISTANCE_OUTSIDE 3
 
