@@ -10,6 +10,7 @@ void crate_ghosts(game_t *game)
     for (int i = 0; i < game->num_ghosts; i++)
     {
         GHOST[i] = (ghost_t *)malloc(sizeof(ghost_t));
+        GHOST[i]->representation = 'G';
     }
 }
 
@@ -77,7 +78,7 @@ void revive_ghost(ghost_t *ghost)
 
 }
 
-void init_game(game_t *game) {
+void init_game(game_t *game, pacman_t *pacman) {
     game->lives = 3;
     game->num_frames_ghost_reset = -1;
 
@@ -85,10 +86,14 @@ void init_game(game_t *game) {
     game->points = 0;
     //game->ghosts = ;
 
+    game->pacman = pacman;
+
 
 }
 
 void init_pacman(pacman_t *pacman) {
+    pacman->representation = 'P';
+    
     pacman->dx = 0;
     pacman->dy = 0;
 
