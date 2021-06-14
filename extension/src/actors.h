@@ -1,6 +1,7 @@
 typedef enum {
     CHASING,
-    CHASED,
+    SCATTER,
+    FRIGHTENED,
     EATEN,
     OFF
 }Ghost_Mode_t;
