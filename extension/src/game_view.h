@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "curses.h"
 
+#define DISTANCE_OUTSIDE 3
+
 char *view[] = {
 "#######################################",
 "# . . . . . . . . ### . . . . . . . . #",
