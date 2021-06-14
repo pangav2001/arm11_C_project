@@ -34,3 +34,10 @@ typedef struct {
     int points;
 }game_t;
 
+void init_game(game_t *game);
+
+void init_pacman(pacman_t *pacman);
+
+void kill_pacman(pacman_t *pacman, game_t *game);
+
+
