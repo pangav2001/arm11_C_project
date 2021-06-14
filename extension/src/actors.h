@@ -25,6 +25,7 @@ typedef struct ghost{
 }ghost;
 
 typedef struct game {
+    int num_ghosts;
     ghost *ghosts;
     pacman pacman;
     int lives;
