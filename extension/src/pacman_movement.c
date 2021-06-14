@@ -12,7 +12,7 @@ int check_position_change(pacman_t *pacman, int dx, int dy)
     return get_char(new_x, new_y) != '#' && get_char(new_x, new_y) != '-';
 }
 
-void check_collision(pacman_t *pacman, game_t *game)
+void move_pacman(pacman_t *pacman, game_t *game)
 {
     int new_x = pacman->x + pacman->dx;
     int new_y = pacman->y + pacman->dy;
@@ -51,6 +51,7 @@ void check_collision(pacman_t *pacman, game_t *game)
         break;
     case 'O':
         //TODO Set all ghosts to frightened mode
+        game->num_frames_ghost_reset = 3000; //might need to change
         for (int i = 0; i < game->num_ghosts; i++)
         {
             if(GHOST[i].mode == CHASING || GHOST[i].mode == SCATTER)
