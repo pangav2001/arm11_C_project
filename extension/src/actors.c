@@ -1,6 +1,8 @@
 #include <string.h>
 #include "game_view.h"
 #include "actors.h"
+#include <stdlib.h>
+
 
 
 #define GHOST game->ghosts
