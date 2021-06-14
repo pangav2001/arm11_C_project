@@ -107,3 +107,4 @@ void init_pacman(pacman_t *pacman) {
 void kill_pacman(pacman_t *pacman, game_t *game) {
     game->lives -= 1;
     init_pacman(pacman);
+}
