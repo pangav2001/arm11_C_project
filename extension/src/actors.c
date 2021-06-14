@@ -1,6 +1,7 @@
 #include "string.h"
 #include "game_view.h"
 
+
 #define GHOST game->ghosts
 
 void crate_ghosts(game_t *game)
