@@ -1,3 +1,6 @@
+#ifndef GAME_VIEW_H
+#define GAME_VIEW_H
+
 #include <stdio.h>
 #include "curses.h"
 
@@ -35,3 +38,7 @@ void print_view(WINDOW *window, char **view);
 void set_character(int x, int y, char c);
 
 char get_char(int x, int y);
+
+void update_view(game_t *game);
+
+#endif
