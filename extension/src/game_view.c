@@ -5,6 +5,7 @@ void print_view(WINDOW *window, char **view) {
         waddstr(window, *view++);
         waddstr(window, "\n");
     }
+    wrefresh(window);
 }
 
 void set_character(int x, int y, char c) {
