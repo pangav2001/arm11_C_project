@@ -2,7 +2,9 @@
 #include "game_view.h"
 #include "actors.h"
 
-int check_position_change(pacman *pacman, int dx, int dy)
+#define GHOST game->ghosts
+
+int check_position_change(pacman_t *pacman, int dx, int dy)
 {
     int new_x = pacman->x + pacman->dx;
     int new_y = pacman->y + pacman->dy;
@@ -10,7 +12,7 @@ int check_position_change(pacman *pacman, int dx, int dy)
     return get_char(new_x, new_y) != '#' && get_char(new_x, new_y) != '-';
 }
 
-void check_collision(pacman *pacman, game *game)
+void check_collision(pacman_t *pacman, game_t *game)
 {
     int new_x = pacman->x + pacman->dx;
     int new_y = pacman->y + pacman->dy;
@@ -28,14 +30,15 @@ void check_collision(pacman *pacman, game *game)
     case 'G':
         for (int i = 0; i < game->num_ghosts; i++)
         {
-            if (game->ghosts[i].x == new_x && game->ghosts[i].y == new_y)
+            if (GHOST[i].x == new_x && GHOST[i].y == new_y)
             {
-                switch (game->ghosts[i].mode)
+                switch (GHOST[i].mode)
                 {
+                case SCATTER:
                 case CHASING:
                     //TODO
                     break;
-                case CHASED:
+                case FRIGHTENED:
                     //TODO
                     break;
                 default:
@@ -48,6 +51,13 @@ void check_collision(pacman *pacman, game *game)
         break;
     case 'O':
         //TODO Set all ghosts to frightened mode
+        for (int i = 0; i < game->num_ghosts; i++)
+        {
+            if(GHOST[i].mode == CHASING || GHOST[i].mode == SCATTER)
+            {
+                GHOST[i].mode = FRIGHTENED;
+            }
+        }
 
         //Power pellet is worth 40 points more than pellet
         game->points += 40;
