@@ -50,7 +50,8 @@ tokens_t *tokenize_instruction(char *line)
     return tokens;
 }
 
-char** extract_opcodes(char* line, int *num_opcodes) {
+char **extract_opcodes(char *line, int *num_opcodes)
+{
     char *instruction = strdup(line); //Had issues with line not being modifiable before, maybe remove after testing with actual buffer
     char *token;
     char *rest = instruction;
@@ -59,25 +60,28 @@ char** extract_opcodes(char* line, int *num_opcodes) {
     for (i = 0; (token = strtok_r(rest, ",", &rest)); i++)
     {
         //printf("%s\n", token);
-        char *curr = calloc(1, strlen(token));
-        strcpy(curr, token);
+        char *curr = calloc(1, strlen(token) + 1);
+        strncpy(curr, token, strlen(token) + 1);
         remove_whitespace(curr);
         opcodes[i] = curr;
     }
 
     *num_opcodes = i;
 
-    for (int i = 0; i < *num_opcodes; i++) { //case where , within []
-        if (opcodes[i][0] == '[' && opcodes[i][strlen(opcodes[i]) - 1] != ']') {
+    for (int i = 0; i < *num_opcodes; i++)
+    { //case where , within []
+        if (opcodes[i][0] == '[' && opcodes[i][strlen(opcodes[i]) - 1] != ']')
+        {
             char *updated = calloc(strlen(opcodes[i]) + strlen(opcodes[i + 1]) + 2, sizeof(char));
-            strcat(updated,opcodes[i]);
+            strcat(updated, opcodes[i]);
             strcat(updated, ",");
-            strcat(updated,opcodes[i + 1]);
+            strcat(updated, opcodes[i + 1]);
             free(opcodes[i]);
             opcodes[i] = updated;
             //move everything over and free last one
             int j;
-            for (j = i + 1; j < *num_opcodes - 1; j++) {
+            for (j = i + 1; j < *num_opcodes - 1; j++)
+            {
                 opcodes[j] = realloc(opcodes[j], sizeof(opcodes[j + 1]));
                 strcpy(opcodes[j], opcodes[j + 1]);
             }
@@ -107,7 +111,8 @@ enum Mnemonic extract_mnemonic(char **line)
 
 enum Register_Names convert_register(char *reg)
 {
-    if (strcmp(reg, "PC") == 0) {
+    if (strcmp(reg, "PC") == 0)
+    {
         return PC;
     }
     reg++; //removes leading r
@@ -154,15 +159,18 @@ enum Mnemonic convert_mnemonic(char *mnemonic)
     return -1;
 }
 
-uint32_t string_to_int(char *number) {
-    if (number[0] == '0' && number[1] == 'x') { //base16 case
+uint32_t string_to_int(char *number)
+{
+    if (number[0] == '0' && number[1] == 'x')
+    { //base16 case
         return strtol(number + 2, NULL, 16);
     }
-    
+
     return strtol(number, NULL, 10);
 }
 
-void free_opcode(char **opcodes, int num_opcode) {
+void free_opcode(char **opcodes, int num_opcode)
+{
     for (int i = 0; i < num_opcode; i++)
     {
         free(opcodes[i]);
@@ -176,19 +184,16 @@ void free_tokens(tokens_t *tokens)
     free(tokens);
 }
 
-void remove_whitespace(char* text) {
-    char* copy = strdup(text);
+void remove_whitespace(char *text)
+{
+    char *copy = strdup(text);
     //Remove from start
-    for(int i = 0; text[i] == ' '; i++) {
-            copy++;
+    int count = 0;
+    for (int i = 0; text[i] == ' '; i++)
+    {
+        copy++;
+        count++;
     }
-    
-    //remove from end
-//    int i;
-//    for (int i = strlen(copy) - 1; copy[i] == ' '; i--);
-    //for (i = 0; copy[i] && copy[i] != ' '; i++);
-//    copy[i] = '\0';
-    strcpy(text, copy);
-//    free(copy);
+    strncpy(text, copy, strlen(copy) + 1);
+    free(copy-count);
 }
-

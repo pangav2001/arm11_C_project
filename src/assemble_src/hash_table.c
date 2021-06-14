@@ -39,10 +39,10 @@ unsigned long hash(char *str, int modulo)
 Entry *new_entry(char *key, uint32_t value)
 {
     Entry *entry = (Entry *)malloc(sizeof(Entry));
-    entry->key = (char *)malloc(strlen(key + 1)); //+1 for string terminator
+    entry->key = (char *)malloc(strlen(key) + 1); //+1 for string terminator
     entry->value = value;
 
-    strcpy(entry->key, key);
+    strncpy(entry->key, key, strlen(key) + 1);
 
     return entry;
 }

@@ -10,6 +10,9 @@
 #include "assemble_src/headers/assemble.h"
 
 char **read_in_prog(char *filename, int *num_instr);
+void save_instruction(uint32_t *assembled_program, uint16_t address, uint32_t data);
+void write_reserved_memory(uint32_t *assembled_program, int *next_avaliable_address, uint32_t reserved_data);
+void free_instructions(char **instructions, int num_instructions);
 
 int main(int argc, char **argv)
 {
@@ -39,7 +42,7 @@ int main(int argc, char **argv)
   {
     if (!is_label(instrucs[i]))
     {
-      printf("%s\n", instrucs[i]);
+      //printf("%s\n", instrucs[i]);
       tokens_t *tokens = tokenize_instruction(instrucs[i]);
 
       if (tokens->mnemonic <= MOV)
@@ -91,7 +94,8 @@ int main(int argc, char **argv)
   write_to_binary(argv[2], assembled_program, start_location_for_data / 4);
   free_table(hash_table);
   free(assembled_program);
-
+  free_instructions(instrucs, num_instructions);
+  
   return EXIT_SUCCESS;
 }
 
@@ -116,7 +120,7 @@ char **read_in_prog(char *filename, int *num_instr)
   {
     if (buffer[0] != '\n')
     {
-      printf("buffer: %s", buffer);
+      //printf("buffer: %s", buffer);
       num_instructions++;
       instructions[j] = calloc(strlen(buffer), sizeof(char));
       strncpy(instructions[j], buffer, strlen(buffer));
@@ -127,7 +131,7 @@ char **read_in_prog(char *filename, int *num_instr)
   *num_instr = num_instructions;
   instructions = realloc(instructions, (num_instructions + 1) * sizeof(char *));
 
-  printf("Num of instructions: %d\n", num_instructions);
+  //printf("Num of instructions: %d\n", num_instructions);
 
   instructions[num_instructions] = NULL;
   fclose(input_file);
@@ -143,4 +147,13 @@ void write_reserved_memory(uint32_t *assembled_program, int *next_avaliable_addr
 {
   assembled_program[*next_avaliable_address] = reserved_data;
   *next_avaliable_address += 4;
+}
+
+void free_instructions(char **instructions, int num_instructions)
+{
+  for (int i = 0; i < num_instructions; i++)
+  {
+    free(instructions[i]);
+  }
+  free(instructions);
 }
