@@ -30,9 +30,9 @@ void move_pacman(pacman_t *pacman, game_t *game)
     case 'G':
         for (int i = 0; i < game->num_ghosts; i++)
         {
-            if (GHOST[i].x == new_x && GHOST[i].y == new_y)
+            if (GHOST[i]->x == new_x && GHOST[i]->y == new_y)
             {
-                switch (GHOST[i].mode)
+                switch (GHOST[i]->mode)
                 {
                 case SCATTER:
                 case CHASING:
@@ -54,9 +54,9 @@ void move_pacman(pacman_t *pacman, game_t *game)
         game->num_frames_ghost_reset = 3000; //might need to change
         for (int i = 0; i < game->num_ghosts; i++)
         {
-            if(GHOST[i].mode == CHASING || GHOST[i].mode == SCATTER)
+            if(GHOST[i]->mode == CHASING || GHOST[i]->mode == SCATTER)
             {
-                GHOST[i].mode = FRIGHTENED;
+                GHOST[i]->mode = FRIGHTENED;
             }
         }
 
