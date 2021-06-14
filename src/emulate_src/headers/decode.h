@@ -1,5 +1,5 @@
-#ifndef DECODE_H
-#define DECODE_H
+#ifndef _DECODE_H_EMULATOR_
+#define _DECODE_H_EMULATOR_
 
 #include <stdint.h>
 #include <assert.h>

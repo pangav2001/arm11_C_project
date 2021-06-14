@@ -1,5 +1,5 @@
-#ifndef DATA_PROCESSING
-#define DATA_PROCESSING
+#ifndef _DATA_PROCESSING_H_EMULATOR
+#define _DATA_PROCESSING_H_EMULATOR
 
 #include "registers.h"
 #include "memory.h"

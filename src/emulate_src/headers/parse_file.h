@@ -1,6 +1,6 @@
 
-#ifndef PARSE_FILE_H
-#define PARSE_FILE_H
+#ifndef _PARSE_FILE_H_EMULATOR_
+#define _PARSE_FILE_H_EMULATOR_
 
 #include <stdint.h>
 

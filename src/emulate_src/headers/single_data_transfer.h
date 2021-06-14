@@ -1,5 +1,5 @@
-#ifndef SINGLE_DATA_TRANSFER_H
-#define SINGLE_DATA_TRANSFER_H
+#ifndef _SINGLE_DATA_TRANSFER_H_EMULATOR_
+#define _SINGLE_DATA_TRANSFER_H_EMULATOR_
 
 #include <stdint.h>
 #include "registers.h"

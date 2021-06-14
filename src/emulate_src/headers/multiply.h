@@ -1,5 +1,5 @@
-#ifndef MULTIPLY_H
-#define MULTIPLY_H
+#ifndef _mULTIPLY_H_EMULATOR_
+#define _mULTIPLY_H_EMULATOR_
 
 #include <stdint.h>
 #include "registers.h"

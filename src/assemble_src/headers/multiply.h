@@ -1,5 +1,5 @@
-#ifndef MUL_ASS
-#define MUL_ASS
+#ifndef _MULTIPLY_H_ASSEMBLER_
+#define _MULTIPLY_H_ASSEMBLER_
 
 #include "tokenizer.h"
 #include "../../emulate_src/headers/registers.h"
