@@ -14,16 +14,20 @@ void check_collision(pacman *pacman) {
         case '.':
             //increament and update
             break;
+        case '-':
         case '#':
-            //update to 0,0
+            //Stop pacman
+            pacman->dx = 0;
+            pacman->dy = 0;
             break;
         case 'O':
+            //set all pacman to chased 
             //blue shit
             break;
         case 'G':
             //maybe die maybe success
             break;
         default:
-            break;
+            
     };
 }
