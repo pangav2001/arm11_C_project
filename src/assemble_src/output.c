@@ -1,10 +1,8 @@
 #include "headers/output.h"
 
-void write_to_binary(char* fileName, uint32_t *data, int size)
+void write_to_binary(char *fileName, uint32_t *data, int size)
 {
-    FILE *outFile;
-    
-    outFile = fopen(fileName, "wb");
+    FILE *outFile = fopen(fileName, "wb");
 
     if (outFile == NULL)
     {
@@ -13,6 +11,6 @@ void write_to_binary(char* fileName, uint32_t *data, int size)
     }
 
     fwrite(data, sizeof(uint32_t), size, outFile);
-    
+
     fclose(outFile);
 }
