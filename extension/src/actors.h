@@ -39,6 +39,12 @@ typedef struct {
     int points;
 }game_t;
 
+void init_game(game_t *game);
+
+void init_pacman(pacman_t *pacman);
+
+void kill_pacman(pacman_t *pacman, game_t *game);
+
 void crate_ghosts(game_t *game);
 
 void free_ghosts(game_t *game);
@@ -48,4 +54,3 @@ void init_ghosts(ghost_t **ghosts, int num_ghosts);
 void kill_ghost(ghost_t *ghost);
 
 void revive_ghost(ghost_t *ghost);
-

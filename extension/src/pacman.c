@@ -11,15 +11,13 @@ int main(void) {
 
     pacman_t *pacman = calloc(1, sizeof(pacman_t));
     game_t *game = calloc(1, sizeof(game_t));
-
-
-    
+  
     int h = 64;
     int w = 64;
 
     WINDOW* window = newwin(h, w, 0, 0);
     
-    while (!game_over()) {
+    while (!game_over(game)) {
         char input = getch();
 
         int dx;
@@ -67,6 +65,6 @@ int main(void) {
     free(pacman);
 }
 
-int game_over(void) {
-    return 0;
+int game_over(game_t *game) {
+    return game->lives <= 0;
 }
