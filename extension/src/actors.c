@@ -1,5 +1,6 @@
-#include "string.h"
+#include <string.h>
 #include "game_view.h"
+#include "actors.h"
 
 
 #define GHOST game->ghosts
