@@ -1,34 +1,36 @@
-typedef enum Ghost_Mode {
+typedef enum
+{
     CHASING,
-    CHASED,
+    FRIGHTENED,
     EATEN,
+    SCATTER,
     OFF
-}Ghost_Mode;
+} Ghost_Mode_t;
 
-
-typedef struct pacman{
+typedef struct
+{
     int x;
     int y;
     int dx;
     int dy;
     char representation;
-}pacman;
+} pacman_t;
 
-
-typedef struct ghost{
+typedef struct
+{
     int x;
     int y;
     int dx;
     int dy;
     char representation;
-    Ghost_Mode mode;
-}ghost;
+    Ghost_Mode_t mode;
+} ghost_t;
 
-typedef struct game {
+typedef struct
+{
     int num_ghosts;
-    ghost *ghosts;
-    pacman pacman;
+    ghost_t *ghosts;
+    pacman_t pacman;
     int lives;
     int points;
-}game;
-
+} game_t;
