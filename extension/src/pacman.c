@@ -1,6 +1,7 @@
 #include "curses.h"
 #include "actors.h"
 #include "pacman_movement.h"
+#include "game_view.h"
 
 int main(void) {
     // Setup window
@@ -11,6 +12,9 @@ int main(void) {
 
     pacman_t *pacman = calloc(1, sizeof(pacman_t));
     game_t *game = calloc(1, sizeof(game_t));
+
+    init_pacman(pacman);
+    init_game(game, pacman);
   
     int h = 64;
     int w = 64;
@@ -52,8 +56,11 @@ int main(void) {
         move_pacman(pacman, game);
 
         //update everything else
+        update_view(game);
+
 
         //rerender screen
+        print_view(window, view);
 
     }
         
