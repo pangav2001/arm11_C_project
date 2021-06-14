@@ -1,5 +1,5 @@
-#ifndef OUTPUT_H
-#define OUTPUT_H
+#ifndef _OUTPUT_H_ASSEMBLER_
+#define _OUTPUT_H_ASSEMBLER_
 
 #include <stdio.h>
 #include <stdlib.h>

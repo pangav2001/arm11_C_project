@@ -1,5 +1,5 @@
-#ifndef DP_ASS
-#define DP_ASS
+#ifndef _DATA_PROCESSING_H_ASSEMBLER_
+#define _DATA_PROCESSING_H_ASSEMBLER_
 
 #include "tokenizer.h"
 #include "../../emulate_src/headers/decode.h"

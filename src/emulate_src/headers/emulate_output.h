@@ -1,5 +1,5 @@
-#ifndef OUTPUT_H
-#define OUTPUT_H
+#ifndef _OUTPUT_H_EMULATOR_
+#define _OUTPUT_H_EMULATOR_
 
 #include "registers.h"
 #include "memory.h"

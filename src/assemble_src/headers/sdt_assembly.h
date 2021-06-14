@@ -1,6 +1,6 @@
 
-#ifndef single_data_transfer_assembly
-#define single_data_transfer_assembly
+#ifndef _SINGLE_DATA_TRANSFER_H_ASSEMBLER_
+#define _SINGLE_DATA_TRANSFER_H_ASSEMBLER_
 
 #include <stdint.h>
 #include <stdbool.h>

@@ -1,6 +1,6 @@
 
-#ifndef FLAGS_H
-#define FLAGS_H
+#ifndef _FALGS_H_EMULATOR
+#define _FALGS_H_EMULATOR
 
 #include <stdint.h>
 

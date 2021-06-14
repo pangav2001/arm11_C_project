@@ -1,5 +1,5 @@
-#ifndef ASSEMBLE_H
-#define ASSEMBLE_H
+#ifndef _ASSEMBLE_H_
+#define _ASSEMBLE_H_
 
 #include <stdint.h>
 

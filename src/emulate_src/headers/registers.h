@@ -1,5 +1,5 @@
-#ifndef REGISTER_H
-#define REGISTER_H
+#ifndef _REGISTER_H_EMULATOR_
+#define _REGISTER_H_EMULATOR_
 
 #include <stdint.h>
 
