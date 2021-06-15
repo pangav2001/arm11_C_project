@@ -24,15 +24,28 @@ void free_ghosts(game_t *game)
     }
 }
 
+int get_mid_x(char **view){
+    return strlen(view[0]) / 2;
+}
+
+int get_mid_y(char **view) {
+    int y = 0;
+    for (; view[y]; y++)
+        ;
+    return y / 2;
+}
+
 void init_ghosts(ghost_t **ghosts, int num_ghosts, char **view)
 {
     for (int i = 0; i < num_ghosts; i++)
     {
-        int mid_x = strlen(view[0]) / 2;
-        int y = 0;
-        for (; view[y]; y++)
-            ;
-        int mid_y = y / 2;
+        // int mid_x = strlen(view[0]) / 2;
+        // int y = 0;
+        // for (; view[y]; y++)
+        //     ;
+        // int mid_y = y / 2;
+        int mid_x = get_mid_x(view);
+        int mid_y = get_mid_y(view);
 
         //Change hard coding positions
         for (i = 0; i < num_ghosts; i++)
@@ -93,18 +106,18 @@ void init_game(game_t *game, pacman_t *pacman) {
 
 }
 
-void init_pacman(pacman_t *pacman) {
+void init_pacman(pacman_t *pacman, char **view) {
     pacman->representation = 'P';
     
     pacman->dx = 0;
     pacman->dy = 0;
 
     //check pos
-    pacman->x = 13; 
-    pacman->y = 19;
+    pacman->x = get_mid_x(view); 
+    pacman->y = get_mid_y(view) + 6;
 }
 
-void kill_pacman(pacman_t *pacman, game_t *game) {
+void kill_pacman(pacman_t *pacman, game_t *game, char **view) {
     game->lives -= 1;
-    init_pacman(pacman);
+    init_pacman(pacman, view);
 }

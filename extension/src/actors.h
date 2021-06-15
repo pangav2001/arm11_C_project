@@ -44,9 +44,9 @@ typedef struct {
 
 void init_game(game_t *game, pacman_t *pacman);
 
-void init_pacman(pacman_t *pacman);
+void init_pacman(pacman_t *pacman, char **view);
 
-void kill_pacman(pacman_t *pacman, game_t *game);
+void kill_pacman(pacman_t *pacman, game_t *game, char **view);
 
 void crate_ghosts(game_t *game);
 
