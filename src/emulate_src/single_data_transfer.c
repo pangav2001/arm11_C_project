@@ -16,7 +16,7 @@ void single_data_transfer(int8_t i, int8_t p, int8_t u, int8_t l, enum Register_
     int32_t rn_data = get_reg(rn);
     rn_data = (rn == PC) ? rn_data - 4 : rn_data; //accomodate for pipeline
 
-    //32 bits so that a wrap-around (overflow) 
+    //32 bits so that a wrap-around (overflow)
     //on the 16 bit offset can be detected
     /*
     Why? Because theoritically uint16_t can hold
@@ -36,7 +36,27 @@ void single_data_transfer(int8_t i, int8_t p, int8_t u, int8_t l, enum Register_
 
     uint32_t address = add_sub(u, rn_data, new_offset);
 
-    if (address > MAX_ADDRESS)
+    if (address == 0x20200000)
+    {
+        printf("One GPIO pin from 0 to 9 has been accessed\n");
+    }
+    else if (address == 0x20200004)
+    {
+        printf("One GPIO pin from 10 to 19 has been accessed\n");
+    }
+    else if (address == 0x20200008)
+    {
+        printf("One GPIO pin from 20 to 29 has been accessed\n"); 
+    }
+    else if (address == 0x2020001C)
+    {
+        printf("PIN ON\n");
+    }
+    else if (address == 0x20200028)
+    {
+        printf("PIN OFF\n");
+    }
+    else if (address > MAX_ADDRESS)
     {
         printf("Error: Out of bounds memory access at address 0x%08x\n", address);
     }
