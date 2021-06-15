@@ -1,5 +1,6 @@
 #include "ghost_movement.h"
 #include "game_view.h"
+#include "actors.h"
 #include <time.h>
 #include <stdlib.h>
 
@@ -10,6 +11,10 @@ int check_ghost_position(ghost_t *ghost, int dx, int dy, map_t *map) {
     return get_char(new_x, new_y, map) != '#' && get_char(new_x, new_y, map) != 'G';
 }
 
+int diaganol_movement(int dx, int dy) {
+    return abs(dx) == 1 && abs(dy) == 1;
+}
+
 void calculate_ghost_movement(ghost_t *ghost, map_t *map) {
     //What happens when we are at the target?
     int curr_distance = calculate_target_distance(ghost->x + ghost->dx, ghost->y + ghost->dy, ghost->target_x, ghost->target_y);
@@ -18,7 +23,7 @@ void calculate_ghost_movement(ghost_t *ghost, map_t *map) {
     for (int i = -1; i < 2; i++) {
         for (int j = -1; j < 2; j++) {
             int new_distance = calculate_target_distance(ghost->x + i, ghost->y + j, ghost->target_x, ghost->target_y);
-            if (new_distance < curr_distance && !(i == 0 && j == 0) && check_ghost_position(ghost, i, j, map)) {
+            if (new_distance < curr_distance && !(i == 0 && j == 0) && check_ghost_position(ghost, i, j, map) && !diaganol_movement(i, j)) {
                 curr_distance = new_distance;
                 dx = i;
                 dy = j;
@@ -37,6 +42,12 @@ void calculate_ghost_movement(ghost_t *ghost, map_t *map) {
             ghost->dx = 0;
             ghost->dy = 0;
             break;
+        case '-':
+            if (!(ghost->mode == OFF || ghost->mode == EATEN)) {
+                ghost->dx = 0;
+                ghost->dy = 0;   
+                break;
+            }
         default:
             ghost->dx = dx;
             ghost->dy = dy;
@@ -72,6 +83,7 @@ void move_ghost(game_t *game, map_t *map) {
 
 void update_ghost_targets(game_t *game, map_t *map) {
     //srand(time(NULL));
+
     for (int i = 0; i < game->num_ghosts; i++) {
         //set targets random for now
         // int x = rand() % (map->max_x - 1);
@@ -79,7 +91,19 @@ void update_ghost_targets(game_t *game, map_t *map) {
         // GHOST[i]->target_x = x;
         // GHOST[i]->target_y = y;
 
-        GHOST[i]->target_x = game->pacman->x;
-        GHOST[i]->target_y = game->pacman->y;
+        switch (GHOST[i]->mode) {
+            case OFF:
+                if (GHOST[i]->target_x == GHOST[i]->x && GHOST[i]->target_y == GHOST[i]->y) {
+                    GHOST[i]->mode = CHASING;
+                }
+                break;
+            case CHASING:
+                GHOST[i]->target_x = game->pacman->x;
+                GHOST[i]->target_y = game->pacman->y;
+                break;
+            default:
+                GHOST[i]->target_x = game->pacman->x;
+                GHOST[i]->target_y = game->pacman->y;
+        }
     }
 }

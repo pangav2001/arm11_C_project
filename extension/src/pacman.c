@@ -60,13 +60,8 @@ int main(void) {
                 dx = 1;
                 break;
         }
-        //make movement
-        if (check_position_change(pacman, dx, dy, game->map)) {
-            pacman->dx = dx;
-            pacman->dy = dy;
-        }
-
-        move_pacman(pacman, game, game->map);
+        
+        move_pacman(pacman, game, game->map, dx, dy);
         move_ghost(game, game->map);
         update_ghost_targets(game, game->map);
 

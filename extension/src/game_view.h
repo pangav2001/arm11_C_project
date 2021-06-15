@@ -5,7 +5,7 @@
 #include <ncurses.h>
 #include "actors.h"
 
-#define DISTANCE_OUTSIDE 3
+#define DISTANCE_OUTSIDE 4
 
 void print_view(WINDOW *window, game_t *game);
 

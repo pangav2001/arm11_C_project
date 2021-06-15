@@ -5,6 +5,6 @@
 
 int check_position_change(pacman_t *pacman, int dx, int dy, map_t *map);
 
-void move_pacman(pacman_t *pacman, game_t *game, map_t *map);
+void move_pacman(pacman_t *pacman, game_t *game, map_t *map, int dx, int dy);
 
 #endif

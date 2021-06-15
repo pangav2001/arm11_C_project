@@ -6,12 +6,13 @@
 void crate_ghosts(game_t *game)
 {
     GHOST = (ghost_t **)malloc(game->num_ghosts * sizeof(ghost_t *));
+    
     for (int i = 0; i < game->num_ghosts; i++)
     {
         GHOST[i] = (ghost_t *)malloc(sizeof(ghost_t));
         GHOST[i]->representation = 'G';
         GHOST[i]->over = ' ';
-        GHOST[i]->ghost_wait = 0;
+        GHOST[i]->ghost_wait = i * GHOST_START_DELAY;
     }
 }
 
@@ -81,7 +82,7 @@ void init_game(game_t *game, pacman_t *pacman)
     game->lives = 3;
     game->num_frames_ghost_reset = -1;
 
-    game->num_ghosts = 4;
+    game->num_ghosts = 1;
     game->points = 0;
     game->high_score = 10700;
     //game->ghosts = ;
@@ -95,6 +96,7 @@ void init_pacman(pacman_t *pacman, map_t *map)
 
     pacman->dx = -1;
     pacman->dy = 0;
+    pacman->pacman_wait = PACMAN_WAIT;
 
     //check pos
     pacman->x = map->max_x / 2;
