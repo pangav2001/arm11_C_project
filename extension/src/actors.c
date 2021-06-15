@@ -82,7 +82,7 @@ void init_game(game_t *game, pacman_t *pacman)
     game->lives = 3;
     game->num_frames_ghost_reset = -1;
 
-    game->num_ghosts = 4;
+    game->num_ghosts = 1;
     game->points = 0;
     game->high_score = 10700;
     //game->ghosts = ;
