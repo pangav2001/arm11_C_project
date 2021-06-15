@@ -11,6 +11,7 @@ void crate_ghosts(game_t *game)
         GHOST[i] = (ghost_t *)malloc(sizeof(ghost_t));
         GHOST[i]->representation = 'G';
         GHOST[i]->over = ' ';
+        GHOST[i]->ghost_wait = 0;
     }
 }
 
