@@ -70,4 +70,7 @@ void move_pacman(pacman_t *pacman, game_t *game, char **view)
         pacman->y += pacman->dy;
         break;
     };
+
+    //clear pacman prev
+    set_character(pacman->x - pacman->dx, pacman->y - pacman->dy, ' ', view);
 }

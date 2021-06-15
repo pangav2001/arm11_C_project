@@ -16,7 +16,7 @@ void print_view(WINDOW *window, char **view) {
     }
 
     wrefresh(window);
-    usleep(30000);
+    usleep(50000);
     
 }
 
