@@ -53,12 +53,17 @@ void move_ghost(game_t *game, map_t *map) {
     //update pos
     for (int i = 0; i < game->num_ghosts; i++) {
         // //causing screen to disappear at the moment
-        calculate_ghost_movement(GHOST[i], map);
-        if (!(GHOST[i]->dx == 0 && GHOST[i]->dy == 0)) {
-            //put back over character
-            set_character(GHOST[i]->x - GHOST[i]->dx, GHOST[i]->y - GHOST[i]->dy, GHOST[i]->over, map);
-            GHOST[i]->over = get_char(GHOST[i]->x, GHOST[i]->y, map);
-            set_character(GHOST[i]->x , GHOST[i]->y, GHOST[i]->representation ,map);
+        if (GHOST[i]->ghost_wait == 0) {
+            GHOST[i]->ghost_wait = GHOST_WAIT;
+            calculate_ghost_movement(GHOST[i], map);
+            if (!(GHOST[i]->dx == 0 && GHOST[i]->dy == 0)) {
+                //put back over character
+                set_character(GHOST[i]->x - GHOST[i]->dx, GHOST[i]->y - GHOST[i]->dy, GHOST[i]->over, map);
+                GHOST[i]->over = get_char(GHOST[i]->x, GHOST[i]->y, map);
+                set_character(GHOST[i]->x , GHOST[i]->y, GHOST[i]->representation ,map);
+            }
+        } else {
+            GHOST[i]->ghost_wait --;
         }
 
     }
