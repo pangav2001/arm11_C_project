@@ -3,6 +3,7 @@
 
 #define MAX_GHOSTS 9
 #define GHOST_WAIT 2
+#define PACMAN_WAIT 2
 #define GHOST_START_DELAY 20 //between ghosts starting
 #define GHOST game->ghosts
 
@@ -21,6 +22,7 @@ typedef struct
     int y;
     int dx;
     int dy;
+    int pacman_wait;
     char representation;
 } pacman_t;
 

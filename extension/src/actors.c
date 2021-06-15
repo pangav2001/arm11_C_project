@@ -96,6 +96,7 @@ void init_pacman(pacman_t *pacman, map_t *map)
 
     pacman->dx = -1;
     pacman->dy = 0;
+    pacman->pacman_wait = PACMAN_WAIT;
 
     //check pos
     pacman->x = map->max_x / 2;
