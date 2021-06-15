@@ -52,10 +52,10 @@ void crate_ghosts(game_t *game);
 
 void free_ghosts(game_t *game);
 
-void init_ghosts(ghost_t **ghosts, int num_ghosts);
+void init_ghosts(ghost_t **ghosts, int num_ghosts, char **view);
 
-void kill_ghost(ghost_t *ghost);
+void kill_ghost(ghost_t *ghost, char **view);
 
-void revive_ghost(ghost_t *ghost);
+void revive_ghost(ghost_t *ghost, char **view);
 
 #endif

@@ -2,13 +2,53 @@
 #include "actors.h"
 #include "pacman_movement.h"
 #include "game_view.h"
+#include <stdlib.h>
+#include <string.h>
+
+int game_over(game_t *game);
+
+char *view_test[24] = {
+"#######################################",
+"# . . . . . . . . ### . . . . . . . . #",
+"# O ### . ##### . ### . ##### . ### O #",
+"# . . . . . . . . . . . . . . . . . . #",
+"# . ### . # . ########### . # . ### . #",
+"# . . . . # . . . ### . . . # . . . . #",
+"####### . ##### . ### . ##### . #######",
+"      # . # . . . . . . . . # . #      ",
+"      # . # . ### - - ### . # . #      ",
+"####### . # . #         # . # . #######",
+"        . . . #         # . . .        ",
+"####### . # . #         # . # . #######",
+"      # . # . ########### . # . #      ",
+"      # . # . . . .X. . . . # . #      ",
+"####### . # . ########### . # . #######",
+"# . . . . . . . . ### . . . . . . . . #",
+"# O ### . ##### . ### . ##### . ### O #",
+"# . . # . . . . . . . . . . . . # . . #",
+"### . # . # . ########### . # . # . ###",
+"# . . . . # . . . ### . . . # . . . . #",
+"# . ########### . ### . ########### . #",
+"# . . . . . . . . . . . . . . . . . . #",
+"#######################################",                        
+    NULL
+};
 
 int main(void) {
     // Setup window
+    
+    char **view = calloc(24, sizeof(char *)); //
+    for (int i = 0; i < 23; i++) {
+        view[i] = strdup(view_test[i]);
+    }
+    view[24] = NULL;
+
+    view[0][0] = 'T';
 
     initscr();
     nodelay(stdscr, true);
     cbreak();
+    noecho();
 
     pacman_t *pacman = calloc(1, sizeof(pacman_t));
     game_t *game = calloc(1, sizeof(game_t));
@@ -24,8 +64,8 @@ int main(void) {
     while (!game_over(game)) {
         char input = getch();
 
-        int dx;
-        int dy;
+        int dx = 0;
+        int dy = 0;
 
         switch (input) {
             case 'w':
@@ -48,15 +88,15 @@ int main(void) {
                 break;
         }
         //make movement
-        if (check_position_change(pacman, dx, dy)) {
+        if (check_position_change(pacman, dx, dy, view)) {
             pacman->dx = dx;
             pacman->dy = dy;
         }
 
-        move_pacman(pacman, game);
+        move_pacman(pacman, game, view);
 
         //update everything else
-        update_view(game);
+        update_view(game, view);
 
 
         //rerender screen
