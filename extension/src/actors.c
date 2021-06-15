@@ -9,6 +9,7 @@
 
 void crate_ghosts(game_t *game)
 {
+    GHOST = (ghost_t **)malloc(game->num_ghosts * sizeof(ghost_t *));
     for (int i = 0; i < game->num_ghosts; i++)
     {
         GHOST[i] = (ghost_t *)malloc(sizeof(ghost_t));
@@ -22,6 +23,7 @@ void free_ghosts(game_t *game)
     {
         free(GHOST[i]);
     }
+    free(game->ghosts);
 }
 
 int get_mid_x(char **view){
@@ -60,7 +62,7 @@ void init_ghosts(ghost_t **ghosts, int num_ghosts, char **view)
 
             //To create a 3x3 box since max number of ghosts allowed is 9
             ghosts[i]->x = mid_x - 1 + (i % 3);
-            ghosts[i]->x = mid_y - 1 + (i / 3);
+            ghosts[i]->y = mid_y - 2 + (i / 3);
         }
     }
 }
