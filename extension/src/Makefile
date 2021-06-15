@@ -10,10 +10,10 @@ BUILD = pacman
 
 all: $(BUILD)
 
-pacman: actors.o gameview.o ghost_movement.o pacman_movement.o
+pacman: actors.o game_view.o ghost_movement.o pacman_movement.o -lncurses
 
 actors.o: actors.h
-gameview.o: gameview.h
+game_view.o: game_view.h
 ghost_movement.o: ghost_movement.h
 pacman_movement.o: pacman_movement.h
 

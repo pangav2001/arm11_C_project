@@ -3,8 +3,8 @@
 
 #include "actors.h"
 
-int check_position_change(pacman_t *pacman, int dx, int dy);
+int check_position_change(pacman_t *pacman, int dx, int dy, char **view);
 
-void move_pacman(pacman_t *pacman, game_t *game);
+void move_pacman(pacman_t *pacman, game_t *game, char **view);
 
 #endif

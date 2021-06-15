@@ -24,7 +24,7 @@ void free_ghosts(game_t *game)
     }
 }
 
-void init_ghosts(ghost_t **ghosts, int num_ghosts)
+void init_ghosts(ghost_t **ghosts, int num_ghosts, char **view)
 {
     for (int i = 0; i < num_ghosts; i++)
     {
@@ -52,7 +52,7 @@ void init_ghosts(ghost_t **ghosts, int num_ghosts)
     }
 }
 
-void kill_ghost(ghost_t *ghost)
+void kill_ghost(ghost_t *ghost, char **view)
 {
     ghost->mode = EATEN;
 
@@ -65,7 +65,7 @@ void kill_ghost(ghost_t *ghost)
     ghost->target_x = mid_x;
     ghost->target_y = mid_y;
 }
-void revive_ghost(ghost_t *ghost)
+void revive_ghost(ghost_t *ghost, char **view)
 {
     ghost->mode = CHASING;
     int mid_x = strlen(view[0]) / 2;
