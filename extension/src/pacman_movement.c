@@ -21,6 +21,7 @@ void move_pacman(pacman_t *pacman, game_t *game, char **view)
 
     switch (in_way)
     {
+    case '\255':
     case '-':
     case '#':
         //Stop pacman
