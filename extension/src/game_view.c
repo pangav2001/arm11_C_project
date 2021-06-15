@@ -1,13 +1,23 @@
 #include "game_view.h"
 #include "actors.h"
+#include <ncurses.h>
+#include <unistd.h>
 
 void print_view(WINDOW *window, char **view) {
-    refresh();
-    while (*view != NULL) {
-        waddstr(window, *view++);
-        waddstr(window, "\n");
+    clear();
+    
+    // while (*view != NULL) {
+    //     waddstr(window, *view++);
+    //     waddstr(window, "\n");
+    // }
+
+    for (int i = 0; view[i]; i++) {
+        mvprintw(i, 0, view[i]);
     }
+
     wrefresh(window);
+    usleep(30000);
+    
 }
 
 void set_character(int x, int y, char c, char **view) {

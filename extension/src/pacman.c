@@ -1,4 +1,4 @@
-#include "curses.h"
+#include <ncurses.h>
 #include "actors.h"
 #include "pacman_movement.h"
 #include "game_view.h"
@@ -43,12 +43,11 @@ int main(void) {
     }
     view[24] = NULL;
 
-    view[0][0] = 'T';
-
     initscr();
     nodelay(stdscr, true);
     cbreak();
     noecho();
+    curs_set(FALSE);
 
     pacman_t *pacman = calloc(1, sizeof(pacman_t));
     game_t *game = calloc(1, sizeof(game_t));
