@@ -3,8 +3,6 @@
 #include "actors.h"
 #include <stdlib.h>
 
-#define GHOST game->ghosts
-
 void crate_ghosts(game_t *game)
 {
     GHOST = (ghost_t **)malloc(game->num_ghosts * sizeof(ghost_t *));

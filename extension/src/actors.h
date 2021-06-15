@@ -2,6 +2,7 @@
 #define ACTORS_H
 
 #define MAX_GHOSTS 9
+#define GHOST game->ghosts
 
 typedef enum
 {
@@ -30,7 +31,7 @@ typedef struct
     int target_x;
     int target_y;
     char representation;
-    char over;
+    char over; //character ghost is over to place back
     Ghost_Mode_t mode;
 } ghost_t;
 typedef struct
