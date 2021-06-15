@@ -21,11 +21,11 @@ void print_view(WINDOW *window, char **view) {
 }
 
 void set_character(int x, int y, char c, char **view) {
-    view[x][y] = c;
+    view[y][x] = c;
 }
 
 char get_char(int x, int y, char **view) {
-    return view[x][y];
+    return view[y][x];
 }
 
 void update_view(game_t *game, char **view) {

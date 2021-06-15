@@ -21,7 +21,7 @@ char *view_test[24] = {
 "        . . . #         # . . .        ",
 "####### . # . #         # . # . #######",
 "      # . # . ########### . # . #      ",
-"      # . # . . . .X. . . . # . #      ",
+"      # . # . . . . . . . . # . #      ",
 "####### . # . ########### . # . #######",
 "# . . . . . . . . ### . . . . . . . . #",
 "# O ### . ##### . ### . ##### . ### O #",
@@ -52,7 +52,7 @@ int main(void) {
     pacman_t *pacman = calloc(1, sizeof(pacman_t));
     game_t *game = calloc(1, sizeof(game_t));
 
-    init_pacman(pacman);
+    init_pacman(pacman, view);
     init_game(game, pacman);
   
     int h = 64;
@@ -63,8 +63,8 @@ int main(void) {
     while (!game_over(game)) {
         char input = getch();
 
-        int dx = 0;
-        int dy = 0;
+        int dx = pacman->dx;
+        int dy = pacman->dy;
 
         switch (input) {
             case 'w':
