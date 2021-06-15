@@ -5,6 +5,7 @@
 #include "game_view.h"
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 int game_over(game_t *game);
 
@@ -76,6 +77,22 @@ int main(void)
 
         //rerender screen
         print_view(window, game);
+    }
+
+    int max_y;
+    int max_x;
+    getmaxyx(stdscr, max_y, max_x);
+
+    for (int i = max_x; i >= 0; i--)
+    {
+        clear();
+
+        mvprintw(max_y / 2, i, "%c  %c %c %c %c", game->pacman->representation, game->ghosts[0]->representation, game->ghosts[0]->representation, game->ghosts[0]->representation, game->ghosts[0]->representation);
+        mvprintw(max_y / 2 + 1, max_x / 2, "GAME OVER");
+
+        refresh();
+
+        usleep(50000);
     }
 
     //
