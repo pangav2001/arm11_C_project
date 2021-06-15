@@ -70,6 +70,10 @@ int main(void)
         {
             move_pacman(pacman, game, game->map, dx, dy);
         }
+        else
+        {
+            init_ghosts(game->ghosts, game->num_ghosts, game->map);
+        }
         update_ghost_targets(game, game->map);
 
         //update everything else
