@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "curses.h"
+#include <ncurses.h>
 #include "user_input.h"
 
 Movement get_position() {

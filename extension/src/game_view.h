@@ -2,7 +2,7 @@
 #define GAME_VIEW_H
 
 #include <stdio.h>
-#include "curses.h"
+#include <ncurses.h>
 #include "actors.h"
 
 #define DISTANCE_OUTSIDE 3
