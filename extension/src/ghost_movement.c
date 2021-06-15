@@ -4,14 +4,6 @@
 #include <time.h>
 #include <stdlib.h>
 
-void reset_ghosts(game_t *game)
-{
-    for (int i = 0; i < game->num_ghosts; i++)
-    {
-        kill_ghost(game->ghosts[i], game->map->view);
-    }
-}
-
 int check_ghost_position(ghost_t *ghost, int dx, int dy, game_t *game)
 {
     int new_x = ghost->x + dx;
@@ -22,17 +14,12 @@ int check_ghost_position(ghost_t *ghost, int dx, int dy, game_t *game)
 
 int check_pacman_collision(game_t *game)
 {
-    int x;
-    int y;
     for (int i = 0; i < game->num_ghosts; i++)
     {
         if (get_char(game->ghosts[i]->x, game->ghosts[i]->y, game->map) == 'P')
         {
-            x = game->pacman->x;
-            y = game->pacman->y;
             kill_pacman(game->pacman, game, game->map->view);
             game->ghosts[i]->over = ' ';
-            set_character(x, y, ' ', game->map);
             return 1;
         }
     }

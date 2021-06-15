@@ -7,6 +7,4 @@ int check_position_change(pacman_t *pacman, int dx, int dy, game_t *game);
 
 void move_pacman(pacman_t *pacman, game_t *game, map_t *map, int dx, int dy);
 
-void reset_ghosts(game_t *game);
-
 #endif
