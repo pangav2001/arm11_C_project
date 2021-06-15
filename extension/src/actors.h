@@ -40,6 +40,7 @@ typedef struct {
     int num_frames_ghost_reset; //-1 means ignore, we wait until 0, then we set ghost to chasing
     int lives;
     int points;
+    int high_score;
 }game_t;
 
 void init_game(game_t *game, pacman_t *pacman);

@@ -101,6 +101,7 @@ void init_game(game_t *game, pacman_t *pacman) {
 
     game->num_ghosts = 4;
     game->points = 0;
+    game->high_score = 10700;
     //game->ghosts = ;
 
     game->pacman = pacman;
@@ -111,7 +112,7 @@ void init_game(game_t *game, pacman_t *pacman) {
 void init_pacman(pacman_t *pacman, char **view) {
     pacman->representation = 'P';
     
-    pacman->dx = 0;
+    pacman->dx = -1;
     pacman->dy = 0;
 
     //check pos
