@@ -36,6 +36,7 @@ int main(void) {
     
     while (!game_over(game)) {
         char input = getch();
+        
 
         int dx = pacman->dx;
         int dy = pacman->dy;
@@ -60,6 +61,7 @@ int main(void) {
                 dx = 1;
                 break;
         }
+        flushinp();
         
         move_pacman(pacman, game, game->map, dx, dy);
         move_ghost(game, game->map);

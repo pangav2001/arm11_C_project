@@ -14,17 +14,17 @@ int check_position_change(pacman_t *pacman, int dx, int dy, map_t *map)
 
 void move_pacman(pacman_t *pacman, game_t *game, map_t *map, int dx, int dy)
 {
+    
+    if (check_position_change(pacman, dx, dy, game->map)) {
+        pacman->dx = dx;
+        pacman->dy = dy;
+    }
 
     if (pacman->pacman_wait != 0) {
         pacman->pacman_wait --;
         return;
     }
     pacman->pacman_wait = PACMAN_WAIT;
-    
-    if (check_position_change(pacman, dx, dy, game->map)) {
-        pacman->dx = dx;
-        pacman->dy = dy;
-    }
 
 
     int new_x = pacman->x + pacman->dx;
