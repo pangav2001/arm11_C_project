@@ -66,7 +66,7 @@ void kill_ghost(ghost_t *ghost, char **view)
 }
 void revive_ghost(ghost_t *ghost, char **view)
 {
-    ghost->mode = CHASING;
+    ghost->mode = OFF;
     int mid_x = strlen(view[0]) / 2;
     int y = 0;
     for (; view[y]; y++)
