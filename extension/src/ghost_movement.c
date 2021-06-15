@@ -1,5 +1,6 @@
 #include "ghost_movement.h"
 #include "game_view.h"
+#include "actors.h"
 #include <time.h>
 #include <stdlib.h>
 
@@ -72,6 +73,7 @@ void move_ghost(game_t *game, map_t *map) {
 
 void update_ghost_targets(game_t *game, map_t *map) {
     //srand(time(NULL));
+
     for (int i = 0; i < game->num_ghosts; i++) {
         //set targets random for now
         // int x = rand() % (map->max_x - 1);
@@ -79,7 +81,16 @@ void update_ghost_targets(game_t *game, map_t *map) {
         // GHOST[i]->target_x = x;
         // GHOST[i]->target_y = y;
 
-        GHOST[i]->target_x = game->pacman->x;
-        GHOST[i]->target_y = game->pacman->y;
+        switch (GHOST[i]->mode) {
+            case OFF:
+                break;
+            case CHASING:
+                GHOST[i]->target_x = game->pacman->x;
+                GHOST[i]->target_y = game->pacman->y;
+                break;
+            default:
+                GHOST[i]->target_x = game->pacman->x;
+                GHOST[i]->target_y = game->pacman->y;
+        }
     }
 }

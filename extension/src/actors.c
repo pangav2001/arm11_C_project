@@ -6,12 +6,13 @@
 void crate_ghosts(game_t *game)
 {
     GHOST = (ghost_t **)malloc(game->num_ghosts * sizeof(ghost_t *));
+    
     for (int i = 0; i < game->num_ghosts; i++)
     {
         GHOST[i] = (ghost_t *)malloc(sizeof(ghost_t));
         GHOST[i]->representation = 'G';
         GHOST[i]->over = ' ';
-        GHOST[i]->ghost_wait = 0;
+        GHOST[i]->ghost_wait = i * GHOST_START_DELAY;
     }
 }
 
