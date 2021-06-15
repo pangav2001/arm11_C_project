@@ -9,7 +9,7 @@ int check_position_change(pacman_t *pacman, int dx, int dy, map_t *map)
     int new_x = pacman->x + dx;
     int new_y = pacman->y + dy;
 
-    return get_char(new_x, new_y, map) != '#' && get_char(new_x, new_y, map) != '-';
+    return get_char(new_x, new_y, map) != '#' && get_char(new_x, new_y, map) != '-' && get_char(new_x, new_y, map) != '\255';
 }
 
 void move_pacman(pacman_t *pacman, game_t *game, map_t *map)
@@ -55,7 +55,7 @@ void move_pacman(pacman_t *pacman, game_t *game, map_t *map)
         game->num_frames_ghost_reset = 3000; //might need to change
         for (int i = 0; i < game->num_ghosts; i++)
         {
-            if(GHOST[i]->mode == CHASING || GHOST[i]->mode == SCATTER)
+            if (GHOST[i]->mode == CHASING || GHOST[i]->mode == SCATTER)
             {
                 GHOST[i]->mode = FRIGHTENED;
             }
@@ -67,8 +67,19 @@ void move_pacman(pacman_t *pacman, game_t *game, map_t *map)
         //Power pellet is worth 10 points
         game->points += 10;
     default:
-        pacman->x = new_x;
-        pacman->y = new_y;
+        if (pacman->x <= 0)
+        {
+            pacman->x = map->max_x - 1;
+        }
+        else if (pacman->x >= map->max_x)
+        {
+            pacman->x = 1;
+        }
+        else
+        {
+            pacman->x = new_x;
+            pacman->y = new_y;
+        }
         break;
     };
 
