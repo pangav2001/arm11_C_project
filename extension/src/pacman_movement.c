@@ -6,8 +6,8 @@
 
 int check_position_change(pacman_t *pacman, int dx, int dy, char **view)
 {
-    int new_x = pacman->x + pacman->dx;
-    int new_y = pacman->y + pacman->dy;
+    int new_x = pacman->x + dx;
+    int new_y = pacman->y + dy;
 
     return get_char(new_x, new_y, view) != '#' && get_char(new_x, new_y, view) != '-';
 }
@@ -67,8 +67,8 @@ void move_pacman(pacman_t *pacman, game_t *game, char **view)
         //Power pellet is worth 10 points
         game->points += 10;
     default:
-        pacman->x += pacman->dx;
-        pacman->y += pacman->dy;
+        pacman->x = new_x;
+        pacman->y = new_y;
         break;
     };
 
