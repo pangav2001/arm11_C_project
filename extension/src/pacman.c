@@ -1,6 +1,7 @@
 #include <ncurses.h>
 #include "actors.h"
 #include "pacman_movement.h"
+#include "ghost_movement.h"
 #include "game_view.h"
 #include <stdlib.h>
 #include <string.h>
@@ -51,9 +52,13 @@ int main(void) {
 
     pacman_t *pacman = calloc(1, sizeof(pacman_t));
     game_t *game = calloc(1, sizeof(game_t));
+    init_game(game, pacman);
+    
+    crate_ghosts(game);
+    init_ghosts(game->ghosts, game->num_ghosts, view);
 
     init_pacman(pacman, view);
-    init_game(game, pacman);
+    
   
     int h = 64;
     int w = 64;
@@ -93,6 +98,7 @@ int main(void) {
         }
 
         move_pacman(pacman, game, view);
+        move_ghost(game, view);
 
         //update everything else
         update_view(game, view);
