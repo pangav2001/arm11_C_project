@@ -87,8 +87,15 @@ int main(void)
     {
         clear();
 
+        int len = strlen(" _____   ___  ___  ___ _____   _____  _   _ ___________ ") / 2;
+
         mvprintw(max_y / 2, i, "%c  %c %c %c %c", game->pacman->representation, game->ghosts[0]->representation, game->ghosts[0]->representation, game->ghosts[0]->representation, game->ghosts[0]->representation);
-        mvprintw(max_y / 2 + 1, max_x / 2, "GAME OVER");
+        mvprintw(max_y / 2 + 1, max_x / 2 - len, " _____   ___  ___  ___ _____   _____  _   _ ___________ ");
+        mvprintw(max_y / 2 + 2, max_x / 2 - len, "|  __ \\ / _ \\ |  \\/  ||  ___| |  _  || | | |  ___| ___ \\");
+        mvprintw(max_y / 2 + 3, max_x / 2 - len, "| |  \\// /_\\ \\| .  . || |__   | | | || | | | |__ | |_/ /");
+        mvprintw(max_y / 2 + 4, max_x / 2 - len, "| | __ |  _  || |\\/| ||  __|  | | | || | | |  __||    / ");
+        mvprintw(max_y / 2 + 5, max_x / 2 - len, "| |_\\ \\| | | || |  | || |___  \\ \\_/ /\\ \\_/ / |___| |\\ \\ ");
+        mvprintw(max_y / 2 + 6, max_x / 2 - len, " \\____/\\_| |_/\\_|  |_/\\____/   \\___/  \\___/\\____/\\_| \\_|");
 
         refresh();
 
