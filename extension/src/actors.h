@@ -3,25 +3,26 @@
 
 #define MAX_GHOSTS 9
 
-typedef enum {
+typedef enum
+{
     CHASING,
     SCATTER,
     FRIGHTENED,
     EATEN,
     OFF
-}Ghost_Mode_t;
+} Ghost_Mode_t;
 
-
-typedef struct {
+typedef struct
+{
     int x;
     int y;
     int dx;
     int dy;
     char representation;
-}pacman_t;
+} pacman_t;
 
-
-typedef struct {
+typedef struct
+{
     int x;
     int y;
     int dx;
@@ -31,9 +32,17 @@ typedef struct {
     char representation;
     char over;
     Ghost_Mode_t mode;
-}ghost_t;
+} ghost_t;
+typedef struct
+{
+    char**view;
+    int max_x;
+    int max_y;
+    int pacman_start_offset;   
+}map_t;
 
-typedef struct {
+typedef struct
+{
     int num_ghosts;
     ghost_t **ghosts;
     pacman_t *pacman;
@@ -41,11 +50,13 @@ typedef struct {
     int lives;
     int points;
     int high_score;
-}game_t;
+    map_t *map;
+} game_t;
+
 
 void init_game(game_t *game, pacman_t *pacman);
 
-void init_pacman(pacman_t *pacman, char **view);
+void init_pacman(pacman_t *pacman, map_t *map);
 
 void kill_pacman(pacman_t *pacman, game_t *game, char **view);
 
@@ -53,10 +64,12 @@ void crate_ghosts(game_t *game);
 
 void free_ghosts(game_t *game);
 
-void init_ghosts(ghost_t **ghosts, int num_ghosts, char **view);
+void init_ghosts(ghost_t **ghosts, int num_ghosts, map_t *map);
 
 void kill_ghost(ghost_t *ghost, char **view);
 
 void revive_ghost(ghost_t *ghost, char **view);
+
+void init_map(game_t *game);
 
 #endif
