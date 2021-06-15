@@ -7,7 +7,7 @@
 
 #define DISTANCE_OUTSIDE 3
 
-void print_view(WINDOW *window, char **view);
+void print_view(WINDOW *window, char **view, game_t *game);
 
 void set_character(int x, int y, char c, char **view);
 
