@@ -2,8 +2,8 @@
 #define ACTORS_H
 
 #define MAX_GHOSTS 9
-#define GHOST_WAIT 2
-#define PACMAN_WAIT 2
+#define GHOST_WAIT 1
+#define PACMAN_WAIT 1
 #define GHOST_START_DELAY 20 //between ghosts starting
 #define GHOST game->ghosts
 
