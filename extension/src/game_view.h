@@ -7,12 +7,12 @@
 
 #define DISTANCE_OUTSIDE 3
 
-void print_view(WINDOW *window, char **view, game_t *game);
+void print_view(WINDOW *window, game_t *game);
 
-void set_character(int x, int y, char c, char **view);
+void set_character(int x, int y, char c, map_t *map);
 
-char get_char(int x, int y, char **view);
+char get_char(int x, int y, map_t *map);
 
-void update_view(game_t *game, char **view);
+void update_view(game_t *game, map_t *map);
 
 #endif

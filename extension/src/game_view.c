@@ -5,7 +5,7 @@
 
 #define UI_HEIGHT 2
 
-void print_view(WINDOW *window, char **view, game_t *game) {
+void print_view(WINDOW *window, game_t *game) {
     clear();
     
     // while (*view != NULL) {
@@ -16,8 +16,8 @@ void print_view(WINDOW *window, char **view, game_t *game) {
     mvprintw(1, 1, "  %d\t\t%9d", game->points, game->high_score);
 
     int i = 0;
-    for (; view[i]; i++) {
-        mvprintw(i + UI_HEIGHT, 1, view[i]);
+    for (; game->map->view[i]; i++) {
+        mvprintw(i + UI_HEIGHT, 1, game->map->view[i]);
     }
 
     i++;
@@ -32,17 +32,17 @@ void print_view(WINDOW *window, char **view, game_t *game) {
     
 }
 
-void set_character(int x, int y, char c, char **view) {
-    view[y][x] = c;
+void set_character(int x, int y, char c, map_t *map) {
+    map->view[y][x] = c;
 }
 
-char get_char(int x, int y, char **view) {
-    return view[y][x];
+char get_char(int x, int y, map_t *map) {
+    return map->view[y][x];
 }
 
-void update_view(game_t *game, char **view) {
+void update_view(game_t *game, map_t *map) {
     //update pacman
-    set_character(game->pacman->x, game->pacman->y, game->pacman->representation, view);
+    set_character(game->pacman->x, game->pacman->y, game->pacman->representation, map);
     
 
     //update ghosts
