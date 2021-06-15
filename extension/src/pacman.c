@@ -68,6 +68,7 @@ int main(void) {
 
         move_pacman(pacman, game, game->map);
         move_ghost(game, game->map);
+        update_ghost_targets(game, game->map);
 
         //update everything else
         update_view(game, game->map);
