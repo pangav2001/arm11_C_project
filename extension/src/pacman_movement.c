@@ -4,18 +4,18 @@
 
 #define GHOST game->ghosts
 
-int check_position_change(pacman_t *pacman, int dx, int dy, map_t *map)
+int check_position_change(pacman_t *pacman, int dx, int dy, game_t *game)
 {
     int new_x = pacman->x + dx;
     int new_y = pacman->y + dy;
-
-    return get_char(new_x, new_y, map) != '#' && get_char(new_x, new_y, map) != '-' && get_char(new_x, new_y, map) != '\255';
+    
+    return get_char(new_x, new_y, game->map) != '#' && get_char(new_x, new_y, game->map) != '-' && get_char(new_x, new_y, game->map) != '\255';
 }
 
 void move_pacman(pacman_t *pacman, game_t *game, map_t *map, int dx, int dy)
 {
     
-    if (check_position_change(pacman, dx, dy, game->map)) {
+    if (check_position_change(pacman, dx, dy, game)) {
         pacman->dx = dx;
         pacman->dy = dy;
     }

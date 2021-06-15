@@ -106,6 +106,7 @@ void init_pacman(pacman_t *pacman, map_t *map)
 void kill_pacman(pacman_t *pacman, game_t *game, char **view)
 {
     game->lives -= 1;
+    //set_character(pacman->x, pacman->y, ' ', game->map);
     init_pacman(pacman, game->map);
 }
 
