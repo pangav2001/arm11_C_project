@@ -31,10 +31,8 @@ int diaganol_movement(int dx, int dy)
     return abs(dx) == 1 && abs(dy) == 1;
 }
 
-void calculate_ghost_movement(ghost_t *ghost, game_t *game)
-{
-    //What happens when we are at the target?
-    int curr_distance = calculate_target_distance(ghost->x + ghost->dx, ghost->y + ghost->dy, ghost->target_x, ghost->target_y);
+void decide_best_movement_ghost(game_t *game, ghost_t *ghost,int *new_dx, int *new_dy) {
+    int curr_distance = game->map->max_x + game->map->max_y;
     int dx = ghost->dx;
     int dy = ghost->dy;
     for (int i = -1; i < 2; i++)
@@ -50,6 +48,49 @@ void calculate_ghost_movement(ghost_t *ghost, game_t *game)
             }
         }
     }
+    *new_dx = dx;
+    *new_dy = dy;
+}
+
+void calculate_ghost_movement(ghost_t *ghost, game_t *game)
+{
+    //What happens when we are at the target?
+    // int curr_distance = calculate_target_distance(ghost->x + ghost->dx, ghost->y + ghost->dy, ghost->target_x, ghost->target_y);
+    // int dx = ghost->dx;
+    // int dy = ghost->dy;
+    // for (int i = -1; i < 2; i++)
+    // {
+    //     for (int j = -1; j < 2; j++)
+    //     {
+    //         int new_distance = calculate_target_distance(ghost->x + i, ghost->y + j, ghost->target_x, ghost->target_y);
+    //         if (new_distance < curr_distance && !(i == 0 && j == 0) && check_ghost_position(ghost, i, j, game) && !diaganol_movement(i, j))
+    //         {
+    //             curr_distance = new_distance;
+    //             dx = i;
+    //             dy = j;
+    //         }
+    //     }
+    // }
+
+    int curr_distance = calculate_target_distance(ghost->x + ghost->dx, ghost->y + ghost->dy, ghost->target_x, ghost->target_y);
+    int best_dx;
+    int best_dy;
+    decide_best_movement_ghost(game, ghost, &best_dx, &best_dy);
+
+    int curr_dx = ghost->dx;
+    int curr_dy = ghost->dy;
+
+    int dx;
+    int dy;
+
+    if (curr_distance <= calculate_target_distance(ghost->x + best_dx, ghost->y + best_dy, ghost->target_x, ghost->target_y)) {
+        dx = curr_dx;
+        dy = curr_dy;
+    } else {
+        dx = best_dx;
+        dy = best_dy;
+    }
+
     int new_x = ghost->x + dx;
     int new_y = ghost->y + dy;
     char in_way = get_char(new_x, new_y, game->map);
@@ -59,8 +100,23 @@ void calculate_ghost_movement(ghost_t *ghost, game_t *game)
     {
     case '#':
     case 'G':
-        ghost->dx = 0;
-        ghost->dy = 0;
+        if (ghost->dx == dx && ghost->dy == dy) {
+            ghost->dx = best_dx;
+            ghost->dy = best_dy;
+
+        }else {
+            ghost->dx = 0;
+            ghost->dy = 0;
+
+        }
+        // if (dx == ghost->dx && dy == ghost->dy) {
+            
+
+        
+        // } else {
+        //     ghost->dx = 0;
+        //     ghost->dy = 0;
+        // }
         break;
     case '-':
         if (!(ghost->mode == OFF || ghost->mode == EATEN))
