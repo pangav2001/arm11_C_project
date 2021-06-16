@@ -145,9 +145,8 @@ void move_ghosts(game_t *game) {
         } else {
             GHOSTS[i]->ghost_wait --;            
         }
-
-
     }
+    update_ghosts_targets(game);
 
 
 }

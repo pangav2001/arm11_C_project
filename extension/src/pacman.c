@@ -1,4 +1,5 @@
-#include "game.h"
+#include "pacman.h"
+#include <stdlib.h>
 
 void create_pacman(game_t *game)
 {
@@ -24,7 +25,7 @@ void init_pacman(game_t *game)
 void kill_pacman(game_t *game)
 {
     game->lives -= 1;
-    set_character(PACMAN->x, PACMAN->y, ' ', game->map);
+    set_char(PACMAN->x, PACMAN->y, ' ', game->map);
     init_pacman(game);
     init_all_ghosts(game);
 }
@@ -37,7 +38,7 @@ static int valid_move_pacman(game_t *game, int dx, int dy)
     return get_char(new_x, new_y, game->map) != '#' && get_char(new_x, new_y, game->map) != '-' && get_char(new_x, new_y, game->map) != '\255';
 }
 
-static void move_pacman(game_t *game, int dx, int dy)
+void move_pacman(game_t *game, int dx, int dy)
 {
 
     if (valid_move_pacman(game, dx, dy))
@@ -109,21 +110,21 @@ static void move_pacman(game_t *game, int dx, int dy)
         if (PACMAN->x <= 0)
         {
             PACMAN->x = MAP->max_x - 1;
-            set_character(0, PACMAN->y, ' ', MAP);
+            set_char(0, PACMAN->y, ' ', MAP);
         }
         else if (PACMAN->x >= MAP->max_x)
         {
             PACMAN->x = 1;
-            set_character(MAP->max_x, PACMAN->y, ' ', MAP);
+            set_char(MAP->max_x, PACMAN->y, ' ', MAP);
         }
         else
         {
             PACMAN->x = new_x;
             PACMAN->y = new_y;
-            set_character(PACMAN->x - PACMAN->dx, PACMAN->y - PACMAN->dy, ' ', MAP);
+            set_char(PACMAN->x - PACMAN->dx, PACMAN->y - PACMAN->dy, ' ', MAP);
         }
         break;
     };
 
-    set_character(PACMAN->x, PACMAN->y, PACMAN_REPRESENTATION, MAP);
+    set_char(PACMAN->x, PACMAN->y, PACMAN_REPRESENTATION, MAP);
 }
