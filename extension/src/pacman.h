@@ -13,6 +13,8 @@ void free_pacman(game_t *game);
 
 void init_pacman(game_t *game);
 
+void kill_pacman(game_t *game);
+
 void move_pacman(game_t *game, int dx, int dy);
 
 #endif

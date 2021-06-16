@@ -26,6 +26,10 @@ void kill_pacman(game_t *game)
 {
     game->lives -= 1;
     set_char(PACMAN->x, PACMAN->y, ' ', game->map);
+    for(int i = 0; i < game->num_ghosts; i++)
+    {
+        set_char(GHOSTS[i]->x, GHOSTS[i]->y, GHOSTS[i]->over == PACMAN_REPRESENTATION ? ' ' : GHOSTS[i]->over, MAP);
+    }
     init_pacman(game);
     init_all_ghosts(game);
 }
@@ -67,29 +71,6 @@ void move_pacman(game_t *game, int dx, int dy)
         //Stop pacman
         PACMAN->dx = 0;
         PACMAN->dy = 0;
-        break;
-    case 'G':
-        for (int i = 0; i < game->num_ghosts; i++)
-        {
-            if (GHOSTS[i]->x == new_x && GHOSTS[i]->y == new_y)
-            {
-                switch (GHOSTS[i]->mode)
-                {
-                case SCATTER:
-                case CHASING:
-                    game->ghosts[i]->over = ' ';
-                    kill_pacman(game);
-                    return;
-                    break;
-                case FRIGHTENED:
-                    //TODO
-                    break;
-                default:
-                    break;
-                }
-                break;
-            }
-        }
         break;
     case 'O':
         game->num_frames_ghost_reset = 3000; //might need to change

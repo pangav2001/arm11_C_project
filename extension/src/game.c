@@ -116,8 +116,26 @@ int main(void)
         }
         flushinp();
 
-        move_pacman(game, dx, dy);
         move_ghosts(game);
+        for (int i = 0; i < game->num_ghosts; i++)
+        {
+            if (GHOSTS[i]->x == PACMAN->x && GHOSTS[i]->y == PACMAN->y)
+                switch (GHOSTS[i]->mode)
+                {
+                case SCATTER:
+                case CHASING:
+                    kill_pacman(game);
+                    continue;
+                    break;
+                case FRIGHTENED:
+                    //TODO
+                    break;
+                default:
+                    break;
+                }
+        }
+
+        move_pacman(game, dx, dy);
 
         if (MAP->pellet_num <= 0)
         {
