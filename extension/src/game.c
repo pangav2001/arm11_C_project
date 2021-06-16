@@ -31,7 +31,7 @@ void init_game(game_t *game)
     game->lives = 3;
     game->num_frames_ghost_reset = -1;
 
-    game->num_ghosts = 0;
+    game->num_ghosts = 4;
     game->points = 0;
     game->high_score = 10700;
 
@@ -77,6 +77,9 @@ int main(void)
     cbreak();
     noecho();
     curs_set(FALSE);
+    //Cols
+    start_color();
+    use_default_colors();
 
     game_t *game = create_game();
 
