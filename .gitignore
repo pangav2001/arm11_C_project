@@ -19,7 +19,7 @@
 emulate
 assemble
 tst
-pacman
+game
 
 #ignore junk files from compiling Haskell code
 *.hi
