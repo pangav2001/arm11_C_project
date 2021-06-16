@@ -18,10 +18,10 @@ void print_view(WINDOW *window, game_t *game) {
 
     int i = 0;
     for (; game->map->view[i]; i++) {
-        mvprintw(i + UI_HEIGHT, 1, game->map->view[i]);
+        for (int j = 0; game->map->view[i][j]; j++) {
+            mvaddch(i + UI_HEIGHT, j, game->map->view[i][j] == 'b' ? ' ': game->map->view[i][j]);
+        }
     }
-
-    i++;
 
     for(int j = 0; j < game->lives - 1; j++)
     {
