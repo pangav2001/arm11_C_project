@@ -41,20 +41,24 @@ void init_game(game_t *game)
     init_all_ghosts(game);
 }
 
-void print_game_over()
+void print_game_over(game_t *game)
 {
     int max_y;
     int max_x;
     getmaxyx(stdscr, max_y, max_x);
 
+    int len = strlen(" _____   ___  ___  ___ _____   _____  _   _ ___________ ") / 2;
+
     for (int i = max_x; i >= 0; i--)
     {
         clear();
 
-        int len = strlen(" _____   ___  ___  ___ _____   _____  _   _ ___________ ") / 2;
+        print_char_colour(PACMAN_REPRESENTATION, i, max_y / 2 - 4, PACMAN_REPRESENTATION, 0);
+        print_char_colour(INKY_E, i + 4, max_y / 2 - 4, GHOST_REPRESENTATION, 0);
+        print_char_colour(BLINKY_E, i + 6, max_y / 2 - 4, GHOST_REPRESENTATION, 0);
+        print_char_colour(PINKY_E, i + 8, max_y / 2 - 4, GHOST_REPRESENTATION, 0);
+        print_char_colour(CLYDE_E, i + 10, max_y / 2 - 4, GHOST_REPRESENTATION, 0);
 
-        //Change 'G'
-        mvprintw(max_y / 2, i, "%c  %c %c %c %c", PACMAN_REPRESENTATION, 'G', 'G', 'G', 'G');
         mvprintw(max_y / 2 + 1, max_x / 2 - len, " _____   ___  ___  ___ _____   _____  _   _ ___________ ");
         mvprintw(max_y / 2 + 2, max_x / 2 - len, "|  __ \\ / _ \\ |  \\/  ||  ___| |  _  || | | |  ___| ___ \\");
         mvprintw(max_y / 2 + 3, max_x / 2 - len, "| |  \\// /_\\ \\| .  . || |__   | | | || | | | |__ | |_/ /");
@@ -156,7 +160,7 @@ int main(void)
         print_view(window, game);
     }
 
-    print_game_over();
+    print_game_over(game);
 
     endwin();
 
