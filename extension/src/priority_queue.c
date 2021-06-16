@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
-Node_P **new_list()
+Node_P **new_queue()
 {
     return malloc(sizeof(Node_P *));
 }
@@ -69,7 +69,7 @@ void push(Node_P **head, int x, int y, int distance)
     }
 }
 
-void free_list(Node_P **head)
+void free_queue(Node_P **head)
 {
     while (!isEmpty(head))
     {
