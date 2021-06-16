@@ -18,4 +18,4 @@ pacman.o: pacman.h
 
 clean:
 	rm -f $(wildcard *.o)
-	rm -f pacman
+	rm -f game
