@@ -109,8 +109,8 @@ void calculate_ghost_movement(game_t *game, ghost_t *ghost) {
 
     //get best movement ignoring curr path
     //will this always work?
-    int new_dx;
-    int new_dy;
+    int new_dx = 0;
+    int new_dy = 0;
     int new_distance = game->map->max_x + game->map->max_y;
     for (int i = -1; i < 2; i++) {
         for (int j = -1; j < 2; j++) {
