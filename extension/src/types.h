@@ -10,6 +10,19 @@ typedef enum
     OFF
 } Ghost_Mode_t;
 
+typedef enum
+{
+    INKY_E,
+    BLINKY_E,
+    PINKY_E,
+    CLYDE_E,
+    PACMAN_E = 'P',
+    WALL_E = '#',
+    DOT_E = '.',
+    PELLET_E = 'O'
+
+} Game_Constructs_t;
+
 typedef struct
 {
     int x;
@@ -19,8 +32,9 @@ typedef struct
     int target_x;
     int target_y;
     int ghost_wait; //when 0 can move, otherwise number of frames until can move
-    char over; //character ghost is over to place back
+    char over;      //character ghost is over to place back
     Ghost_Mode_t mode;
+    Game_Constructs_t ghost_name;
 } ghost_t;
 
 typedef struct
@@ -34,14 +48,14 @@ typedef struct
 
 typedef struct
 {
-    char**view;
+    char **view;
     int max_x;
     int max_y;
-    int pacman_start_offset; 
-    int pellet_num;  
-}map_t;
+    int pacman_start_offset;
+    int pellet_num;
+} map_t;
 
-typedef struct 
+typedef struct
 {
     int num_ghosts;
     ghost_t **ghosts;
