@@ -78,7 +78,7 @@ int check_ghost_position(game_t *game, ghost_t *ghost, int dx, int dy) {
     int new_x = ghost->x + dx;
     int new_y = ghost->y + dy;
 
-    return get_char(new_x, new_y, game->map) != '#' && get_char(new_x, new_y, game->map) != 'G';
+    return get_char(new_x, new_y, game->map) != '#' && get_char(new_x, new_y, game->map) != 'G' && get_char(new_x, new_y, game->map) != 'b';
 }
 
 int diagonal(int dx, int dy) {
@@ -121,6 +121,7 @@ void calculate_ghost_movement(game_t *game, ghost_t *ghost) {
     char in_way = get_char(ghost->x + new_dx, ghost->y + new_dy, game->map);
 
     switch (in_way) {
+        case 'b':
         case '#':
         case 'G':
             ghost->dx = 0;
