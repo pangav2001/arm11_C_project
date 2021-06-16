@@ -55,9 +55,14 @@ void update_ghosts_targets(game_t *game) {
                 }
                 break;
             case FRIGHTENED:
+                if (game->num_frames_ghost_reset == 0) {
+                    GHOSTS[i]->mode = CHASING;
+                } else {
                 //bit dodgy
-                GHOSTS[i]->target_x = game->map->max_x - PACMAN->x;
-                GHOSTS[i]->target_y = game->map->max_y - PACMAN->y;
+                    GHOSTS[i]->target_x = game->map->max_x - PACMAN->x;
+                    GHOSTS[i]->target_y = game->map->max_y - PACMAN->y;
+                    game->num_frames_ghost_reset --;
+                }
                 break;
             // implement rest
             default:
