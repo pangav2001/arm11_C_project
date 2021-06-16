@@ -78,7 +78,7 @@ void move_pacman(game_t *game, int dx, int dy)
         {
             if (GHOSTS[i]->mode == CHASING || GHOSTS[i]->mode == SCATTER)
             {
-                GHOSTS[i]->mode = FRIGHTENED;
+                set_ghost_mode(GHOSTS[i], FRIGHTENED);
             }
         }
 

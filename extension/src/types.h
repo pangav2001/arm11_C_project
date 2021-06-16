@@ -31,6 +31,7 @@ typedef struct
     int dy;
     int target_x;
     int target_y;
+    int frame_delay;
     int ghost_wait; //when 0 can move, otherwise number of frames until can move
     char over;      //character ghost is over to place back
     Ghost_Mode_t mode;

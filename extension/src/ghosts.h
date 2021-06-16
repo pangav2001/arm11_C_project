@@ -13,6 +13,8 @@ void create_ghosts(game_t *game);
 
 void free_ghosts(game_t *game);
 
+void set_ghost_mode(ghost_t *ghost, Ghost_Mode_t mode);
+
 void init_ghost(game_t *game , ghost_t *ghost);
 
 void init_all_ghosts(game_t *game);
