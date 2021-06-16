@@ -1,116 +1,121 @@
-#include <ncurses.h>
-#include "actors.h"
-#include "pacman_movement.h"
-#include "ghost_movement.h"
-#include "game_view.h"
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
+#include "game.h"
 
-int game_over(game_t *game);
-
-int main(void)
+void create_pacman(game_t *game)
 {
-    // Setup window
-
-    initscr();
-    nodelay(stdscr, true);
-    cbreak();
-    noecho();
-    curs_set(FALSE);
-
-    pacman_t *pacman = calloc(1, sizeof(pacman_t));
-    game_t *game = calloc(1, sizeof(game_t));
-
-    init_game(game, pacman);
-    init_map(game);
-
-    crate_ghosts(game);
-    init_ghosts(game->ghosts, game->num_ghosts, game->map);
-
-    init_pacman(pacman, game->map);
-
-    int h = 64;
-    int w = 64;
-
-    WINDOW *window = newwin(h, w, 0, 0);
-
-    while (!game_over(game))
-    {
-        char input = getch();
-
-        int dx = pacman->dx;
-        int dy = pacman->dy;
-
-        switch (input)
-        {
-        case 'w':
-            dy = -1;
-            dx = 0;
-
-            break;
-        case 'a':
-            dy = 0;
-            dx = -1;
-            break;
-        case 's':
-            dy = 1;
-            dx = 0;
-
-            break;
-        case 'd':
-            dy = 0;
-            dx = 1;
-            break;
-        }
-        flushinp();
-
-        move_ghost(game, game->map);
-        if (!check_pacman_collision(game))
-        {
-            move_pacman(pacman, game, game->map, dx, dy);
-        }
-        update_ghost_targets(game, game->map);
-
-        //update everything else
-        update_view(game, game->map);
-
-        //rerender screen
-        print_view(window, game);
-    }
-
-    int max_y;
-    int max_x;
-    getmaxyx(stdscr, max_y, max_x);
-
-    for (int i = max_x; i >= 0; i--)
-    {
-        clear();
-
-        int len = strlen(" _____   ___  ___  ___ _____   _____  _   _ ___________ ") / 2;
-
-        mvprintw(max_y / 2, i, "%c  %c %c %c %c", game->pacman->representation, game->ghosts[0]->representation, game->ghosts[0]->representation, game->ghosts[0]->representation, game->ghosts[0]->representation);
-        mvprintw(max_y / 2 + 1, max_x / 2 - len, " _____   ___  ___  ___ _____   _____  _   _ ___________ ");
-        mvprintw(max_y / 2 + 2, max_x / 2 - len, "|  __ \\ / _ \\ |  \\/  ||  ___| |  _  || | | |  ___| ___ \\");
-        mvprintw(max_y / 2 + 3, max_x / 2 - len, "| |  \\// /_\\ \\| .  . || |__   | | | || | | | |__ | |_/ /");
-        mvprintw(max_y / 2 + 4, max_x / 2 - len, "| | __ |  _  || |\\/| ||  __|  | | | || | | |  __||    / ");
-        mvprintw(max_y / 2 + 5, max_x / 2 - len, "| |_\\ \\| | | || |  | || |___  \\ \\_/ /\\ \\_/ / |___| |\\ \\ ");
-        mvprintw(max_y / 2 + 6, max_x / 2 - len, " \\____/\\_| |_/\\_|  |_/\\____/   \\___/  \\___/\\____/\\_| \\_|");
-
-        refresh();
-
-        usleep(50000);
-    }
-
-    //
-    endwin();
-
-    //
-    free(game);
-    free(pacman);
+    PACMAN = (pacman_t *)malloc(sizeof(pacman_t));
 }
 
-int game_over(game_t *game)
+void init_pacman(game_t *game)
 {
-    return game->lives <= 0;
+    PACMAN->dx = -1;
+    PACMAN->dy = 0;
+    PACMAN->pacman_wait = PACMAN_WAIT;
+
+    //check pos
+    PACMAN->x = game->map->max_x / 2;
+    PACMAN->y = game->map->max_y / 2 + game->map->pacman_start_offset;
 }
+
+void kill_pacman(game_t *game)
+{
+    game->lives -= 1;
+    set_character(PACMAN->x, PACMAN->y, ' ', game->map);
+    init_pacman(game);
+}
+
+int valid_move_pacman(game_t *game, int dx, int dy)
+{
+    int new_x = PACMAN->x + dx;
+    int new_y = PACMAN->y + dy;
+    
+    return get_char(new_x, new_y, game->map) != '#' && get_char(new_x, new_y, game->map) != '-' && get_char(new_x, new_y, game->map) != '\255';
+}
+
+void move_pacman(game_t *game, int dx, int dy)
+{
+    
+    if (check_position_change(PACMAN, dx, dy, game)) {
+        PACMAN->dx = dx;
+        PACMAN->dy = dy;
+    }
+
+    if (PACMAN->pacman_wait != 0) {
+        pacman->pacman_wait --;
+        return;
+    }
+    PACMAN->pacman_wait = PACMAN_WAIT;
+
+
+    int new_x = pacman->x + pacman->dx;
+    int new_y = pacman->y + pacman->dy;
+
+    char in_way = get_char(new_x, new_y, game->map);
+
+    switch (in_way)
+    {
+    case '\255':
+    case '-':
+    case '#':
+        //Stop pacman
+        pacman->dx = 0;
+        pacman->dy = 0;
+        break;
+    case 'G':
+        for (int i = 0; i < game->num_ghosts; i++)
+        {
+            if (GHOSTS[i]->x == new_x && GHOSTS[i]->y == new_y)
+            {
+                switch (GHOSTS[i]->mode)
+                {
+                case SCATTER:
+                case CHASING:
+                    //TODO
+                    break;
+                case FRIGHTENED:
+                    //TODO
+                    break;
+                default:
+                    //TODO
+                    break;
+                }
+                break;
+            }
+        }
+        break;
+    case 'O':
+        //TODO Set all ghosts to frightened mode
+        game->num_frames_ghost_reset = 3000; //might need to change
+        for (int i = 0; i < game->num_ghosts; i++)
+        {
+            if (GHOSTS[i]->mode == CHASING || GHOSTS[i]->mode == SCATTER)
+            {
+                GHOSTS[i]->mode = FRIGHTENED;
+            }
+        }
+
+        //Power pellet is worth 40 points more than pellet
+        game->points += 40;
+    case '.':
+        //Power pellet is worth 10 points
+        game->points += 10;
+    default:
+        if (pacman->x <= 0)
+        {
+            pacman->x = MAP->max_x - 1;
+        }
+        else if (pacman->x >= MAP->max_x)
+        {
+            pacman->x = 1;
+        }
+        else
+        {
+            pacman->x = new_x;
+            pacman->y = new_y;
+        }
+        break;
+    };
+
+    //clear pacman prev
+    set_character(pacman->x - pacman->dx, pacman->y - pacman->dy, ' ', MAP);
+}
+
