@@ -12,7 +12,7 @@ typedef enum
 
 typedef enum
 {
-    INKY_E,
+    INKY_E = 1,
     BLINKY_E,
     PINKY_E,
     CLYDE_E,

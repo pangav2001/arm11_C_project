@@ -10,7 +10,7 @@ void create_ghosts(game_t *game) {
     for (int i = 0; i < game->num_ghosts; i++)
     {
         GHOSTS[i] = (ghost_t *)malloc(sizeof(ghost_t));
-        GHOSTS[i]->ghost_name = i;
+        GHOSTS[i]->ghost_name = i + 1; //starts at 1
     }
 }
 
