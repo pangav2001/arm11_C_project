@@ -1,5 +1,7 @@
 #include "game.h"
 #include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
 #define MAX_PELLETS 190
 #define UI_HEIGHT 2
@@ -31,7 +33,7 @@ void print_view(WINDOW *window, game_t *game) {
     
 }
 
-void set_character(int x, int y, char c, map_t *map) {
+void set_char(int x, int y, char c, map_t *map) {
     map->view[y][x] = c;
 }
 
@@ -59,7 +61,7 @@ void create_map(game_t *game)
     MAP = (map_t *)malloc(sizeof(map_t));
 }
 
-free_map(game_t *game)
+void free_map(game_t *game)
 {
     free(MAP);
 }

@@ -19,9 +19,9 @@ game_t *create_game()
 
 void free_game(game_t *game)
 {
-    free_pacman(PACMAN);
-    free_ghosts(GHOSTS);
-    free_map(MAP);
+    free_pacman(game);
+    free_ghosts(game);
+    free_map(game);
 
     free(game);
 }
@@ -35,9 +35,9 @@ void init_game(game_t *game)
     game->points = 0;
     game->high_score = 10700;
 
-    init_all_ghosts(GHOSTS);
-    init_pacman(PACMAN);
-    init_map(MAP);
+    init_all_ghosts(game);
+    init_pacman(game);
+    init_map(game);
 }
 
 void print_game_over()
@@ -117,19 +117,17 @@ int main(void)
         flushinp();
 
         move_pacman(game, dx, dy);
-        move_ghost(game, MAP);
+        move_ghosts(game);
 
         if (MAP->pellet_num <= 0)
         {
-            init_all_ghosts(GHOSTS);
-            init_pacman(PACMAN);
-            init_map(MAP);
+            init_all_ghosts(game);
+            init_pacman(game);
+            init_map(game);
         }
 
-        update_ghost_targets(game, MAP);
-
         //update everything else
-        update_view(game, MAP);
+        //update_view(game);
 
         //rerender screen
         print_view(window, game);
