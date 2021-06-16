@@ -101,6 +101,10 @@ void create_map(game_t *game)
 
 void free_map(game_t *game)
 {
+    for (int i = 0; MAP->view[i]; i++) {
+        free(MAP->view[i]);
+    }
+    free(MAP->view);
     free(MAP);
 }
 
