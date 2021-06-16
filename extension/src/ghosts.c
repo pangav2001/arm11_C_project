@@ -24,12 +24,17 @@ void free_ghosts(game_t *game) {
 void init_ghost(game_t *game , ghost_t *ghost) {
     int mid_x = game->map->max_x / 2;
     int mid_y = game->map->max_y / 2;
+
+    ghost->mode = OFF;
     
     ghost->dx = 0;
     ghost->dy = 0;
 
     ghost->x = mid_x;
-    ghost->y = mid_y - DISTANCE_OUTSIDE;
+    ghost->y = mid_y;
+
+    ghost->target_x = mid_x;
+    ghost->target_y = mid_y - 4;
 
     //Do we need the 3/3 box since delay in starting
 
@@ -80,7 +85,7 @@ int target_distance(int curr_x, int curr_y, int target_x, int target_y) {
 }
 
 void calculate_ghost_movement(game_t *game, ghost_t *ghost) {
-    int curr_path_distance = target_distance(ghost->x, ghost->y, NEXT_X(ghost), NEXT_Y(ghost));
+    int curr_path_distance = target_distance(NEXT_X(ghost), NEXT_Y(ghost),ghost->target_x, ghost->target_y);
 
     //get best movement ignoring curr path
     //will this always work?
