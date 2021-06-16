@@ -7,7 +7,7 @@
 #define GHOST_START_DELAY 20
 #define DISTANCE_OUTSIDE 3
 #define GHOST_REPRESENTATION 'G'
-#define GHOST_WAIT 0
+#define GHOST_WAIT 2
 
 void create_ghosts(game_t *game);
 
