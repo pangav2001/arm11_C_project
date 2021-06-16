@@ -39,7 +39,7 @@ static int valid_move_pacman(game_t *game, int dx, int dy)
     int new_x = PACMAN->x + dx;
     int new_y = PACMAN->y + dy;
 
-    return get_char(new_x, new_y, game->map) != '#' && get_char(new_x, new_y, game->map) != '-' && get_char(new_x, new_y, game->map) != '\255';
+    return get_char(new_x, new_y, game->map) != '#' && get_char(new_x, new_y, game->map) != '-' && get_char(new_x, new_y, game->map) != 'b';
 }
 
 void move_pacman(game_t *game, int dx, int dy)
@@ -65,7 +65,7 @@ void move_pacman(game_t *game, int dx, int dy)
 
     switch (in_way)
     {
-    case '\255':
+    case 'b':
     case '-':
     case '#':
         //Stop pacman
