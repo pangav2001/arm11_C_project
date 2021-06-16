@@ -8,8 +8,6 @@ void create_ghosts(game_t *game) {
     for (int i = 0; i < game->num_ghosts; i++)
     {
         GHOSTS[i] = (ghost_t *)malloc(sizeof(ghost_t));
-        GHOSTS[i]->over = ' ';
-        GHOSTS[i]->ghost_wait = i * GHOST_START_DELAY;
     }
 }
 
@@ -33,6 +31,8 @@ void init_ghost(game_t *game , ghost_t *ghost) {
     ghost->x = mid_x;
     ghost->y = mid_y;
 
+    ghost->over = ' ';
+
     ghost->target_x = mid_x;
     ghost->target_y = mid_y - 4;
 
@@ -43,6 +43,7 @@ void init_ghost(game_t *game , ghost_t *ghost) {
 void init_all_ghosts(game_t *game) {
     for (int i = 0; i < game->num_ghosts; i++) {
         init_ghost(game,GHOSTS[i]);
+        GHOSTS[i]->ghost_wait = i * GHOST_START_DELAY;
     }
 }
 

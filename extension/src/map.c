@@ -3,7 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#define MAX_PELLETS 190
+#define MAX_PELLETS 189
 #define UI_HEIGHT 2
 
 void print_view(WINDOW *window, game_t *game) {
@@ -14,7 +14,7 @@ void print_view(WINDOW *window, game_t *game) {
     //     waddstr(window, "\n");
     // }
     mvprintw(0, 1, "1UP\t\t HIGH SCORE");
-    mvprintw(1, 1, "  %d\t\t%9d", game->points, game->high_score);
+    mvprintw(1, 1, "  %d\t\t%9d\t\t%d", game->points, game->high_score, MAP->pellet_num);
 
     int i = 0;
     for (; game->map->view[i]; i++) {

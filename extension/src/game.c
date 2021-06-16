@@ -5,6 +5,7 @@
 #include <unistd.h>
 
 #define DELAY 50000
+#define BONUS 200
 
 game_t *create_game()
 {
@@ -30,7 +31,7 @@ void init_game(game_t *game)
     game->lives = 3;
     game->num_frames_ghost_reset = -1;
 
-    game->num_ghosts = 4;
+    game->num_ghosts = 0;
     game->points = 0;
     game->high_score = 10700;
 
@@ -128,7 +129,8 @@ int main(void)
                     continue;
                     break;
                 case FRIGHTENED:
-                    //TODO
+                    init_ghost(game, GHOSTS[i]);
+                    game->points += BONUS;
                     break;
                 default:
                     break;
