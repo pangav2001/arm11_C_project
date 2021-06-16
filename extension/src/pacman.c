@@ -5,6 +5,11 @@ void create_pacman(game_t *game)
     PACMAN = (pacman_t *)malloc(sizeof(pacman_t));
 }
 
+void free_pacman(game_t *game)
+{
+    free(PACMAN);
+}
+
 void init_pacman(game_t *game)
 {
     PACMAN->dx = -1;
@@ -21,33 +26,35 @@ void kill_pacman(game_t *game)
     game->lives -= 1;
     set_character(PACMAN->x, PACMAN->y, ' ', game->map);
     init_pacman(game);
+    init_all_ghosts(game);
 }
 
-int valid_move_pacman(game_t *game, int dx, int dy)
+static int valid_move_pacman(game_t *game, int dx, int dy)
 {
     int new_x = PACMAN->x + dx;
     int new_y = PACMAN->y + dy;
-    
+
     return get_char(new_x, new_y, game->map) != '#' && get_char(new_x, new_y, game->map) != '-' && get_char(new_x, new_y, game->map) != '\255';
 }
 
-void move_pacman(game_t *game, int dx, int dy)
+static void move_pacman(game_t *game, int dx, int dy)
 {
-    
-    if (check_position_change(PACMAN, dx, dy, game)) {
+
+    if (valid_move_pacman(game, dx, dy))
+    {
         PACMAN->dx = dx;
         PACMAN->dy = dy;
     }
 
-    if (PACMAN->pacman_wait != 0) {
-        pacman->pacman_wait --;
+    if (PACMAN->pacman_wait != 0)
+    {
+        PACMAN->pacman_wait--;
         return;
     }
     PACMAN->pacman_wait = PACMAN_WAIT;
 
-
-    int new_x = pacman->x + pacman->dx;
-    int new_y = pacman->y + pacman->dy;
+    int new_x = PACMAN->x + PACMAN->dx;
+    int new_y = PACMAN->y + PACMAN->dy;
 
     char in_way = get_char(new_x, new_y, game->map);
 
@@ -57,8 +64,8 @@ void move_pacman(game_t *game, int dx, int dy)
     case '-':
     case '#':
         //Stop pacman
-        pacman->dx = 0;
-        pacman->dy = 0;
+        PACMAN->dx = 0;
+        PACMAN->dy = 0;
         break;
     case 'G':
         for (int i = 0; i < game->num_ghosts; i++)
@@ -69,21 +76,20 @@ void move_pacman(game_t *game, int dx, int dy)
                 {
                 case SCATTER:
                 case CHASING:
-                    //TODO
+                    game->ghosts[i]->over = ' ';
+                    kill_pacman(game);
+                    return;
                     break;
                 case FRIGHTENED:
                     //TODO
                     break;
                 default:
-                    //TODO
                     break;
                 }
                 break;
             }
         }
         break;
-    case 'O':
-        //TODO Set all ghosts to frightened mode
         game->num_frames_ghost_reset = 3000; //might need to change
         for (int i = 0; i < game->num_ghosts; i++)
         {
@@ -96,26 +102,28 @@ void move_pacman(game_t *game, int dx, int dy)
         //Power pellet is worth 40 points more than pellet
         game->points += 40;
     case '.':
-        //Power pellet is worth 10 points
+        //Normal pellet is worth 10 points
         game->points += 10;
+        MAP->pellet_num--;
     default:
-        if (pacman->x <= 0)
+        if (PACMAN->x <= 0)
         {
-            pacman->x = MAP->max_x - 1;
+            PACMAN->x = MAP->max_x - 1;
+            set_character(0, PACMAN->y, ' ', MAP);
         }
-        else if (pacman->x >= MAP->max_x)
+        else if (PACMAN->x >= MAP->max_x)
         {
-            pacman->x = 1;
+            PACMAN->x = 1;
+            set_character(MAP->max_x, PACMAN->y, ' ', MAP);
         }
         else
         {
-            pacman->x = new_x;
-            pacman->y = new_y;
+            PACMAN->x = new_x;
+            PACMAN->y = new_y;
+            set_character(PACMAN->x - PACMAN->dx, PACMAN->y - PACMAN->dy, ' ', MAP);
         }
         break;
     };
 
-    //clear pacman prev
-    set_character(pacman->x - pacman->dx, pacman->y - pacman->dy, ' ', MAP);
+    set_character(PACMAN->x, PACMAN->y, PACMAN_REPRESENTATION, MAP);
 }
-

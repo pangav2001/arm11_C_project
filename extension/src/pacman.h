@@ -14,4 +14,12 @@ typedef struct
     int pacman_wait;
 } pacman_t;
 
+void create_pacman(game_t *game);
+
+void free_pacman(game_t *game);
+
+void init_pacman(game_t *game);
+
+void move_pacman(game_t *game, int dx, int dy);
+
 #endif
