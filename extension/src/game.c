@@ -10,7 +10,6 @@ game_t *create_game()
 {
     game_t *ret = (game_t *)malloc(sizeof(game_t));
 
-    create_ghosts(ret);
     create_pacman(ret);
     create_map(ret);
 
@@ -35,9 +34,10 @@ void init_game(game_t *game)
     game->points = 0;
     game->high_score = 10700;
 
-    init_all_ghosts(game);
-    init_pacman(game);
     init_map(game);
+    init_pacman(game);
+    create_ghosts(game);
+    init_all_ghosts(game);
 }
 
 void print_game_over()

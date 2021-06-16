@@ -28,8 +28,8 @@ void init_ghost(game_t *game , ghost_t *ghost) {
     ghost->dx = 0;
     ghost->dy = 0;
 
-    ghost->target_x = mid_x;
-    ghost->target_y = mid_y - DISTANCE_OUTSIDE;
+    ghost->x = mid_x;
+    ghost->y = mid_y - DISTANCE_OUTSIDE;
 
     //Do we need the 3/3 box since delay in starting
 
