@@ -2,6 +2,8 @@
 #include "ghosts.h"
 #include <assert.h>
 
+#define BLINKY_RADIUS 8
+
 void create_ghosts(game_t *game) {
     
     GHOSTS = (ghost_t **)malloc(game->num_ghosts * sizeof(ghost_t *));
@@ -80,6 +82,32 @@ void update_ghosts_targets(game_t *game) {
                 }
                 break;
             // implement rest
+            case CHASING:
+                switch (GHOSTS[i]->ghost_name) {
+                    case PINKY_E:
+                        GHOSTS[i]->target_x = PACMAN->x + (2 * PACMAN->dx);
+                        GHOSTS[i]->target_y = PACMAN->y + (2 * PACMAN->dy);
+                        break;
+                    case CLYDE_E:
+                        //
+                        if (GHOSTS[i]->x < BLINKY_RADIUS && GHOSTS[i]->y > MAP->max_y - BLINKY_RADIUS - 1) {
+                            //Target lower left
+                            GHOSTS[i]->target_x = 0;
+                            GHOSTS[i]->target_y = MAP->max_y - 1;
+                            break;
+                        }
+                    case INKY_E:
+                        // for now copy blinky
+                        //break;
+                    case BLINKY_E:
+                        GHOSTS[i]->target_x = PACMAN->x;
+                        GHOSTS[i]->target_y = PACMAN->y;
+                        break;
+                    default:
+                        perror("Should be ghost");    
+                }
+                
+                break;
             default:
                 GHOSTS[i]->target_x = PACMAN->x;
                 GHOSTS[i]->target_y = PACMAN->y;
