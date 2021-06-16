@@ -18,8 +18,10 @@ int check_pacman_collision(game_t *game)
     {
         if (get_char(game->ghosts[i]->x, game->ghosts[i]->y, game->map) == 'P')
         {
+            set_character(game->pacman->x, game->pacman->y, ' ', game->map);
             kill_pacman(game->pacman, game, game->map->view);
-            game->ghosts[i]->over = ' ';
+            init_ghosts(game->ghosts, game->num_ghosts, game->map);
+            // game->ghosts[i]->over = ' ';
             return 1;
         }
     }
@@ -95,7 +97,7 @@ void move_ghost(game_t *game, map_t *map)
             if (!(GHOST[i]->dx == 0 && GHOST[i]->dy == 0))
             {
                 //put back over character
-                set_character(GHOST[i]->x - GHOST[i]->dx, GHOST[i]->y - GHOST[i]->dy, GHOST[i]->over, map);
+                set_character(GHOST[i]->x - GHOST[i]->dx, GHOST[i]->y - GHOST[i]->dy, GHOST[i]->over == game->pacman->representation ? ' ' : GHOST[i]->over, map);
                 GHOST[i]->over = get_char(GHOST[i]->x, GHOST[i]->y, map);
                 set_character(GHOST[i]->x, GHOST[i]->y, GHOST[i]->representation, map);
             }
