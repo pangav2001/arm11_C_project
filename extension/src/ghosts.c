@@ -10,7 +10,7 @@ void create_ghosts(game_t *game) {
     for (int i = 0; i < game->num_ghosts; i++)
     {
         GHOSTS[i] = (ghost_t *)malloc(sizeof(ghost_t));
-        GHOSTS[i]->ghost_name = i;
+        GHOSTS[i]->ghost_name = i + 1; //starts at 1
     }
 }
 
@@ -26,7 +26,7 @@ void init_ghost(game_t *game , ghost_t *ghost) {
     int mid_x = game->map->max_x / 2;
     int mid_y = game->map->max_y / 2;
 
-    ghost->mode = OFF;
+    set_ghost_mode(ghost, OFF);
     
     ghost->dx = 0;
     ghost->dy = 0;
@@ -43,6 +43,17 @@ void init_ghost(game_t *game , ghost_t *ghost) {
 
 }
 
+void set_ghost_mode(ghost_t *ghost, Ghost_Mode_t mode) {
+    switch (mode) {
+        case FRIGHTENED:
+            ghost->frame_delay = 2 * GHOST_WAIT; //50% slower
+            break;
+        default:
+            ghost->frame_delay = GHOST_WAIT;
+    }
+    ghost->mode = mode;
+}
+
 void init_all_ghosts(game_t *game) {
     for (int i = 0; i < game->num_ghosts; i++) {
         init_ghost(game,GHOSTS[i]);
@@ -55,12 +66,12 @@ void update_ghosts_targets(game_t *game) {
         switch (GHOSTS[i]->mode) {
             case OFF:
                 if (GHOSTS[i]->target_x == GHOSTS[i]->x && GHOSTS[i]->target_y == GHOSTS[i]->y) {
-                    GHOSTS[i]->mode = CHASING;
+                    set_ghost_mode(GHOSTS[i], CHASING);
                 }
                 break;
             case FRIGHTENED:
                 if (game->num_frames_ghost_reset == 0) {
-                    GHOSTS[i]->mode = CHASING;
+                    set_ghost_mode(GHOSTS[i], CHASING);
                 } else {
                 //bit dodgy
                     GHOSTS[i]->target_x = game->map->max_x - PACMAN->x;
@@ -148,7 +159,7 @@ void calculate_ghost_movement(game_t *game, ghost_t *ghost) {
 void move_ghosts(game_t *game) {
     for (int i = 0; i < game->num_ghosts; i++) {
         if (GHOSTS[i]->ghost_wait == 0) {
-            GHOSTS[i]->ghost_wait = GHOST_WAIT;
+            GHOSTS[i]->ghost_wait = GHOSTS[i]->frame_delay;
 
             calculate_ghost_movement(game, GHOSTS[i]);
 

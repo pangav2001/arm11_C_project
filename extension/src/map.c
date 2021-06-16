@@ -6,28 +6,34 @@
 #define MAX_PELLETS 189
 #define UI_HEIGHT 2
 
-void print_char_colour(Game_Constructs_t object, int x, int y, char c) {
-    switch (object) {
-        case INKY_E:
-            init_pair(object, COLOR_CYAN, -1);
-            break;
-        case BLINKY_E:
-            init_pair(object, COLOR_RED, -1);
-            break;
-        case PINKY_E:
-            init_pair(object, COLOR_MAGENTA, -1);
-            break;
-        case CLYDE_E:
-            init_pair(object, COLOR_YELLOW, -1);
-            break;  
-        case PACMAN_E:
-            init_pair(object, COLOR_YELLOW, -1);
-            break;
-        case WALL_E:
+void print_char_colour(Game_Constructs_t object, int x, int y, char c, int frightened_mode) {
+    switch (frightened_mode) {
+        case 1:
             init_pair(object, COLOR_BLUE, -1);
             break;
-        default:
-            init_pair(object, -1, -1);
+        case 0:
+            switch (object) {
+                case INKY_E:
+                    init_pair(object, COLOR_CYAN, -1);
+                    break;
+                case BLINKY_E:
+                    init_pair(object, COLOR_RED, -1);
+                    break;
+                case PINKY_E:
+                    init_pair(object, COLOR_MAGENTA, -1);
+                    break;
+                case CLYDE_E:
+                    init_pair(object, COLOR_YELLOW, -1);
+                    break;  
+                case PACMAN_E:
+                    init_pair(object, COLOR_YELLOW, -1);
+                    break;
+                case WALL_E:
+                    init_pair(object, COLOR_BLUE, -1);
+                    break;
+                default:
+                    init_pair(object, -1, -1);
+            }
     }
     attron(COLOR_PAIR(object));
     mvaddch(y + UI_HEIGHT, x, c == 'b' ? ' ': c);
@@ -36,26 +42,21 @@ void print_char_colour(Game_Constructs_t object, int x, int y, char c) {
 
 void print_view(WINDOW *window, game_t *game) {
     clear();
-    
-    // while (*view != NULL) {
-    //     waddstr(window, *view++);
-    //     waddstr(window, "\n");
-    // }
+
     mvprintw(0, 1, "1UP\t\t HIGH SCORE");
     mvprintw(1, 1, "  %d\t\t%9d\t\t%d", game->points, game->high_score, MAP->pellet_num);
 
     //print ghosts
     for (int i = 0; i < game->num_ghosts; i++) {
-        print_char_colour(GHOSTS[i]->ghost_name, GHOSTS[i]->x, GHOSTS[i]->y, GHOST_REPRESENTATION);
+        print_char_colour(GHOSTS[i]->ghost_name, GHOSTS[i]->x, GHOSTS[i]->y, GHOST_REPRESENTATION, GHOSTS[i]->mode == FRIGHTENED);
     }
-
 
     //print remaining
     int i = 0;
     for (; game->map->view[i]; i++) {
         for (int j = 0; MAP->view[i][j]; j++) {
             if (MAP->view[i][j] != GHOST_REPRESENTATION) {
-                print_char_colour(MAP->view[i][j],j, i, MAP->view[i][j]);
+                print_char_colour(MAP->view[i][j],j, i, MAP->view[i][j], 0);
             }
         }
     }
