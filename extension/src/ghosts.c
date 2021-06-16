@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "ghosts.h"
 
 void create_ghosts(game_t *game) {
@@ -38,4 +39,24 @@ void init_all_ghosts(game_t *game) {
     for (int i = 0; i < game->num_ghosts; i++) {
         init_ghost(game,GHOSTS[i]);
     }
+}
+
+void update_ghosts_targets(game_t *game) {
+
+}
+
+//Checks new movement would be valid
+int check_ghost_position(game_t *game, ghost_t *ghost, int dx, int dy) {
+    int new_x = ghost->x + dx;
+    int new_y = ghost->y + dy;
+
+    return get_char(new_x, new_y, game->map) != '#' && get_char(new_x, new_y, game->map) != 'G';
+}
+
+int diagonal(int dx, int dy) {
+    return abs(dx) == 1 && abs(dy) == 1;
+}
+
+void move_ghosts(game_t *game) {
+
 }
