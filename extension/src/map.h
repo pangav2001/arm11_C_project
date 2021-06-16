@@ -1,6 +1,8 @@
 #ifndef MAP_H
 #define MAP_H
 
+#define MAP game->map
+
 typedef struct
 {
     char**view;

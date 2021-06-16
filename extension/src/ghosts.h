@@ -1,12 +1,6 @@
 #ifndef GHOSTS_H
 #define GHOSTS_H
 
-#include "game.h"
-
-#define GHOSTS game->ghosts
-#define GHOST_START_DELAY 20
-#define DISTANCE_OUTSIDE 3
-
 typedef enum
 {
     CHASING,
@@ -28,15 +22,5 @@ typedef struct
     char over; //character ghost is over to place back
     Ghost_Mode_t mode;
 } ghost_t;
-
-void create_ghosts(game_t *game);
-
-void free_ghosts(game_t *game);
-
-void init_ghost(game_t *game , ghost_t *ghost);
-
-void init_all_ghosts(game_t *game);
-
-void move_ghosts(game_t *game);
 
 #endif
