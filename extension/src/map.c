@@ -64,7 +64,7 @@ void print_view(WINDOW *window, game_t *game) {
 
     for(int j = 0; j < game->lives - 1; j++)
     {
-        mvprintw(i + UI_HEIGHT, j * 2, "%c", PACMAN_REPRESENTATION);
+        print_char_colour(PACMAN_REPRESENTATION, j * 2,i ,PACMAN_REPRESENTATION, 0);
     }
 
     wrefresh(window);
