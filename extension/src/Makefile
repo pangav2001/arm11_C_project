@@ -10,7 +10,7 @@ BUILD = game dijkstra
 
 all: $(BUILD)
 
-game: ghosts.o map.o pacman.o -lncurses
+game: ghosts.o map.o pacman.o -lncursesw
 dijkstra: game.h map.o priority_queue.o -lncurses
 
 priority_queue.o: priority_queue.h
