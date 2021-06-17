@@ -94,10 +94,18 @@ int main(void)
 
     WINDOW *window = newwin(h, w, 0, 0);
 
+    char prev;
     while (!game_over(game))
     {
-        char input = getch();
 
+        char input = getch();
+        //Do i need to ensure valid input here? 
+        if (input == -1) {
+            input = prev;
+        } else {
+            prev = input;
+        }
+        
         int dx = PACMAN->dx;
         int dy = PACMAN->dy;
 
