@@ -5,7 +5,7 @@
 
 #define MAX_PELLETS 189
 #define UI_HEIGHT 2
-#define REPLACE_BLOCK(block) (block == '#' ? ACS_BLOCK : block)
+#define REPLACE_BLOCK(block) (block == '#' ? ' ' | A_REVERSE : block)
 
 void print_char_colour(Game_Constructs_t object, int x, int y, char c, int frightened_mode) {
     switch (frightened_mode) {
