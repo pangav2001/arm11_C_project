@@ -1,7 +1,7 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-#define GHOST_REPRESENTATION 'G'
+#define GHOST_REPRESENTATION 'M'
 #define PACMAN_REPRESENTATION '@'
 
 typedef enum

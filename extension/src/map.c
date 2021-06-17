@@ -5,7 +5,7 @@
 
 #define MAX_PELLETS 189
 #define UI_HEIGHT 2
-#define REPLACE_BLOCK(block) (block == '#' ? ACS_BLOCK : block)
+#define REPLACE_BLOCK(block) (block == '#' ? ' ' | A_REVERSE : block)
 
 void print_char_colour(Game_Constructs_t object, int x, int y, char c, int frightened_mode) {
     switch (frightened_mode) {
@@ -45,7 +45,7 @@ void print_view(WINDOW *window, game_t *game) {
     clear();
 
     mvprintw(0, 1, "1UP\t\t HIGH SCORE");
-    mvprintw(1, 1, "  %d\t\t%9d\t\t%d", game->points, game->high_score, MAP->pellet_num);
+    mvprintw(1, 1, "  %d\t\t%9d", game->points, game->high_score);
 
     //print ghosts
     for (int i = 0; i < game->num_ghosts; i++) {
@@ -64,7 +64,7 @@ void print_view(WINDOW *window, game_t *game) {
 
     for(int j = 0; j < game->lives - 1; j++)
     {
-        mvprintw(i + UI_HEIGHT, j * 2, "%c", PACMAN_REPRESENTATION);
+        print_char_colour(PACMAN_REPRESENTATION, j * 2,i ,PACMAN_REPRESENTATION, 0);
     }
 
     wrefresh(window);
