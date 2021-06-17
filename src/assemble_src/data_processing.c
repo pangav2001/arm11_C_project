@@ -11,7 +11,7 @@
 #define MAX_SHIFT_LENGTH 4 //With the '\0'
 #define MAX_RS_LENGTH 12 //2^32 - 1 including '#' and '\0' 
 
-#define OPERAND2(I) instructions->opcodes[operand2_start + I]
+#define OPERAND2(I) instructions->operands[operand2_start + I]
 
 enum Shift_Types convert_shift_types(char *str)
 {
@@ -89,21 +89,21 @@ uint32_t data_process(tokens_t *instructions)
     case RSB:
     case ADD:
     case ORR:
-        assert(instructions->num_opcode >= 3);
-        rd = convert_register(instructions->opcodes[0]);
-        rn = convert_register(instructions->opcodes[1]);
+        assert(instructions->num_operand >= 3);
+        rd = convert_register(instructions->operands[0]);
+        rn = convert_register(instructions->operands[1]);
         operand2_start = 2;
         break;
     case MOV:
-        assert(instructions->num_opcode >= 2);
-        rd = convert_register(instructions->opcodes[0]);
+        assert(instructions->num_operand >= 2);
+        rd = convert_register(instructions->operands[0]);
         operand2_start = 1;
         break;
     case TST:
     case TEQ:
     case CMP:
-        assert(instructions->num_opcode >= 2);
-        rn = convert_register(instructions->opcodes[0]);
+        assert(instructions->num_operand >= 2);
+        rn = convert_register(instructions->operands[0]);
         operand2_start = 1;
         break;
     default:
@@ -170,7 +170,7 @@ uint32_t data_process(tokens_t *instructions)
     {
         rm = convert_register(OPERAND2(0));
         uint8_t shift = 0;
-        if (instructions->num_opcode > operand2_start + 1)
+        if (instructions->num_operand > operand2_start + 1)
         {
             shift = calculate_register_shift(OPERAND2(1));
         }

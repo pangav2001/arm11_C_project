@@ -2,7 +2,7 @@
 #include <assert.h>
 #include "headers/data_processing.h"
 
-#define EXPRESSION instructions->opcodes[0]
+#define EXPRESSION instructions->operands[0]
 
 #define ARM_OFFSET 8
 

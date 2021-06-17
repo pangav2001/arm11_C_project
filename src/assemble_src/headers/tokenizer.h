@@ -7,7 +7,7 @@
 #include "hash_table.h"
 
 #define MAX_LINE_LENGTH 511
-#define MAX_OPCODE 4          //I think
+#define MAX_OPERAND 4          //I think
 #define MAX_MNEMONIC_LENGTH 6 //Based on what we need to implement
 
 int16_t is_label(char *line);
@@ -64,18 +64,25 @@ typedef struct
     enum Mnemonic mnemonic;
 } Enum_Map;
 
+// typedef struct
+// {
+//     enum Mnemonic mnemonic;
+//     int num_opcode;
+//     char **opcodes;
+// } tokens_t;
+
 typedef struct
 {
     enum Mnemonic mnemonic;
-    int num_opcode;
-    char **opcodes;
+    int num_operand;
+    char **operands;
 } tokens_t;
 
 tokens_t *tokenize_instruction(char *line);
 
 enum Mnemonic extract_mnemonic(char **line);
 
-char** extract_opcodes(char* line, int *num_opcodes);
+char** extract_operands(char* line, int *num_operand);
 
 enum Register_Names convert_register(char *reg);
 
@@ -83,7 +90,7 @@ enum Mnemonic convert_mnemonic(char *mnemonic);
 
 uint32_t string_to_int(char *number);
 
-void free_opcode(char **opcodes, int num_opcode);
+void free_operands(char **operands, int num_operand);
 
 void free_tokens(tokens_t *tokens_t);
 
