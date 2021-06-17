@@ -45,7 +45,7 @@ void print_view(WINDOW *window, game_t *game) {
     clear();
 
     mvprintw(0, 1, "1UP\t\t HIGH SCORE");
-    mvprintw(1, 1, "  %d\t\t%9d\t\t%d", game->points, game->high_score, MAP->pellet_num);
+    mvprintw(1, 1, "  %d\t\t%9d", game->points, game->high_score);
 
     //print ghosts
     for (int i = 0; i < game->num_ghosts; i++) {
