@@ -9,9 +9,9 @@
 #define UINT12_MAX 4095
 #define ARM_PIPELINE_OFFSET 8
 
-#define ADDRESS instructions->opcodes[1]
+#define ADDRESS instructions->operands[1]
 
-static uint16_t inline calculate_offset(char **expression, uint32_t *result, uint8_t num_opcode)
+static uint16_t inline calculate_offset(char **expression, uint32_t *result, uint8_t num_operand)
 {
 
     if (expression[0][0] == '#')
@@ -40,7 +40,7 @@ static uint16_t inline calculate_offset(char **expression, uint32_t *result, uin
     uint8_t shift = 0;
     uint16_t offset = 0;
 
-    if (num_opcode > 2)
+    if (num_operand > 2)
     {
         shift = calculate_register_shift(expression[1]);
     }
@@ -79,20 +79,20 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
 
         *next_available_address += 4;
 
-        sprintf(instructions->opcodes[1], "[PC, #%u]", offset);
+        sprintf(instructions->operands[1], "[PC, #%u]", offset);
 
         return sdt_assembly(instructions, current_address, next_available_address, assembled_program);
     }
 
     uint32_t result = 0;
-    enum Register_Names rd = convert_register(instructions->opcodes[0]);
+    enum Register_Names rd = convert_register(instructions->operands[0]);
 
     int num_bracket_opcodes = 0;
     //Remove the last ']' from <expression>
-    instructions->opcodes[1][strlen(instructions->opcodes[1]) - 1] = '\0';
+    instructions->operands[1][strlen(instructions->operands[1]) - 1] = '\0';
 
     //Tokenize the opcodes within []
-    char **bracket_opcodes = extract_opcodes(instructions->opcodes[1] + 1, &num_bracket_opcodes);
+    char **bracket_opcodes = extract_operands(instructions->operands[1] + 1, &num_bracket_opcodes);
     assert(num_bracket_opcodes);
 
     //Set the base register Rn
@@ -101,7 +101,7 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
     uint16_t offset = 0;
 
     //Check for pre/post index
-    if (instructions->num_opcode == 2)
+    if (instructions->num_operand == 2)
     {
         //Pre-Index
 
@@ -122,7 +122,7 @@ uint32_t sdt_assembly(tokens_t *instructions, uint16_t current_address, uint16_t
     else
     {
         //Post-Index
-        offset = calculate_offset(instructions->opcodes + 2, &result, instructions->num_opcode - 1);
+        offset = calculate_offset(instructions->operands + 2, &result, instructions->num_operand - 1);
     }
 
     //Set bits 31 - 28 to Cond
