@@ -5,6 +5,7 @@
 
 #define MAX_PELLETS 189
 #define UI_HEIGHT 2
+#define REPLACE_BLOCK(block) (block == '#' ? ACS_BLOCK : block)
 
 void print_char_colour(Game_Constructs_t object, int x, int y, char c, int frightened_mode) {
     switch (frightened_mode) {
@@ -36,7 +37,7 @@ void print_char_colour(Game_Constructs_t object, int x, int y, char c, int frigh
             }
     }
     attron(COLOR_PAIR(object));
-    mvaddch(y + UI_HEIGHT, x, c == 'b' ? ' ': c);
+    mvaddch(y + UI_HEIGHT, x, REPLACE_BLOCK(c == 'b' ? ' ': c));
     attroff(COLOR_PAIR(object));
 }
 
