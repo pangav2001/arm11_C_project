@@ -32,7 +32,7 @@ void init_game(game_t *game)
     game->lives = 3;
     game->num_frames_ghost_reset = -1;
 
-    game->num_ghosts = 4;
+    game->num_ghosts = 0;
     game->points = 0;
     game->high_score = 10700;
 
@@ -159,9 +159,11 @@ int main(void)
 
         if (MAP->pellet_num <= 0)
         {
+            
             init_all_ghosts(game);
             init_pacman(game);
             init_map(game);
+            usleep(10 * DELAY);
         }
 
         //update everything else
