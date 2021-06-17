@@ -1,6 +1,9 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#define GHOST_REPRESENTATION 'G'
+#define PACMAN_REPRESENTATION '@'
+
 typedef enum
 {
     CHASING,
@@ -16,7 +19,7 @@ typedef enum
     BLINKY_E,
     PINKY_E,
     CLYDE_E,
-    PACMAN_E = 'P',
+    PACMAN_E = PACMAN_REPRESENTATION,
     WALL_E = '#',
     DOT_E = '.',
     PELLET_E = 'O'

@@ -75,7 +75,7 @@ void move_pacman(game_t *game, int dx, int dy)
         PACMAN->dy = 0;
         break;
     case 'O':
-        game->num_frames_ghost_reset = 3000; //might need to change
+        game->num_frames_ghost_reset = GHOST_POWER_PELLET_DELAY;
         for (int i = 0; i < game->num_ghosts; i++)
         {
             if (GHOSTS[i]->mode == CHASING || GHOSTS[i]->mode == SCATTER)

@@ -135,8 +135,9 @@ int main(void)
                     kill_pacman(game);
                     continue;
                     break;
-                case FRIGHTENED:
+                case FRIGHTENED:                  
                     init_ghost(game, GHOSTS[i]);
+                    GHOSTS[i]->ghost_wait = GHOST_START_DELAY;
                     game->points += BONUS;
                     break;
                 default:

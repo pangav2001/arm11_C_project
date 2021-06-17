@@ -88,17 +88,25 @@ void update_ghosts_targets(game_t *game) {
                         GHOSTS[i]->target_x = PACMAN->x + (2 * PACMAN->dx);
                         GHOSTS[i]->target_y = PACMAN->y + (2 * PACMAN->dy);
                         break;
+
+                    case INKY_E:;
+                        int vector_x = PACMAN->x + (2 * PACMAN->dx);
+                        int vector_y = PACMAN->y + (2 * PACMAN->dy);
+
+                        int increase_x = vector_x - GHOSTS[BLINKY_E]->x;
+                        int increase_y = vector_y - GHOSTS[BLINKY_E]->y;
+
+                        GHOSTS[i]->target_x = 2 * increase_x;
+                        GHOSTS[i]->target_y = 2 * increase_y;
+
                     case CLYDE_E:
                         //
-                        if (GHOSTS[i]->x < BLINKY_RADIUS && GHOSTS[i]->y > MAP->max_y - BLINKY_RADIUS - 1) {
+                        if (abs(GHOSTS[i]->x - PACMAN->x) < BLINKY_RADIUS && abs(GHOSTS[i]->y - PACMAN->y) < BLINKY_RADIUS) { //relative to pacman!!!!!!
                             //Target lower left
                             GHOSTS[i]->target_x = 0;
                             GHOSTS[i]->target_y = MAP->max_y - 1;
                             break;
                         }
-                    case INKY_E:
-                        // for now copy blinky
-                        //break;
                     case BLINKY_E:
                         GHOSTS[i]->target_x = PACMAN->x;
                         GHOSTS[i]->target_y = PACMAN->y;
