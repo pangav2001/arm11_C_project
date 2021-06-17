@@ -3,7 +3,6 @@
 
 #include "game.h"
 
-#define PACMAN_REPRESENTATION 'P'
 #define PACMAN_WAIT 1
 #define PACMAN game->pacman
 
