@@ -192,7 +192,15 @@ void move_ghosts(game_t *game) {
             calculate_ghost_movement(game, GHOSTS[i]);
 
             if (!NOT_MOVING(GHOSTS[i])) {
-                set_char(PREV_X(GHOSTS[i]), PREV_Y(GHOSTS[i]), GHOSTS[i]->over, game->map);
+                if (GHOSTS[i]->x <= 0) {
+                    GHOSTS[i]->x = MAP->max_x - 1;
+                    set_char(0, GHOSTS[i]->y, ' ', MAP);
+                } else if (GHOSTS[i]->x >= MAP->max_x) {
+                    GHOSTS[i]->x = 1;
+                    set_char(MAP->max_x, GHOSTS[i]->y, ' ', MAP);
+                } else {
+                    set_char(PREV_X(GHOSTS[i]), PREV_Y(GHOSTS[i]), GHOSTS[i]->over, game->map);
+                }       
                 GHOSTS[i]->over = get_char(GHOSTS[i]->x, GHOSTS[i]->y, game->map);
                 set_char(GHOSTS[i]->x, GHOSTS[i]->y, GHOST_REPRESENTATION, game->map);
             }
