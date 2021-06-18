@@ -11,7 +11,7 @@
 
 #define ADDRESS instructions->operands[1]
 
-static uint16_t inline calculate_offset(char **expression, uint32_t *result, uint8_t num_operand)
+inline static uint16_t calculate_offset(char **expression, uint32_t *result, uint8_t num_operand)
 {
 
     if (expression[0][0] == '#')

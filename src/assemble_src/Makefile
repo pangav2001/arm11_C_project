@@ -1,5 +1,5 @@
 CC      = gcc
-CFLAGS  = -Wall -g -Werror -pedantic
+CFLAGS  = -Wall -g -Werror -Wextra -pedantic -O3
 BUILD = multiply.o tokenizer.o data_processing.o branch.o hash_table.o output.o sdt_assembly.o
 
 .SUFFIXES: .c .o

@@ -81,7 +81,7 @@ int32_t immediate_operand(int16_t operand2, int8_t i_flag, int8_t s_flag)
     }
 }
 
-static void overflow_check_arithmetic(int32_t a, int32_t b, int32_t result, int8_t s_flag, enum Arithmetic_Operations op)
+static void overflow_check_arithmetic(int32_t result, int8_t s_flag, enum Arithmetic_Operations op)
 {
     int overflow = (result < 0) | (result > INT32_MAX);
     if (overflow)
@@ -114,15 +114,15 @@ void process_func(int8_t i_flag, enum Mnemonic opcode, int8_t s_flag, enum Regis
     case CMP:
     case SUB:
         result = get_reg(rn) - immediate_operand2;
-        overflow_check_arithmetic(get_reg(rn), immediate_operand2, result, s_flag, SUBTRACTION);
+        overflow_check_arithmetic(result, s_flag, SUBTRACTION);
         break;
     case RSB:
         result = immediate_operand2 - get_reg(rn);
-        overflow_check_arithmetic(get_reg(rn), immediate_operand2, result, s_flag, SUBTRACTION);
+        overflow_check_arithmetic(result, s_flag, SUBTRACTION);
         break;
     case ADD:
         result = get_reg(rn) + immediate_operand2;
-        overflow_check_arithmetic(get_reg(rn), immediate_operand2, result, s_flag, ADDITION);
+        overflow_check_arithmetic(result, s_flag, ADDITION);
         break;
     case ORR:
         result = get_reg(rn) | immediate_operand2;

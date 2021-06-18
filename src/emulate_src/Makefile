@@ -1,5 +1,5 @@
 CC      = gcc
-CFLAGS  = -Wall -g -Werror -pedantic
+CFLAGS  = -Wall -g -Werror -Wextra -pedantic -O3
 BUILD = memory.o registers.o parse_file.o decode.o data_processing.o flags.o multiply.o branch.o single_data_transfer.o emulate_output.o
 
 .SUFFIXES: .c .o
