@@ -113,7 +113,7 @@ void update_ghosts_targets(game_t *game)
                 break;
             case CLYDE_E:
                 if (abs(GHOSTS[i]->x - PACMAN->x) < BLINKY_RADIUS && abs(GHOSTS[i]->y - PACMAN->y) < BLINKY_RADIUS)
-                { //relative to pacman!!!!!!
+                { 
                     //Target lower left
                     GHOSTS[i]->target_x = 0;
                     GHOSTS[i]->target_y = MAP->max_y - 1;
