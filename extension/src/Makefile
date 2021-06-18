@@ -1,7 +1,7 @@
 #Makefile
 
 CC = gcc
-CFLAGS = -Wall -g -Werror -pedantic
+CFLAGS = -Wall -g -Werror -Wextra -pedantic
 BUILD = game
 
 .SUFFIXES: .c .o
