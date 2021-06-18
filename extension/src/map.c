@@ -147,7 +147,7 @@ void init_map(game_t *game)
         "#######################################b",
         NULL};
 
-    MAP->view = calloc(24, sizeof(char *)); //
+    MAP->view = calloc(24, sizeof(char *));
     assert(MAP->view);
     for (int i = 0; i < 23; i++)
     {

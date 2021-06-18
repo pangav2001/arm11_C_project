@@ -209,4 +209,3 @@ void remove_whitespace(char *text)
     strcpy(text, copy);
     free(copy - count);
 }
-        //printf("%s\n", token);
