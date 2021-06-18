@@ -84,10 +84,12 @@ void move_pacman(game_t *game, int dx, int dy)
         }
         //Power pellet is worth 40 points more than pellet
         game->points += 40;
+        // fall through
     case '.':
         //Normal pellet is worth 10 points
         game->points += 10;
         MAP->pellet_num--;
+        //fall through
     default:
         if (PACMAN->x <= 0)
         {
