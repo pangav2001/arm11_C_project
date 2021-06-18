@@ -4,6 +4,8 @@
 #include <string.h>
 #include "headers/tokenizer.h"
 
+#define INFINITY 9999
+
 //returns 0 if not label
 //returns length of label otherwise
 int16_t is_label(char *line)
@@ -61,7 +63,7 @@ char **extract_operands(char *line, int *num_operands)
     {
         //printf("%s\n", token);
         char *curr = calloc(1, strlen(token) + 1);
-        strncpy(curr, token, strlen(token) + 1);
+        strcpy(curr, token);
         remove_whitespace(curr);
         operands[i] = curr;
     }
@@ -143,12 +145,12 @@ Enum_Map mnemonic_mapping[] = {
     {"b", B},
     {"lsl", LSL_M},
     {"andeq", ANDEQ},
-    {"", -1} //for iterating
+    {"", INFINITY} //for iterating
 };
 
 enum Mnemonic convert_mnemonic(char *mnemonic)
 {
-    for (int i = 0; mnemonic_mapping[i].mnemonic != -1; i++)
+    for (int i = 0; mnemonic_mapping[i].mnemonic != INFINITY; i++)
     {
         if (strcmp(mnemonic, mnemonic_mapping[i].str) == 0)
         {
@@ -194,6 +196,6 @@ void remove_whitespace(char *text)
         copy++;
         count++;
     }
-    strncpy(text, copy, strlen(copy) + 1);
+    strcpy(text, copy);
     free(copy-count);
 }
