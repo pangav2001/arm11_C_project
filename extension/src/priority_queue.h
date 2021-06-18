@@ -19,6 +19,8 @@ int isEmpty();
 
 Node_P **new_queue();
 
+void decrease_priority(Node_P **head, int x, int y, int distance);
+
 void free_queue(Node_P **head);
 
 #endif
