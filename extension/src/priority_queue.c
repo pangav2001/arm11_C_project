@@ -69,6 +69,50 @@ void push(Node_P **head, int x, int y, int distance)
     }
 }
 
+int contains(Node_P **head, int x, int y)
+{
+    Node_P *start = *head;
+
+    while (start)
+    {
+        if (start->x == x && start->y == y)
+        {
+            return 1;
+        }
+
+        start = start->next;
+    }
+
+    return 0;
+}
+
+static void delete_node(Node_P **head, int x, int y)
+{
+    Node_P *prev;
+    Node_P *curr = *head;
+
+    while (prev && curr && !(curr->x == x && curr->y == y))
+    {
+        prev = curr;
+        curr = curr->next;   
+    }
+
+    assert(prev);
+    assert(curr);
+
+    prev->next = curr->next;
+
+    free(curr);
+}
+
+void decrease_priority(Node_P **head, int x, int y, int distance)
+{
+    delete_node(head, x, y);
+
+    push(head, x, y, distance);
+    
+}
+
 void free_queue(Node_P **head)
 {
     while (!isEmpty(head))
