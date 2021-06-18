@@ -1,6 +1,7 @@
 #include "headers/pacman.h"
 #include <stdlib.h>
 #include <unistd.h>
+#include <assert.h>
 
 void create_pacman(game_t *game)
 {

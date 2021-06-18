@@ -136,7 +136,7 @@ void decode(int32_t instruction)
             struct branch *instr;
             instr = calloc(1, sizeof(struct branch));
             assert(instr);
-            
+
             instr->cond = cond;
             instr->ozoz = 10;
             instr->offset = extract_bits(instruction, 0, 23);

@@ -6,7 +6,8 @@
 #define MEMORY_SIZE 65536
 #define BYTE_SIZE 256
 
-enum Endian {
+enum Endian
+{
     LITTLE,
     BIG
 };

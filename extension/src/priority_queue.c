@@ -8,7 +8,7 @@ Node_P **new_queue()
     Node_P **ret = malloc(sizeof(Node_P *));
     assert(ret);
 
-    return ret; 
+    return ret;
 }
 
 static Node_P *new_node(int x, int y, int distance)

@@ -33,7 +33,6 @@ int16_t assign_label_address(char *line, int16_t address, Hash_Table *table)
         strncpy(label, line, length);
         label[length] = '\0';
 
-        //I can just do this right even if same key?
         table_insert(table, label, address);
 
         free(label);
@@ -58,7 +57,7 @@ tokens_t *tokenize_instruction(char *line)
 
 char **extract_operands(char *line, int *num_operands)
 {
-    char *instruction = strdup(line); //Had issues with line not being modifiable before, maybe remove after testing with actual buffer
+    char *instruction = strdup(line);
     char *token;
     char *rest = instruction;
     char **operands = calloc(MAX_OPERAND, sizeof(char *));
@@ -67,7 +66,6 @@ char **extract_operands(char *line, int *num_operands)
     int i;
     for (i = 0; (token = strtok_r(rest, ",", &rest)); i++)
     {
-        //printf("%s\n", token);
         char *curr = calloc(1, strlen(token) + 1);
         assert(curr);
 
@@ -209,5 +207,6 @@ void remove_whitespace(char *text)
         count++;
     }
     strcpy(text, copy);
-    free(copy-count);
+    free(copy - count);
 }
+        //printf("%s\n", token);

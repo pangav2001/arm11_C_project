@@ -7,10 +7,8 @@
 #include "emulate_src/headers/data_processing.h"
 #include "emulate_src/headers/emulate_output.h"
 
-
-int main(int argc, char **argv) {
-  
-  // testing branch
+int main(int argc, char **argv)
+{
   assert(argc == 2);
 
   //init memory and reg
@@ -23,7 +21,8 @@ int main(int argc, char **argv) {
 
   store_reg(PC, 8);
 
-  while (get_reg(PC) - 8 < bytes) {
+  while (get_reg(PC) - 8 < bytes)
+  {
     instruction = get_memory(get_reg(PC) - 8, 4, BIG);
     if (instruction == 0) //all zero instruction
     {
