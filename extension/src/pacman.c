@@ -18,7 +18,6 @@ void init_pacman(game_t *game)
     PACMAN->dy = 0;
     PACMAN->pacman_wait = PACMAN_WAIT;
 
-    //check pos
     PACMAN->x = game->map->max_x / 2;
     PACMAN->y = game->map->max_y / 2 + game->map->pacman_start_offset;
 }
@@ -83,7 +82,6 @@ void move_pacman(game_t *game, int dx, int dy)
                 set_ghost_mode(GHOSTS[i], FRIGHTENED);
             }
         }
-
         //Power pellet is worth 40 points more than pellet
         game->points += 40;
     case '.':
