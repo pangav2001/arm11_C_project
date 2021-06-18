@@ -42,7 +42,7 @@ void init_game(game_t *game)
     init_all_ghosts(game);
 }
 
-void print_game_over(game_t *game)
+void print_game_over()
 {
     int max_y;
     int max_x;
@@ -168,7 +168,7 @@ int main(void)
         print_view(window, game);
     }
 
-    print_game_over(game);
+    print_game_over();
 
     endwin();
 
