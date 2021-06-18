@@ -2,7 +2,7 @@
 
 CC = gcc
 CFLAGS = -Wall -g -Werror -pedantic
-BUILD = game dijkstra
+BUILD = game
 
 .SUFFIXES: .c .o
 
@@ -11,7 +11,6 @@ BUILD = game dijkstra
 all: $(BUILD)
 
 game: ghosts.o map.o pacman.o -lncursesw
-dijkstra: game.h map.o priority_queue.o -lncurses
 
 priority_queue.o: priority_queue.h
 ghosts.o : ghosts.h 
