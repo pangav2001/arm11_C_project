@@ -94,7 +94,7 @@ static void delete_node(Node_P **head, int x, int y)
     while (prev && curr && !(curr->x == x && curr->y == y))
     {
         prev = curr;
-        curr = curr->next;   
+        curr = curr->next;
     }
 
     assert(prev);
@@ -110,7 +110,6 @@ void decrease_priority(Node_P **head, int x, int y, int distance)
     delete_node(head, x, y);
 
     push(head, x, y, distance);
-    
 }
 
 void free_queue(Node_P **head)

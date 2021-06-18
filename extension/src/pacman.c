@@ -27,7 +27,7 @@ void kill_pacman(game_t *game)
     usleep(1000);
     game->lives -= 1;
     set_char(PACMAN->x, PACMAN->y, ' ', game->map);
-    for(int i = 0; i < game->num_ghosts; i++)
+    for (int i = 0; i < game->num_ghosts; i++)
     {
         set_char(GHOSTS[i]->x, GHOSTS[i]->y, GHOSTS[i]->over == PACMAN_REPRESENTATION ? ' ' : GHOSTS[i]->over, MAP);
     }
