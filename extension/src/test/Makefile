@@ -2,7 +2,7 @@
 
 CC = gcc
 CFLAGS = -Wall -g -Werror -pedantic
-BUILD = test
+BUILD = priority_test
 
 .SUFFIXES: .c .o
 
@@ -10,13 +10,13 @@ BUILD = test
 
 all: $(BUILD)
 
-game: ghosts.o map.o pacman.o -lncursesw
+priority_test: priority_test.o testutils.o ../priority_queue.o
 
-priority_queue.o: priority_queue.h
-ghosts.o : ghosts.h 
-map.o: map.h
-pacman.o: pacman.h
+testutils.o: testutils.h
+../priority_queue.o : ../priority_queue.h
+
 
 clean:
 	rm -f $(wildcard *.o)
-	rm -f test
+	rm -f ../priority_queue.o
+	rm -f priority_test
