@@ -9,15 +9,16 @@
 #include "assemble_src/headers/output.h"
 #include "assemble_src/headers/assemble.h"
 
-char **read_in_prog(char *filename, int *num_instr);
+char **read_in_prog(char *filename, uint8_t *num_instr);
 void save_instruction(uint32_t *assembled_program, uint16_t address, uint32_t data);
 void write_reserved_memory(uint32_t *assembled_program, int *next_avaliable_address, uint32_t reserved_data);
 void free_instructions(char **instructions, int num_instructions);
 
 int main(int argc, char **argv)
 {
+  assert(argc > 1);
 
-  int num_instructions;
+  uint8_t num_instructions;
   char **instrucs = read_in_prog(argv[1], &num_instructions);
 
   Hash_Table *hash_table = new_table(2000); //How many
@@ -36,6 +37,7 @@ int main(int argc, char **argv)
   //such as offsets too large to fit into the instruction
 
   uint32_t *assembled_program = calloc(2 * num_instructions, sizeof(uint32_t)); //Cannot have more than 2* in output
+  assert(assembled_program);
 
   address = 0;
   for (int i = 0; i < num_instructions; i++)
@@ -100,7 +102,7 @@ int main(int argc, char **argv)
 }
 
 //Maybe reuse from emulate but it uses memory which we do not need;
-char **read_in_prog(char *filename, int *num_instr)
+char **read_in_prog(char *filename, uint8_t *num_instr)
 {
   FILE *input_file;
   char buffer[MAX_LINE_LENGTH];
@@ -123,7 +125,7 @@ char **read_in_prog(char *filename, int *num_instr)
       //printf("buffer: %s", buffer);
       num_instructions++;
       instructions[j] = calloc(strlen(buffer), sizeof(char));
-      strncpy(instructions[j], buffer, strlen(buffer));
+      strcpy(instructions[j], buffer);
       instructions[j][strlen(buffer) - 1] = '\0'; //remove \n
       j++;
     }
