@@ -15,4 +15,6 @@
 
 int game_over(game_t *game);
 
+int game_won(game_t *game);
+
 #endif

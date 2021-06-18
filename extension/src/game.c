@@ -157,7 +157,7 @@ int main(void)
 
         move_pacman(game, dx, dy);
 
-        if (MAP->pellet_num <= 0)
+        if (game_won(game))//(MAP->pellet_num <= 0)
         {
             
             init_all_ghosts(game);
@@ -183,4 +183,15 @@ int main(void)
 int game_over(game_t *game)
 {
     return game->lives <= 0;
+}
+
+int game_won(game_t *game) {
+    for (int i = 0; MAP->view[i]; i++) {
+        for (int j = 0; MAP->view[i][j]; j++) {
+            if (MAP->view[i][j] == '.' || MAP->view[i][j] == 'O') {
+                return 0;
+            }
+        }
+    }
+    return 1;
 }
