@@ -1,4 +1,4 @@
-#include "pacman.h"
+#include "headers/pacman.h"
 #include <stdlib.h>
 #include <unistd.h>
 

@@ -1,4 +1,4 @@
-#include "game.h"
+#include "headers/game.h"
 #include <ncurses.h>
 #include <locale.h>
 #include <stdlib.h>

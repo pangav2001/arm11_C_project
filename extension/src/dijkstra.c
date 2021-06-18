@@ -1,6 +1,6 @@
-#include "game.h"
-#include "priority_queue.h"
-#include "dijkstra.h"
+#include "headers/game.h"
+#include "headers/priority_queue.h"
+#include "headers/dijkstra.h"
 #include <stdlib.h>
 
 #define INFINITY 9999

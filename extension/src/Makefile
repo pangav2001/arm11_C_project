@@ -15,10 +15,10 @@ game: ghosts.o map.o pacman.o -lncursesw
 test:
 	cd test; make
 
-priority_queue.o: priority_queue.h
-ghosts.o : ghosts.h 
-map.o: map.h
-pacman.o: pacman.h
+priority_queue.o: headers/priority_queue.h
+ghosts.o : headers/ghosts.h 
+map.o: headers/map.h
+pacman.o: headers/pacman.h
 
 clean:
 	cd test; make clean

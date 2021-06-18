@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "ghosts.h"
+#include "headers/ghosts.h"
 #include <assert.h>
 
 #define BLINKY_RADIUS 8
