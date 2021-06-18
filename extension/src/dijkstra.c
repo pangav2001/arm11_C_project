@@ -1,28 +1,19 @@
 #include "game.h"
 #include "priority_queue.h"
+#include "dijkstra.h"
 #include <stdlib.h>
 
 #define INFINITY 9999
 #define NIL -1
 
-int main()
+void next_step(int starting_x, int starting_y, int target_x, int target_y, int *dx, int *dy, game_t *game)
 {
-    int starting_x = 22;
-    int starting_y = 7;
-
-    int target_x = 12;
-    int target_y = 10;
-
     if (target_x == starting_x && target_y == starting_y)
     {
-        return 0;
+        *dx = 0;
+        *dy = 0;
+        return;
     }
-
-    game_t *game = (game_t *)malloc(sizeof(game_t));
-
-    create_map(game);
-
-    init_map(game);
 
     int dist[MAP->max_x][MAP->max_y];
     int prev_x[MAP->max_x][MAP->max_y];
@@ -95,12 +86,30 @@ int main()
         y = prev_y[x][y];
         x = temp;
 
+
+        //If position is out of bound return euclidian
         if (x == -1 || y == -1)
         {
-            return 1;
+            x = target_x;
+            y = target_y;
+            break;
         }
     }
 
-    printf("%d, %d", x, y);
-    return 0;
+    //Mod 2 is needed for euclidian case
+    *dx = (starting_x - x) % 2;
+    *dy = (starting_y - y) % 2;
+
+    //Needed for euclidian in case movement is diagonal
+    if (abs(*dx) == 1 && abs(*dy) == 1)
+    {
+        if (get_char(starting_x + *dx, starting_y, MAP) == '#' || get_char(starting_x + *dx, starting_y, MAP) == 'b')
+        {
+            *dy = 0;
+        }
+        else
+        {
+            *dx = 0;
+        }
+    }
 }
