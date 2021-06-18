@@ -15,7 +15,7 @@ void push(Node_P **head, int x, int y, int distance);
 
 int contains(Node_P **head, int x, int y);
 
-int isEmpty();
+int isEmpty(Node_P **head);
 
 Node_P **new_queue();
 
