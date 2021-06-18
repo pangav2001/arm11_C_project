@@ -7,16 +7,16 @@
 
 uint32_t assemble_multiply(tokens_t *instructions)
 {
-    assert(instructions->num_opcode > 2);
+    assert(instructions->num_operand > 2);
 
-    enum Register_Names rd = convert_register(instructions->opcodes[0]);
-    enum Register_Names rm = convert_register(instructions->opcodes[1]);
-    enum Register_Names rs = convert_register(instructions->opcodes[2]);
+    enum Register_Names rd = convert_register(instructions->operands[0]);
+    enum Register_Names rm = convert_register(instructions->operands[1]);
+    enum Register_Names rs = convert_register(instructions->operands[2]);
     enum Register_Names rn = 0;
     if(instructions->mnemonic == MLA)
     {
-        assert(instructions->num_opcode == 4);
-        rn = convert_register(instructions->opcodes[3]);
+        assert(instructions->num_operand == 4);
+        rn = convert_register(instructions->operands[3]);
     }
 
     uint32_t result = 0;

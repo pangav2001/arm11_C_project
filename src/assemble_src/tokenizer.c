@@ -43,19 +43,19 @@ tokens_t *tokenize_instruction(char *line)
 
     enum Mnemonic mnemonic = extract_mnemonic(&line);
 
-    int num_opcodes;
-    tokens->opcodes = extract_opcodes(line, &num_opcodes);
-    tokens->num_opcode = num_opcodes;
+    int num_operands;
+    tokens->operands = extract_operands(line, &num_operands);
+    tokens->num_operand = num_operands;
     tokens->mnemonic = mnemonic;
     return tokens;
 }
 
-char **extract_opcodes(char *line, int *num_opcodes)
+char **extract_operands(char *line, int *num_operands)
 {
     char *instruction = strdup(line); //Had issues with line not being modifiable before, maybe remove after testing with actual buffer
     char *token;
     char *rest = instruction;
-    char **opcodes = calloc(MAX_OPCODE, sizeof(char *));
+    char **operands = calloc(MAX_OPERAND, sizeof(char *));
     int i;
     for (i = 0; (token = strtok_r(rest, ",", &rest)); i++)
     {
@@ -63,36 +63,36 @@ char **extract_opcodes(char *line, int *num_opcodes)
         char *curr = calloc(1, strlen(token) + 1);
         strncpy(curr, token, strlen(token) + 1);
         remove_whitespace(curr);
-        opcodes[i] = curr;
+        operands[i] = curr;
     }
 
-    *num_opcodes = i;
+    *num_operands = i;
 
-    for (int i = 0; i < *num_opcodes; i++)
+    for (int i = 0; i < *num_operands; i++)
     { //case where , within []
-        if (opcodes[i][0] == '[' && opcodes[i][strlen(opcodes[i]) - 1] != ']')
+        if (operands[i][0] == '[' && operands[i][strlen(operands[i]) - 1] != ']')
         {
-            char *updated = calloc(strlen(opcodes[i]) + strlen(opcodes[i + 1]) + 2, sizeof(char));
-            strcat(updated, opcodes[i]);
+            char *updated = calloc(strlen(operands[i]) + strlen(operands[i + 1]) + 2, sizeof(char));
+            strcat(updated, operands[i]);
             strcat(updated, ",");
-            strcat(updated, opcodes[i + 1]);
-            free(opcodes[i]);
-            opcodes[i] = updated;
+            strcat(updated, operands[i + 1]);
+            free(operands[i]);
+            operands[i] = updated;
             //move everything over and free last one
             int j;
-            for (j = i + 1; j < *num_opcodes - 1; j++)
+            for (j = i + 1; j < *num_operands - 1; j++)
             {
-                opcodes[j] = realloc(opcodes[j], sizeof(opcodes[j + 1]));
-                strcpy(opcodes[j], opcodes[j + 1]);
+                operands[j] = realloc(operands[j], sizeof(operands[j + 1]));
+                strcpy(operands[j], operands[j + 1]);
             }
-            free(opcodes[j]); //free the last
-            *num_opcodes -= 1;
+            free(operands[j]); //free the last
+            *num_operands -= 1;
             i--;
         }
     }
 
     free(instruction);
-    return opcodes;
+    return operands;
 }
 
 //extracts the mnemonic and updates the pointer to after the first " ";
@@ -169,18 +169,18 @@ uint32_t string_to_int(char *number)
     return strtol(number, NULL, 10);
 }
 
-void free_opcode(char **opcodes, int num_opcode)
+void free_operands(char **operands, int num_operand)
 {
-    for (int i = 0; i < num_opcode; i++)
+    for (int i = 0; i < num_operand; i++)
     {
-        free(opcodes[i]);
+        free(operands[i]);
     }
-    free(opcodes);
+    free(operands);
 }
 
 void free_tokens(tokens_t *tokens)
 {
-    free_opcode(tokens->opcodes, tokens->num_opcode);
+    free_operands(tokens->operands, tokens->num_operand);
     free(tokens);
 }
 
