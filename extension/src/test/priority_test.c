@@ -1,11 +1,7 @@
 #include "testutils.h"
 #include "../priority_queue.h"
 
-
-
 int main(void) {
-
-
     Node_P **PQ = new_queue();
 
     testcond(isEmpty(PQ), "Empty PQ");
@@ -28,6 +24,5 @@ int main(void) {
     testcond(isEmpty(PQ), "Empty PQ");
 
     free_queue(PQ);
-
 }
 
