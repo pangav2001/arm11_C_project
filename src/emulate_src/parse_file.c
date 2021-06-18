@@ -29,11 +29,7 @@ int32_t read_in_binary(char* fileName)
     }
 
     buffer = calloc(fileSize, sizeof(int8_t));
-    if (buffer == NULL)
-    {
-        fputs("Memory error!", stderr);
-        exit(2);
-    }
+    assert(buffer);
 
     assert(fread(buffer, 1, fileSize, inFile) != 0);
 

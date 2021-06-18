@@ -5,6 +5,7 @@
 void create_pacman(game_t *game)
 {
     PACMAN = (pacman_t *)malloc(sizeof(pacman_t));
+    assert(PACMAN);
 }
 
 void free_pacman(game_t *game)

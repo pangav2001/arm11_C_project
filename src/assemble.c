@@ -72,6 +72,7 @@ int main(int argc, char **argv)
         //LSL
         char *instruction = malloc(MAX_LINE_LENGTH * sizeof(char));
         assert(instruction != NULL);
+        
         sprintf(instruction, "mov %s,%s,lsl %s", tokens->operands[0], tokens->operands[0], tokens->operands[1]);
         tokens_t *tokens_lsl = tokenize_instruction(instruction);
         save_instruction(assembled_program, address, data_process(tokens_lsl));
@@ -129,6 +130,7 @@ char **read_in_prog(char *filename, uint8_t *num_instr)
       num_instructions++;
       instructions[j] = calloc(strlen(buffer), sizeof(char));
       assert(instructions[j] != NULL);
+
       strcpy(instructions[j], buffer);
       instructions[j][strlen(buffer) - 1] = '\0'; //remove \n
       j++;

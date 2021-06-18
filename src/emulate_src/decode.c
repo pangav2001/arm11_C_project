@@ -77,7 +77,8 @@ void decode(int32_t instruction)
             {
                 struct data_processing *instr;
                 instr = calloc(1, sizeof(struct data_processing));
-                assert(instr != NULL);
+                assert(instr);
+
                 instr->cond = cond;
                 instr->i_bit = extract_bits(instruction, 25, 25);
                 instr->opcode = extract_bits(instruction, 21, 24);
@@ -92,7 +93,8 @@ void decode(int32_t instruction)
             {
                 struct multiply *instr;
                 instr = calloc(1, sizeof(struct multiply));
-                assert(instr != NULL);
+                assert(instr);
+
                 instr->cond = cond;
                 instr->zzzzzz = 0;
                 instr->a_bit = extract_bits(instruction, 21, 21);
@@ -112,7 +114,8 @@ void decode(int32_t instruction)
         {
             struct sdt *instr;
             instr = calloc(1, sizeof(struct sdt));
-            assert(instr != NULL);
+            assert(instr);
+
             instr->cond = cond;
             instr->decide = decide;
             instr->i_bit = extract_bits(instruction, 25, 25);
@@ -132,8 +135,8 @@ void decode(int32_t instruction)
         {
             struct branch *instr;
             instr = calloc(1, sizeof(struct branch));
-            assert(instr != NULL);
-            assert(instr != NULL);
+            assert(instr);
+            
             instr->cond = cond;
             instr->ozoz = 10;
             instr->offset = extract_bits(instruction, 0, 23);

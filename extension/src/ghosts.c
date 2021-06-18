@@ -8,11 +8,13 @@ void create_ghosts(game_t *game)
 {
 
     GHOSTS = (ghost_t **)malloc(game->num_ghosts * sizeof(ghost_t *));
+    assert(GHOSTS);
 
     assert(game->num_ghosts <= 4);
     for (int i = 0; i < game->num_ghosts; i++)
     {
         GHOSTS[i] = (ghost_t *)malloc(sizeof(ghost_t));
+        assert(GHOSTS[i]);
         GHOSTS[i]->ghost_name = i + 1; //starts at 1
     }
 }

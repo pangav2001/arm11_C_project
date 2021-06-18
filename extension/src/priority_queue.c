@@ -5,12 +5,16 @@
 
 Node_P **new_queue()
 {
-    return malloc(sizeof(Node_P *));
+    Node_P **ret = malloc(sizeof(Node_P *));
+    assert(ret);
+
+    return ret; 
 }
 
 static Node_P *new_node(int x, int y, int distance)
 {
     Node_P *node = (Node_P *)malloc(sizeof(Node_P));
+    assert(node);
 
     node->x = x;
     node->y = y;
