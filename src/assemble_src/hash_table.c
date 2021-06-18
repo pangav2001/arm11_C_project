@@ -1,4 +1,5 @@
 #include "headers/hash_table.h"
+#include <assert.h>
 
 //#define SIZE 20000
 
@@ -39,10 +40,15 @@ unsigned long hash(char *str, int modulo)
 Entry *new_entry(char *key, uint32_t value)
 {
     Entry *entry = (Entry *)malloc(sizeof(Entry));
+    assert(entry != NULL);
     entry->key = (char *)malloc(strlen(key) + 1); //+1 for string terminator
+    assert(entry->key != NULL);
+
+    
     entry->value = value;
 
-    strncpy(entry->key, key, strlen(key) + 1);
+    //strncpy(entry->key, key, strlen(key) + 1);
+    strcpy(entry->key, key);
 
     return entry;
 }
@@ -60,9 +66,11 @@ void free_entry(Entry *entry)
 Hash_Table *new_table(int size)
 {
     Hash_Table *hash_table = (Hash_Table *)malloc(sizeof(Hash_Table));
+    assert(hash_table != NULL);
     hash_table->size = size;
     hash_table->no_of_entries = 0;
     hash_table->entries = (Entry **)malloc(hash_table->size * sizeof(Entry *));
+    assert(hash_table->entries != NULL);
 
     for (int i = 0; i < hash_table->size; i++)
     {
@@ -200,6 +208,7 @@ void print_table(Hash_Table *hash_table)
 List_Node *new_node()
 {
     List_Node *node = (List_Node *)malloc(sizeof(List_Node));
+    assert(node != NULL);
     return node;
 }
 
@@ -285,6 +294,7 @@ void free_list(List_Node *linked_list)
 List_Node **create_buckets(Hash_Table *hash_table)
 {
     List_Node **buckets = (List_Node **)malloc(hash_table->size * sizeof(List_Node *));
+    assert(buckets != NULL);
 
     for (int i = 0; i < hash_table->size; i++)
     {

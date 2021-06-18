@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 #include "headers/parse_file.h"
 #include "headers/memory.h"
 
@@ -34,7 +35,7 @@ int32_t read_in_binary(char* fileName)
         exit(2);
     }
 
-    fread(buffer, 1, fileSize, inFile);
+    assert(fread(buffer, 1, fileSize, inFile) != 0);
 
     for(int i = 0; i < fileSize; i++)
     {
