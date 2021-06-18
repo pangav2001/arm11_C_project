@@ -1,7 +1,7 @@
 #Makefile
 
 CC = gcc
-CFLAGS = -Wall -g -Werror -Wextra -pedantic
+CFLAGS = -Wall -g -Werror -Wextra -pedantic -O3
 BUILD = priority_test
 
 .SUFFIXES: .c .o
