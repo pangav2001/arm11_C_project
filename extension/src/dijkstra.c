@@ -7,7 +7,7 @@
 
 int main()
 {
-    int starting_x = 21;
+    int starting_x = 22;
     int starting_y = 7;
 
     int target_x = 12;
@@ -42,7 +42,7 @@ int main()
 
     Node_P **pq = new_queue();
 
-    push(pq, starting_x, starting_y, 0);
+    push(pq, starting_x, starting_y, dist[starting_x][starting_y]);
 
     while (!isEmpty(pq))
     {
@@ -50,27 +50,37 @@ int main()
         int y;
         int distance;
         pop(pq, &x, &y, &distance);
-        if (y == target_y && x == target_x)
-        {
-            break;
-        }
 
         for (int i = -1; i <= 1; i++)
         {
             for (int j = -1; j <= 1; j++)
             {
-                if (abs(i) == 1 && abs(j) == 1)
+                if ((abs(i) == 1 && abs(j) == 1) || x < 0 || x >= MAP->max_x || y < 0 || y >= MAP->max_y)
                 {
                     continue;
                 }
 
-                if (x + i >= 0 &&  x + i < MAP->max_x && y + j >= 0 && y + j < MAP->max_y && get_char(x + i, y + j, MAP) != '#' && dist[x + i][y + j] > dist[x][y] + 1)
+
+                int alt = INFINITY;
+                if(get_char(x + i, y + j, MAP) != '#' && get_char(x + i, y + j, MAP) != 'b')
                 {
-                    dist[x + i][y + j] = dist[x][y] + 1;
+                    alt = dist[x][y] + 1;
+                }
+
+                if (alt < dist[x + i][y + j])
+                {
+                    dist[x + i][y + j] = alt;
                     prev_x[x + i][y + j] = x;
                     prev_y[x + i][y + j] = y;
 
-                    push(pq, x + i, y + i, dist[x + i][y + j]);
+                    if (!contains(pq, x + i, y + j))
+                    {
+                        push(pq, x + i, y + j, alt);
+                    }
+                    else
+                    {
+                        decrease_priority(pq, x + i, y + j, alt);
+                    }
                 }
             }
         }
@@ -79,12 +89,18 @@ int main()
     int x = target_x;
     int y = target_y;
 
-    while (prev_x[x][y] != starting_x && prev_y[x][y] != starting_y)
+    while (!(prev_x[x][y] == starting_x && prev_y[x][y] == starting_y))
     {
         int temp = prev_x[x][y];
         y = prev_y[x][y];
         x = temp;
+
+        if (x == -1 || y == -1)
+        {
+            return 1;
+        }
     }
+
+    printf("%d, %d", x, y);
     return 0;
-    
 }
