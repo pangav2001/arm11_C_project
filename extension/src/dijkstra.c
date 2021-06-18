@@ -94,6 +94,11 @@ int main()
         int temp = prev_x[x][y];
         y = prev_y[x][y];
         x = temp;
+
+        if (x == -1 || y == -1)
+        {
+            return 1;
+        }
     }
 
     printf("%d, %d", x, y);
