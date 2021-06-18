@@ -101,7 +101,6 @@ int main(void)
     {
 
         char input = getch();
-        //Do i need to ensure valid input here? 
         if (input == -1) {
             input = prev;
         } else {
@@ -157,7 +156,7 @@ int main(void)
 
         move_pacman(game, dx, dy);
 
-        if (game_won(game))//(MAP->pellet_num <= 0)
+        if (game_won(game))
         {
             
             init_all_ghosts(game);
@@ -166,10 +165,6 @@ int main(void)
             usleep(10 * DELAY);
         }
 
-        //update everything else
-        //update_view(game);
-
-        //rerender screen
         print_view(window, game);
     }
 
