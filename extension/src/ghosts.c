@@ -40,9 +40,6 @@ void init_ghost(game_t *game , ghost_t *ghost) {
 
     ghost->target_x = mid_x;
     ghost->target_y = mid_y - 4;
-
-    //Do we need the 3/3 box since delay in starting
-
 }
 
 void set_ghost_mode(ghost_t *ghost, Ghost_Mode_t mode) {
@@ -75,13 +72,11 @@ void update_ghosts_targets(game_t *game) {
                 if (game->num_frames_ghost_reset == 0) {
                     set_ghost_mode(GHOSTS[i], CHASING);
                 } else {
-                //bit dodgy
                     GHOSTS[i]->target_x = game->map->max_x - PACMAN->x;
                     GHOSTS[i]->target_y = game->map->max_y - PACMAN->y;
                     game->num_frames_ghost_reset --;
                 }
                 break;
-            // implement rest
             case CHASING:
                 switch (GHOSTS[i]->ghost_name) {
                     case PINKY_E:
@@ -98,21 +93,22 @@ void update_ghosts_targets(game_t *game) {
 
                         GHOSTS[i]->target_x = 2 * increase_x;
                         GHOSTS[i]->target_y = 2 * increase_y;
-
+                        break;
                     case CLYDE_E:
-                        //
                         if (abs(GHOSTS[i]->x - PACMAN->x) < BLINKY_RADIUS && abs(GHOSTS[i]->y - PACMAN->y) < BLINKY_RADIUS) { //relative to pacman!!!!!!
                             //Target lower left
                             GHOSTS[i]->target_x = 0;
                             GHOSTS[i]->target_y = MAP->max_y - 1;
                             break;
                         }
+                        // fall through
                     case BLINKY_E:
                         GHOSTS[i]->target_x = PACMAN->x;
                         GHOSTS[i]->target_y = PACMAN->y;
                         break;
                     default:
                         perror("Should be ghost");    
+                        break;
                 }
                 
                 break;
@@ -144,7 +140,6 @@ void calculate_ghost_movement(game_t *game, ghost_t *ghost) {
     int curr_path_distance = target_distance(NEXT_X(ghost), NEXT_Y(ghost),ghost->target_x, ghost->target_y);
 
     //get best movement ignoring curr path
-    //will this always work?
     int new_dx = 0;
     int new_dy = 0;
     int new_distance = game->map->max_x + game->map->max_y;
@@ -184,6 +179,7 @@ void calculate_ghost_movement(game_t *game, ghost_t *ghost) {
                 ghost->dy = 0;
                 break;
             }
+            // fall through
         default:
             ghost->dx = new_dx;
             ghost->dy = new_dy;
