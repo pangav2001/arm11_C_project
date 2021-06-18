@@ -8,7 +8,6 @@
 #include "../../assemble_src/headers/tokenizer.h"
 #include <stdint.h>
 
-
 enum Shift_Types
 {
     LSL,

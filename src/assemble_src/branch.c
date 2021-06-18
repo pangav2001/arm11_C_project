@@ -6,7 +6,6 @@
 
 #define ARM_OFFSET 8
 
-
 uint32_t branch_assembly(tokens_t *instructions, int16_t current_address, Hash_Table *table)
 {
     uint32_t result = 0;
@@ -14,7 +13,6 @@ uint32_t branch_assembly(tokens_t *instructions, int16_t current_address, Hash_T
 
     //Set bits 31 - 28 to Cond
     SET_BITS(result, 28, instructions->mnemonic - BRANCH_INDEX);
-
 
     //Set bits 27 - 25 to 101 and 24 to 0
     SET_BITS(result, 24, B_1010);
@@ -27,7 +25,7 @@ uint32_t branch_assembly(tokens_t *instructions, int16_t current_address, Hash_T
 
     int32_t offset = target_address - current_address - ARM_OFFSET;
     offset >>= 2;
-    offset &= (1<<24) - 1;
+    offset &= (1 << 24) - 1;
 
     //Set bits 23 - 0 to offset
     SET_BITS(result, 0, offset);

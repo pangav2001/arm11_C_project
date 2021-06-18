@@ -9,7 +9,7 @@
 #define UINT5_MAX 31
 
 #define MAX_SHIFT_LENGTH 4 //With the '\0'
-#define MAX_RS_LENGTH 12 //2^32 - 1 including '#' and '\0' 
+#define MAX_RS_LENGTH 12   //2^32 - 1 including '#' and '\0'
 
 #define OPERAND2(I) instructions->operands[operand2_start + I]
 

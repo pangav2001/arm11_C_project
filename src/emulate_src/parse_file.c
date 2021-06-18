@@ -4,7 +4,7 @@
 #include "headers/parse_file.h"
 #include "headers/memory.h"
 
-int32_t read_in_binary(char* fileName)
+int32_t read_in_binary(char *fileName)
 {
     FILE *inFile;
     int32_t fileSize;
@@ -23,7 +23,7 @@ int32_t read_in_binary(char* fileName)
     fileSize = ftell(inFile);
     rewind(inFile);
 
-    if(fileSize > MEMORY_SIZE)
+    if (fileSize > MEMORY_SIZE)
     {
         fputs("Larger file than expected!", stderr);
     }
@@ -33,11 +33,11 @@ int32_t read_in_binary(char* fileName)
 
     assert(fread(buffer, 1, fileSize, inFile) != 0);
 
-    for(int i = 0; i < fileSize; i++)
+    for (int i = 0; i < fileSize; i++)
     {
         store_memory(i, buffer[i]);
     }
-    
+
     fclose(inFile);
 
     free(buffer);

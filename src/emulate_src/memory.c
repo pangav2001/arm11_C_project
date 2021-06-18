@@ -4,8 +4,14 @@
 #include <math.h>
 #include "headers/memory.h"
 
-#define LE_LOOP int i = 0; i < num_bytes; i++
-#define BE_LOOP int i = num_bytes - 1; i >= 0; i--
+#define LE_LOOP    \
+    int i = 0;     \
+    i < num_bytes; \
+    i++
+#define BE_LOOP            \
+    int i = num_bytes - 1; \
+    i >= 0;                \
+    i--
 
 #define COMBINE_BITS(EXP)                                 \
     for (EXP)                                             \

@@ -16,7 +16,7 @@ void single_data_transfer(int8_t i, int8_t p, int8_t u, int8_t l, enum Register_
     int32_t rn_data = get_reg(rn);
     rn_data = (rn == PC) ? rn_data - 4 : rn_data; //accomodate for pipeline
 
-    //32 bits so that a wrap-around (overflow) 
+    //32 bits so that a wrap-around (overflow)
     //on the 16 bit offset can be detected
     /*
     Why? Because theoritically uint16_t can hold

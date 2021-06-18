@@ -4,8 +4,7 @@
 #include "headers/flags.h"
 #include <assert.h>
 
-
-extern void set_flag_value(enum Flag flag, int8_t value, int8_t s_flag);             
+extern void set_flag_value(enum Flag flag, int8_t value, int8_t s_flag);
 
 void multiply(int a_flag, int s_flag,
               enum Register_Names rd, enum Register_Names rn, enum Register_Names rs, enum Register_Names rm)

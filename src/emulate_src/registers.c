@@ -7,7 +7,8 @@
 
 static int32_t *registers = NULL;
 
-void initialize_registers(void) {
+void initialize_registers(void)
+{
     if (registers == NULL)
     {
         registers = calloc(NUM_REG, sizeof(int32_t));
@@ -32,6 +33,7 @@ int store_reg(enum Register_Names reg_name, int32_t data)
     return 0;
 }
 
-void free_registers(void) {
+void free_registers(void)
+{
     free(registers);
 }

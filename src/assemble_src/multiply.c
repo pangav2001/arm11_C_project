@@ -13,7 +13,7 @@ uint32_t assemble_multiply(tokens_t *instructions)
     enum Register_Names rm = convert_register(instructions->operands[1]);
     enum Register_Names rs = convert_register(instructions->operands[2]);
     enum Register_Names rn = 0;
-    if(instructions->mnemonic == MLA)
+    if (instructions->mnemonic == MLA)
     {
         assert(instructions->num_operand == 4);
         rn = convert_register(instructions->operands[3]);

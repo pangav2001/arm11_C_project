@@ -15,14 +15,15 @@ enum Condition_Code
     AL
 };
 
-enum Flag {
+enum Flag
+{
     N,
     Z,
     C,
     V
 };
 
-void set_flag_value(enum Flag flag, int8_t value, int8_t s_flag);             
+void set_flag_value(enum Flag flag, int8_t value, int8_t s_flag);
 
 int check_cond(enum Condition_Code condition_code);
 

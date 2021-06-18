@@ -45,10 +45,8 @@ Entry *new_entry(char *key, uint32_t value)
     entry->key = (char *)malloc(strlen(key) + 1); //+1 for string terminator
     assert(entry->key != NULL);
 
-    
     entry->value = value;
 
-    //strncpy(entry->key, key, strlen(key) + 1);
     strcpy(entry->key, key);
 
     return entry;
@@ -211,7 +209,7 @@ List_Node *new_node()
 {
     List_Node *node = (List_Node *)malloc(sizeof(List_Node));
     assert(node != NULL);
-    
+
     return node;
 }
 
