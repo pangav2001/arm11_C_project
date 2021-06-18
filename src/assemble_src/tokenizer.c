@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "headers/tokenizer.h"
+#include <assert.h>
 
 #define INFINITY 9999
 
@@ -27,6 +28,8 @@ int16_t assign_label_address(char *line, int16_t address, Hash_Table *table)
     if (length)
     {
         char *label = malloc(length + 1);
+        assert(label != NULL);
+
         strncpy(label, line, length);
         label[length] = '\0';
 
@@ -42,6 +45,7 @@ int16_t assign_label_address(char *line, int16_t address, Hash_Table *table)
 tokens_t *tokenize_instruction(char *line)
 {
     tokens_t *tokens = calloc(1, sizeof(tokens_t));
+    assert(tokens != NULL);
 
     enum Mnemonic mnemonic = extract_mnemonic(&line);
 
@@ -58,11 +62,15 @@ char **extract_operands(char *line, int *num_operands)
     char *token;
     char *rest = instruction;
     char **operands = calloc(MAX_OPERAND, sizeof(char *));
+    assert(operands != NULL);
+
     int i;
     for (i = 0; (token = strtok_r(rest, ",", &rest)); i++)
     {
         //printf("%s\n", token);
         char *curr = calloc(1, strlen(token) + 1);
+        assert(curr != NULL);
+
         strcpy(curr, token);
         remove_whitespace(curr);
         operands[i] = curr;
@@ -75,6 +83,8 @@ char **extract_operands(char *line, int *num_operands)
         if (operands[i][0] == '[' && operands[i][strlen(operands[i]) - 1] != ']')
         {
             char *updated = calloc(strlen(operands[i]) + strlen(operands[i + 1]) + 2, sizeof(char));
+            assert(updated != NULL);
+
             strcat(updated, operands[i]);
             strcat(updated, ",");
             strcat(updated, operands[i + 1]);
