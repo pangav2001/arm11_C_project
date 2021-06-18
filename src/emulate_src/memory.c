@@ -20,7 +20,7 @@ void initialize_memory(void)
     if (memory == NULL)
     {
         memory = calloc(MEMORY_SIZE, sizeof(int8_t));
-        assert(memory != NULL);
+        assert(memory);
     }
     else
     {

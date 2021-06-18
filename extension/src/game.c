@@ -1,9 +1,10 @@
-#include "game.h"
+#include "headers/game.h"
 #include <ncurses.h>
 #include <locale.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <assert.h>
 
 #define DELAY 50000
 #define BONUS 200
@@ -11,6 +12,7 @@
 game_t *create_game()
 {
     game_t *ret = (game_t *)malloc(sizeof(game_t));
+    assert(ret);
 
     create_pacman(ret);
     create_map(ret);

@@ -1,10 +1,11 @@
-#include "pacman.h"
+#include "headers/pacman.h"
 #include <stdlib.h>
 #include <unistd.h>
 
 void create_pacman(game_t *game)
 {
     PACMAN = (pacman_t *)malloc(sizeof(pacman_t));
+    assert(PACMAN);
 }
 
 void free_pacman(game_t *game)

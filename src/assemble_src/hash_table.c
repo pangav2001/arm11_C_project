@@ -41,6 +41,7 @@ Entry *new_entry(char *key, uint32_t value)
 {
     Entry *entry = (Entry *)malloc(sizeof(Entry));
     assert(entry != NULL);
+
     entry->key = (char *)malloc(strlen(key) + 1); //+1 for string terminator
     assert(entry->key != NULL);
 
@@ -67,6 +68,7 @@ Hash_Table *new_table(int size)
 {
     Hash_Table *hash_table = (Hash_Table *)malloc(sizeof(Hash_Table));
     assert(hash_table != NULL);
+
     hash_table->size = size;
     hash_table->no_of_entries = 0;
     hash_table->entries = (Entry **)malloc(hash_table->size * sizeof(Entry *));
@@ -209,6 +211,7 @@ List_Node *new_node()
 {
     List_Node *node = (List_Node *)malloc(sizeof(List_Node));
     assert(node != NULL);
+    
     return node;
 }
 

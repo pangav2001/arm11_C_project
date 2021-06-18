@@ -1,5 +1,5 @@
 #include "testutils.h"
-#include "../priority_queue.h"
+#include "../headers/priority_queue.h"
 
 int main(void)
 {

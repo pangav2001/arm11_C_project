@@ -11,7 +11,7 @@ void initialize_registers(void) {
     if (registers == NULL)
     {
         registers = calloc(NUM_REG, sizeof(int32_t));
-        assert(registers != NULL);
+        assert(registers);
     }
     else
     {

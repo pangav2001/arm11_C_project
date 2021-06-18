@@ -1,7 +1,8 @@
-#include "game.h"
+#include "headers/game.h"
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <assert.h>
 
 #define MAX_PELLETS 189
 #define UI_HEIGHT 2
@@ -105,6 +106,7 @@ static int get_max_y(char **view)
 void create_map(game_t *game)
 {
     MAP = (map_t *)malloc(sizeof(map_t));
+    assert(MAP);
 }
 
 void free_map(game_t *game)
@@ -146,6 +148,7 @@ void init_map(game_t *game)
         NULL};
 
     MAP->view = calloc(24, sizeof(char *)); //
+    assert(MAP->view);
     for (int i = 0; i < 23; i++)
     {
         MAP->view[i] = strdup(view_test[i]);

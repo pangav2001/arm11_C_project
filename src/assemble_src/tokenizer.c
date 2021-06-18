@@ -28,7 +28,7 @@ int16_t assign_label_address(char *line, int16_t address, Hash_Table *table)
     if (length)
     {
         char *label = malloc(length + 1);
-        assert(label != NULL);
+        assert(label);
 
         strncpy(label, line, length);
         label[length] = '\0';
@@ -45,7 +45,7 @@ int16_t assign_label_address(char *line, int16_t address, Hash_Table *table)
 tokens_t *tokenize_instruction(char *line)
 {
     tokens_t *tokens = calloc(1, sizeof(tokens_t));
-    assert(tokens != NULL);
+    assert(tokens);
 
     enum Mnemonic mnemonic = extract_mnemonic(&line);
 
@@ -62,14 +62,14 @@ char **extract_operands(char *line, int *num_operands)
     char *token;
     char *rest = instruction;
     char **operands = calloc(MAX_OPERAND, sizeof(char *));
-    assert(operands != NULL);
+    assert(operands);
 
     int i;
     for (i = 0; (token = strtok_r(rest, ",", &rest)); i++)
     {
         //printf("%s\n", token);
         char *curr = calloc(1, strlen(token) + 1);
-        assert(curr != NULL);
+        assert(curr);
 
         strcpy(curr, token);
         remove_whitespace(curr);
@@ -83,7 +83,7 @@ char **extract_operands(char *line, int *num_operands)
         if (operands[i][0] == '[' && operands[i][strlen(operands[i]) - 1] != ']')
         {
             char *updated = calloc(strlen(operands[i]) + strlen(operands[i + 1]) + 2, sizeof(char));
-            assert(updated != NULL);
+            assert(updated);
 
             strcat(updated, operands[i]);
             strcat(updated, ",");
@@ -95,6 +95,8 @@ char **extract_operands(char *line, int *num_operands)
             for (j = i + 1; j < *num_operands - 1; j++)
             {
                 operands[j] = realloc(operands[j], sizeof(operands[j + 1]));
+                assert(operands[j]);
+
                 strcpy(operands[j], operands[j + 1]);
             }
             free(operands[j]); //free the last

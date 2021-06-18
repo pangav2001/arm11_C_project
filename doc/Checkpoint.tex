@@ -1,30 +1,37 @@
-\documentclass[11pt]{article}
+\documentclass{article}
+\title{COMP40009 Interim Report}
+\author{Karim Selih, Panayiotis Gavriil, Konstantinos Koupepas \\ and Naman Sharma}
+\date{}
 
-\usepackage{fullpage}
 
 \begin{document}
 
-\title{ARM Checkpoint... }
-\author{TODO}
-
 \maketitle
 
-\section{Group Organisation}
+\section*{Division of group work}
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-culpa qui officia deserunt mollit anim id est laborum.
+We broke down the emulator into two of the main components (fetch/decode) and the four types of instructions under execute. We then allocated a team member to complete parts of the two main components we had identified. Together we completed the header files, memory and registers so that we would each be able to complete our individual parts and understand how to interact with registers/memory. Panayiotis was responsible for fetch and decode, Karim oversaw flags and single data transfer, Naman completed branch and multiply and Konstantinos oversaw data processing and outputting the memory and registers.  
 
-\section{Implementation Strategies}
+\section*{Group Discussion}
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-culpa qui officia deserunt mollit anim id est laborum.
+We believe the group is working well as we spent time discussing the structure of the emulator and created all the header files prior to starting any work. This allowed us to work independently on our specific parts without having to wait on others to finish – this was useful since we all have different schedules. We have also been making use of branches for each new incremental change to ensure that nothing is broken when a new feature is added, allowing us to easily test and debug separately to the master branch. This ensured that we were productive and proved useful by rolling back to previous commits or disregarding branches when we broke the program through testing. We also found it useful to debug others code as we would often spot the mistakes quicker and find more concise ways of achieving the same result.\\ 
+
+\noindent Since all four team members are living in North Acton, we would meet and work in person making it easier to collaborate and debug our code. We also used teams in the event someone could not make a meeting. \\ \\
+
+\section*{Emulator Structure}
+
+For the emulator, we defined the registers as an array of 17 32-bit integers that use an enum to indicate the index of each register in the array. The memory is defined as an array of 65536 8-bit integers so that it is byte addressable. We used a function to read any number of bytes from the memory and return it in either little or big endian. This means we can use big endian (like in the specification) and still store and print in little endian.  \\
+
+\noindent We read from the input file using the parse file function and store its contents into memory. Then we read line by line using decode to break down the instruction and call the appropriate function out of Data Processing, Multiply, Single Data Transfer and Branch. Decode also checks for the condition in bits 31 to 28 ensuring the condition is met to execute the instruction. Decode contains a function to extract specified bits from a 32-bit number that is used in most functions and will definitely be used in the assembler as well. \\
+
+
+\noindent The 4 functions mentioned above then use the data sent to them from decode to execute their respective task and call the functions from the flags file to set the CPSR flags. \\
+
+
+\noindent We repeat reading, decoding and executing the instructions until the PC increments past the final instruction. We then call a function to output the contents of the registers and memory. 
+
+\section*{Implementation Discussions}
+
+There are a few things we expect to find difficult to implement down the road. The first one is the ADT we are going to use (HashMap) for the assembler. this is because we have not implemented a HashMap yet for this course and we have never implemented an ADT in C. Another is a function to distinguish between different instructions that have the same opcode but a different number of operands. Last but not least, the linking of labels discovered in the first pass of the assembler to actual addresses to be used in the second pass. 
 
 \end{document}
