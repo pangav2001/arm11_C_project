@@ -51,9 +51,8 @@ void next_step(int starting_x, int starting_y, int target_x, int target_y, int *
                     continue;
                 }
 
-
                 int alt = INFINITY;
-                if(get_char(x + i, y + j, MAP) != '#' && get_char(x + i, y + j, MAP) != 'b')
+                if (get_char(x + i, y + j, MAP) != '#' && get_char(x + i, y + j, MAP) != 'b')
                 {
                     alt = dist[x][y] + 1;
                 }
@@ -85,7 +84,6 @@ void next_step(int starting_x, int starting_y, int target_x, int target_y, int *
         int temp = prev_x[x][y];
         y = prev_y[x][y];
         x = temp;
-
 
         //If position is out of bound return euclidian
         if (x == -1 || y == -1)

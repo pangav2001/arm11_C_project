@@ -12,7 +12,6 @@
 #define PREV_Y(ACTOR) (ACTOR->y - ACTOR->dy)
 #define NOT_MOVING(ACTOR) ((ACTOR->dx == 0) && (ACTOR->dy == 0))
 
-
 int game_over(game_t *game);
 
 int game_won(game_t *game);

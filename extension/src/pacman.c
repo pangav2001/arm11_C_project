@@ -27,7 +27,7 @@ void kill_pacman(game_t *game)
     usleep(1000);
     game->lives -= 1;
     set_char(PACMAN->x, PACMAN->y, ' ', game->map);
-    for(int i = 0; i < game->num_ghosts; i++)
+    for (int i = 0; i < game->num_ghosts; i++)
     {
         set_char(GHOSTS[i]->x, GHOSTS[i]->y, GHOSTS[i]->over == PACMAN_REPRESENTATION ? ' ' : GHOSTS[i]->over, MAP);
     }
@@ -84,10 +84,12 @@ void move_pacman(game_t *game, int dx, int dy)
         }
         //Power pellet is worth 40 points more than pellet
         game->points += 40;
+        // fall through
     case '.':
         //Normal pellet is worth 10 points
         game->points += 10;
         MAP->pellet_num--;
+        //fall through
     default:
         if (PACMAN->x <= 0)
         {

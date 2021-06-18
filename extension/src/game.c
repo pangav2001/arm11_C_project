@@ -42,7 +42,7 @@ void init_game(game_t *game)
     init_all_ghosts(game);
 }
 
-void print_game_over(game_t *game)
+void print_game_over()
 {
     int max_y;
     int max_x;
@@ -101,12 +101,15 @@ int main(void)
     {
 
         char input = getch();
-        if (input == -1) {
+        if (input == -1)
+        {
             input = prev;
-        } else {
+        }
+        else
+        {
             prev = input;
         }
-        
+
         int dx = PACMAN->dx;
         int dy = PACMAN->dy;
 
@@ -144,7 +147,7 @@ int main(void)
                     kill_pacman(game);
                     continue;
                     break;
-                case FRIGHTENED:                  
+                case FRIGHTENED:
                     init_ghost(game, GHOSTS[i]);
                     GHOSTS[i]->ghost_wait = GHOST_START_DELAY;
                     game->points += BONUS;
@@ -158,7 +161,7 @@ int main(void)
 
         if (game_won(game))
         {
-            
+
             init_all_ghosts(game);
             init_pacman(game);
             init_map(game);
@@ -168,7 +171,7 @@ int main(void)
         print_view(window, game);
     }
 
-    print_game_over(game);
+    print_game_over();
 
     endwin();
 
@@ -180,10 +183,14 @@ int game_over(game_t *game)
     return game->lives <= 0;
 }
 
-int game_won(game_t *game) {
-    for (int i = 0; MAP->view[i]; i++) {
-        for (int j = 0; MAP->view[i][j]; j++) {
-            if (MAP->view[i][j] == '.' || MAP->view[i][j] == 'O') {
+int game_won(game_t *game)
+{
+    for (int i = 0; MAP->view[i]; i++)
+    {
+        for (int j = 0; MAP->view[i][j]; j++)
+        {
+            if (MAP->view[i][j] == '.' || MAP->view[i][j] == 'O')
+            {
                 return 0;
             }
         }
